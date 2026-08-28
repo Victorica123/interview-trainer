@@ -1,14 +1,15 @@
-# 面试训练场 v0.4.0
+# 面试训练场 v0.4.1
 
 本版本提供两种下载包：
 
-- **Windows 10/11 x64 用户**：下载 `interview-trainer-windows-x64-v0.4.0.zip`。解压后双击 `start.bat`，无需另行安装 Node.js。
-- **macOS、Linux 或已安装 Node.js 20+ 的用户**：下载 `interview-trainer-v0.4.0.zip`，按照 README 运行启动脚本。
+- **Windows 10/11 x64 用户**：下载 `interview-trainer-windows-x64-v0.4.1.zip`。解压后双击 `start.bat`，无需另行安装 Node.js。
+- **macOS、Linux 或已安装 Node.js 20+ 的用户**：下载 `interview-trainer-v0.4.1.zip`，按照 README 运行启动脚本。
 
 请不要下载 GitHub 自动生成的 `Source code` 归档作为普通使用包。所有正式附件的 SHA-256 都记录在 `SHA256SUMS.txt`。
 
 ## 主要内容
 
+- 新增标签触发的自动发布流程、Windows x64 免安装包与附件 SHA-256 校验。
 - 985 道 Java 后端与 AI / Agent 面试训练题。
 - 12 个 Java 后端专题、145 个知识点与五类问法。
 - 可展开预览并自由组合的自定义题单。
