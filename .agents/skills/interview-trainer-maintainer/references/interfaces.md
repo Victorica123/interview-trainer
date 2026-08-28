@@ -1,5 +1,11 @@
 # Interfaces
 
+## Local server startup
+
+- `start.bat` and `start.sh` run `node server.mjs --open`; the actual local URL is printed and opened in the default browser.
+- The server starts from `INTERVIEW_TRAINER_PORT` or `4173` and, on `EADDRINUSE`, tries subsequent ports up to 20 attempts. The reported/opened URL always uses the bound port.
+- `INTERVIEW_TRAINER_HOST` defaults to `127.0.0.1`. The port must be an integer from 0 through 65535; `0` delegates port selection to the operating system.
+
 ## HTTP API
 
 All endpoints are local and JSON unless noted.

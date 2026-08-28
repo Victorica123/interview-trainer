@@ -18,7 +18,13 @@ const siteCookiesPath = join(localRoot, "site-cookies.json");
 const pendingUpdatePath = join(localRoot, "pending-update.json");
 const pendingUpdateTempPath = join(localRoot, "pending-update.tmp");
 const host = process.env.INTERVIEW_TRAINER_HOST || "127.0.0.1";
-const port = Number(process.env.INTERVIEW_TRAINER_PORT || 4173);
+const preferredPort = Number(process.env.INTERVIEW_TRAINER_PORT || 4173);
+const maxPortAttempts = 20;
+
+if (!Number.isInteger(preferredPort) || preferredPort < 0 || preferredPort > 65535) {
+  console.error(`\nInterview Trainer 启动失败：端口“${process.env.INTERVIEW_TRAINER_PORT}”无效，请使用 0 到 65535 之间的整数。\n`);
+  process.exit(1);
+}
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -788,8 +794,31 @@ const server = createServer(async (request, response) => {
   }
 });
 
-server.listen(port, host, () => {
-  const localUrl = `http://${host}:${port}`;
+let activePort = preferredPort;
+let portAttempts = 1;
+
+server.on("error", (error) => {
+  const canTryNextPort = error.code === "EADDRINUSE" && activePort > 0 && activePort < 65535 && portAttempts < maxPortAttempts;
+  if (canTryNextPort) {
+    const blockedPort = activePort;
+    activePort += 1;
+    portAttempts += 1;
+    console.warn(`端口 ${blockedPort} 已被占用，正在尝试 ${activePort}…`);
+    setTimeout(() => server.listen(activePort, host), 0);
+    return;
+  }
+
+  const detail = error.code === "EADDRINUSE"
+    ? `从 ${preferredPort} 开始连续尝试了 ${portAttempts} 个端口，仍未找到可用端口`
+    : error.message;
+  console.error(`\nInterview Trainer 启动失败：${detail}。\n`);
+  process.exitCode = 1;
+});
+
+server.once("listening", () => {
+  const address = server.address();
+  const boundPort = typeof address === "object" && address ? address.port : activePort;
+  const localUrl = `http://${host}:${boundPort}`;
   console.log(`\nInterview Trainer 已启动：${localUrl}`);
   console.log("按 Ctrl+C 停止。AI密钥不会输出到日志。\n");
   if (process.argv.includes("--open")) {
@@ -799,3 +828,5 @@ server.listen(port, host, () => {
     opener.unref();
   }
 });
+
+server.listen(activePort, host);

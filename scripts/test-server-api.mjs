@@ -11,6 +11,7 @@ const sandboxRoot = await mkdtemp(join(tmpdir(), "interview-trainer-server-"));
 const sandbox = join(sandboxRoot, "project");
 let upstream;
 let app;
+let startupBlocker;
 let appOutput = "";
 const conceptName = "服务接口新增题目回归概念";
 const autoConceptName = "自动来源抓取回归概念";
@@ -74,6 +75,44 @@ async function listen(server) {
   return server.address().port;
 }
 
+async function listenAt(server, port) {
+  await new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(port, "127.0.0.1", resolve);
+  });
+}
+
+async function closeServer(server) {
+  if (!server?.listening) return;
+  await new Promise((resolve) => server.close(resolve));
+}
+
+async function reserveFallbackPair() {
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const blocker = createServer((request, response) => {
+      response.writeHead(503, { "content-type": "text/plain; charset=utf-8" });
+      response.end("occupied for startup fallback test");
+    });
+    const occupiedPort = await listen(blocker);
+    if (occupiedPort >= 65535) {
+      await closeServer(blocker);
+      continue;
+    }
+
+    const fallbackPort = occupiedPort + 1;
+    const probe = createServer();
+    try {
+      await listenAt(probe, fallbackPort);
+      await closeServer(probe);
+      return { blocker, occupiedPort, fallbackPort };
+    } catch {
+      await closeServer(probe);
+      await closeServer(blocker);
+    }
+  }
+  throw new Error("unable to reserve adjacent ports for startup fallback test");
+}
+
 async function waitFor(url, timeoutMs = 5000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
@@ -86,7 +125,8 @@ async function waitFor(url, timeoutMs = 5000) {
   throw new Error(`server did not become ready: ${url}\n${appOutput}`);
 }
 
-async function startApp(port) {
+async function startApp(port, readyPort = port) {
+  appOutput = "";
   app = spawn(process.execPath, ["server.mjs"], {
     cwd: sandbox,
     env: { ...process.env, INTERVIEW_TRAINER_PORT: String(port) },
@@ -94,7 +134,7 @@ async function startApp(port) {
   });
   app.stdout.on("data", (chunk) => { appOutput += chunk; });
   app.stderr.on("data", (chunk) => { appOutput += chunk; });
-  await waitFor(`http://127.0.0.1:${port}/api/update/status`);
+  await waitFor(`http://127.0.0.1:${readyPort}/api/update/status`);
 }
 
 async function stopApp() {
@@ -202,6 +242,15 @@ try {
     customHeaders: {},
     rememberKey: true
   }), "utf8");
+
+  const fallbackPair = await reserveFallbackPair();
+  startupBlocker = fallbackPair.blocker;
+  await startApp(fallbackPair.occupiedPort, fallbackPair.fallbackPort);
+  assert.match(appOutput, new RegExp(`端口 ${fallbackPair.occupiedPort} 已被占用`), "occupied startup port should produce a readable warning");
+  assert.match(appOutput, new RegExp(`已启动：http://127\\.0\\.0\\.1:${fallbackPair.fallbackPort}`), "startup should report the actual fallback URL");
+  await stopApp();
+  await closeServer(startupBlocker);
+  startupBlocker = null;
 
   const portProbe = createServer();
   const appPort = await listen(portProbe);
@@ -493,9 +542,10 @@ try {
   assert.equal(recoveredHistory.recoveredInterruptedMutation, true, "startup recovery should leave an auditable history marker");
   assert.equal((await readdir(join(sandbox, ".local"))).includes("content-mutation.json"), false, "a successful startup recovery should clear its transaction marker");
 
-  console.log(`Server API regression passed: key persistence states/restarts, atomic local writes, cookie masking/clear, insights/public-source safety, persistent candidate queue/ID resolution, auto-fetch, cancellation, temp-draft recovery, read-only preview, balanced evaluation, apply ${baselineCount} -> ${baselineCount + 5}, byte-equivalent rollback, and interrupted-mutation startup recovery.`);
+  console.log(`Server API regression passed: occupied-port fallback, key persistence states/restarts, atomic local writes, cookie masking/clear, insights/public-source safety, persistent candidate queue/ID resolution, auto-fetch, cancellation, temp-draft recovery, read-only preview, balanced evaluation, apply ${baselineCount} -> ${baselineCount + 5}, byte-equivalent rollback, and interrupted-mutation startup recovery.`);
 } finally {
   await stopApp();
+  await closeServer(startupBlocker);
   if (upstream) await new Promise((resolve) => upstream.close(resolve));
   await rm(sandboxRoot, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
 }

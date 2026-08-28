@@ -6,6 +6,10 @@
 
 项目不要求账号或数据库，不上传学习记录，不绑定模型厂商，默认只监听本机 `127.0.0.1`。Node.js 20+ 即可运行，默认构建没有第三方运行依赖。
 
+> **[前往 Releases 下载最新版](https://github.com/Victorica123/interview-trainer/releases/latest)**
+>
+> 在 Assets 中选择 `interview-trainer-v0.4.0.zip`。`Source code` 是 GitHub 自动生成的源码归档，普通使用推荐下载上面的正式发布包。
+
 ## 功能速览
 
 | 能力 | 说明 |
@@ -37,7 +41,7 @@ chmod +x start.sh
 npm start
 ```
 
-然后打开 <http://127.0.0.1:4173>。
+启动脚本会自动打开浏览器。服务默认使用 <http://127.0.0.1:4173>；如果端口已被占用，会依次尝试后续端口，并在终端显示和打开最终地址。也可以通过 `INTERVIEW_TRAINER_PORT` 指定起始端口。
 
 ## 推荐使用方式
 
