@@ -62,7 +62,7 @@ Update NDJSON phases: `start`, `fetch`, `analyze`, `partial`, `evaluate`, `draft
 ## Browser storage
 
 - `interviewTrainerProgressV1`: map keyed by stable question ID. Fields: `level`, `attempts`, `answer`, `note`, `favorite`, `inMistakeBook`, `mistakeCount`, `dueAt`, `updatedAt`. Storage is origin-scoped, so changing hostname, port, or browser requires export/import.
-- `interviewTrainerSessionsV1`: up to 30 sanitized custom sessions. Each stores one track, per-topic concept/angle/tier/limit/strategy rules, a fixed question-ID snapshot (up to 5,000 IDs for forward growth), and timestamps. Bank changes never silently replace the snapshot.
+- `interviewTrainerSessionsV1`: up to 30 sanitized custom sessions. Each stores one track, per-topic concept/angle/tier/limit/strategy rules, sanitized manual include/exclude question-ID overrides, a fixed question-ID snapshot (up to 5,000 IDs for forward growth), and timestamps. Bank changes never silently replace the snapshot.
 - `interviewTrainerAppearanceV1`: `{theme, readingSize}`.
 - `interviewTrainerLoginBrowserV1`: selected detected browser ID; no executable path is accepted from the page.
 - Export payload version 3: `{version, exportedAt, progress, sessions}`. Import still accepts version 2 without sessions and sanitizes IDs, sizes, booleans, numbers, dates, filters, and session snapshots.

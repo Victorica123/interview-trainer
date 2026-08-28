@@ -6,6 +6,7 @@ const APPEARANCE_KEY = "interviewTrainerAppearanceV1";
 const LOGIN_BROWSER_KEY = "interviewTrainerLoginBrowserV1";
 const CUSTOM_SESSIONS_KEY = "interviewTrainerSessionsV1";
 const MAX_SESSION_QUESTIONS = 5000;
+const QUESTION_ID_PATTERN = /^(be|ai)-\d{3}-[1-5]$/;
 const DEFAULT_ANGLE_LABELS = { definition: "概念定义", mechanism: "原理机制", application: "项目应用", pitfall: "故障排查", comparison: "对比选型" };
 const SOURCE_TYPE_LABELS = { interview: "真实面经", job: "岗位要求", guide: "维护资料", official: "官方资料", research: "研究依据" };
 const TREND_SIGNAL_LABELS = { rising: "近期上升", hot: "近期高频", emerging: "新出现", stable: "持续出现", "sample-low": "样本较少" };
@@ -185,7 +186,9 @@ function sanitizeCustomConfig(input) {
         angles: Array.isArray(value.angles) ? [...new Set(value.angles.map(String).filter((angle) => DEFAULT_ANGLE_LABELS[angle]))] : Object.keys(DEFAULT_ANGLE_LABELS),
         tier: ["all", "core", "high", "extended"].includes(value.tier) ? value.tier : "all",
         limit: Math.min(MAX_SESSION_QUESTIONS, Math.max(1, Math.round(Number(value.limit) || 15))),
-        strategy: ["balanced", "importance", "weak", "random"].includes(value.strategy) ? value.strategy : "balanced"
+        strategy: ["balanced", "importance", "weak", "random"].includes(value.strategy) ? value.strategy : "balanced",
+        includeIds: Array.isArray(value.includeIds) ? [...new Set(value.includeIds.filter((id) => QUESTION_ID_PATTERN.test(id)))].slice(0, MAX_SESSION_QUESTIONS) : [],
+        excludeIds: Array.isArray(value.excludeIds) ? [...new Set(value.excludeIds.filter((id) => QUESTION_ID_PATTERN.test(id)))].slice(0, MAX_SESSION_QUESTIONS) : []
       };
     }
   }
@@ -200,7 +203,7 @@ function sanitizeCustomSessions(input) {
       createdAt: typeof session?.createdAt === "string" ? session.createdAt : new Date().toISOString(),
       updatedAt: typeof session?.updatedAt === "string" ? session.updatedAt : new Date().toISOString(),
       config: sanitizeCustomConfig(session?.config),
-      questionIds: Array.isArray(session?.questionIds) ? [...new Set(session.questionIds.filter((id) => /^(be|ai)-\d{3}-[1-5]$/.test(id)))].slice(0, MAX_SESSION_QUESTIONS) : []
+      questionIds: Array.isArray(session?.questionIds) ? [...new Set(session.questionIds.filter((id) => QUESTION_ID_PATTERN.test(id)))].slice(0, MAX_SESSION_QUESTIONS) : []
     }));
 }
 
@@ -334,6 +337,12 @@ function bindEvents() {
   });
   $("#customModuleList").addEventListener("change", handleCustomModuleChange);
   $("#customModuleList").addEventListener("click", (event) => {
+    const toggle = event.target.closest("[data-custom-toggle-question]");
+    if (toggle) {
+      const card = toggle.closest("[data-custom-category-card]");
+      if (card) toggleCustomQuestionInclusion(card.dataset.customCategoryCard, toggle.dataset.customToggleQuestion);
+      return;
+    }
     const button = event.target.closest("[data-custom-preview-question]");
     if (button) selectQuestion(button.dataset.customPreviewQuestion);
   });
@@ -920,7 +929,9 @@ function createCustomDraft(track = "backend", sourceConfig = null, name = "") {
       angles: validAngles.length ? validAngles : Object.keys(DEFAULT_ANGLE_LABELS),
       tier: stored?.tier || "all",
       limit: stored?.limit || Math.min(15, category.questionCount),
-      strategy: stored?.strategy || "balanced"
+      strategy: stored?.strategy || "balanced",
+      includeIds: (stored?.includeIds || []).filter((id) => state.questions.some((question) => question.id === id && question.track === track && question.category === category.name)),
+      excludeIds: (stored?.excludeIds || []).filter((id) => state.questions.some((question) => question.id === id && question.track === track && question.category === category.name))
     };
   });
   return { track, status: safe.status, name: String(name || "").slice(0, 60), modules };
@@ -961,14 +972,19 @@ function customModuleQuestions(draft, category, applyLimit = true, includeDisabl
     (module.tier === "all" || question.tier === module.tier) &&
     progressMatchesStatus(question, draft.status)
   );
-  const limit = applyLimit ? Math.min(module.limit, pool.length) : pool.length;
-  if (module.strategy === "balanced") return selectBalancedQuestions(pool, limit);
-  const sorted = [...pool].sort((a, b) => {
+  const ordered = module.strategy === "balanced" ? selectBalancedQuestions(pool, pool.length) : [...pool].sort((a, b) => {
     if (module.strategy === "weak") return getProgress(a.id).level - getProgress(b.id).level || b.importance - a.importance;
     if (module.strategy === "random") return stableQuestionHash(`${category}|${a.id}`) - stableQuestionHash(`${category}|${b.id}`);
     return b.importance - a.importance || a.id.localeCompare(b.id);
   });
-  return sorted.slice(0, limit);
+  if (!applyLimit) return ordered;
+
+  const limit = Math.min(module.limit, pool.length);
+  const excluded = new Set(module.excludeIds || []);
+  const poolById = new Map(pool.map((question) => [question.id, question]));
+  const included = (module.includeIds || []).map((id) => poolById.get(id)).filter((question) => question && !excluded.has(question.id));
+  const includedIds = new Set(included.map((question) => question.id));
+  return [...included, ...ordered.filter((question) => !includedIds.has(question.id) && !excluded.has(question.id))].slice(0, limit);
 }
 
 function customQuestionPreviewMarkup(draft, category) {
@@ -981,12 +997,35 @@ function customQuestionPreviewMarkup(draft, category) {
     const answer = String(question.quickAnswer || "").replace(/\s+/g, " ").trim();
     const excerpt = answer.length > 88 ? `${answer.slice(0, 88)}…` : answer;
     return `<li class="${included ? "included" : ""}">
-      <button type="button" data-custom-preview-question="${escapeHtml(question.id)}">
-        <span class="custom-question-preview-copy"><strong>${escapeHtml(question.title)}</strong><small>${escapeHtml(question.topicGroup)} · ${escapeHtml(question.concept)} · ${escapeHtml(angleLabel(question.angle))} · ${escapeHtml(tierLabel(question.tier))}</small>${excerpt ? `<em>${escapeHtml(excerpt)}</em>` : ""}</span>
-        <b>${included ? "收入题单" : "候选题"}</b>
-      </button>
+      <div class="custom-question-preview-row">
+        <button type="button" class="custom-question-preview-open" data-custom-preview-question="${escapeHtml(question.id)}" title="打开题目详情">
+          <span class="custom-question-preview-copy"><strong>${escapeHtml(question.title)}</strong><small>${escapeHtml(question.topicGroup)} · ${escapeHtml(question.concept)} · ${escapeHtml(angleLabel(question.angle))} · ${escapeHtml(tierLabel(question.tier))}</small>${excerpt ? `<em>${escapeHtml(excerpt)}</em>` : ""}</span>
+        </button>
+        <button type="button" class="custom-question-toggle" data-custom-toggle-question="${escapeHtml(question.id)}" aria-pressed="${included}" aria-label="${included ? "从题单移除" : "收入题单"}：${escapeHtml(question.title)}">${included ? "已收录" : "收入题单"}</button>
+      </div>
     </li>`;
   }).join("")}</ol>`;
+}
+
+function toggleCustomQuestionInclusion(category, questionId) {
+  const draft = state.customDraft;
+  const module = draft?.modules?.[category];
+  if (!module || !state.questions.some((question) => question.id === questionId && question.track === draft.track && question.category === category)) return;
+
+  const wasIncluded = module.enabled && customModuleQuestions(draft, category).some((question) => question.id === questionId);
+  module.includeIds = (module.includeIds || []).filter((id) => id !== questionId);
+  module.excludeIds = (module.excludeIds || []).filter((id) => id !== questionId);
+  if (wasIncluded) {
+    module.excludeIds.unshift(questionId);
+  } else {
+    module.enabled = true;
+    module.includeIds.unshift(questionId);
+  }
+  module.includeIds = module.includeIds.slice(0, MAX_SESSION_QUESTIONS);
+  module.excludeIds = module.excludeIds.slice(0, MAX_SESSION_QUESTIONS);
+  updateCustomModuleCard(category);
+  renderCustomPreview();
+  showToast(wasIncluded ? "已从当前题单移除" : "已收入当前题单");
 }
 
 function customQuestionsForDraft(draft = state.customDraft) {
