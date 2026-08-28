@@ -8,7 +8,7 @@
 
 > **[前往 Releases 下载最新版](https://github.com/Victorica123/interview-trainer/releases/latest)**
 >
-> 在 Assets 中选择 `interview-trainer-v0.4.0.zip`。`Source code` 是 GitHub 自动生成的源码归档，普通使用推荐下载上面的正式发布包。
+> Windows 10/11 x64 推荐下载 `interview-trainer-windows-x64-v0.4.0.zip`，解压后双击即可；其他平台下载轻量版。`Source code` 是 GitHub 自动生成的源码归档，不是普通用户的正式发布包。
 
 ## 功能速览
 
@@ -26,9 +26,15 @@
 
 ## 30 秒启动
 
-先安装 [Node.js 20 或更高版本](https://nodejs.org/)。项目没有第三方 npm 依赖，无需执行 `npm install`。
+### Windows 10/11 x64 免安装版
 
-Windows 双击 `start.bat`，macOS / Linux 执行：
+从 [Releases](https://github.com/Victorica123/interview-trainer/releases/latest) 下载 `interview-trainer-windows-x64-v0.4.0.zip`，完整解压后双击 `start.bat`。它内置经过官方 SHA-256 校验的 Node.js 运行时，无需安装依赖。
+
+### 跨平台轻量版
+
+下载 `interview-trainer-v0.4.0.zip`，并先安装 [Node.js 20 或更高版本](https://nodejs.org/)。项目没有第三方 npm 依赖，无需执行 `npm install`。
+
+Windows 双击 `start.bat`；macOS / Linux 执行：
 
 ```bash
 chmod +x start.sh

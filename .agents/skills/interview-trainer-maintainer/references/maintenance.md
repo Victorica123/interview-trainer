@@ -53,9 +53,11 @@ For UI work check desktop and 390px mobile layouts, reload persistence, console 
 
 1. Run checks and relevant stub/browser tests.
 2. Ensure `.gitignore` covers `.local/`, `data/*.json`, logs, and dependencies.
-3. Run `npm run package:release`; it builds from an explicit file/directory allowlist, not a recursive workspace glob.
-4. List archive entries and reject `.local`, keys, cookies, profiles, caches, backups, drafts, and work logs.
-5. Update only the current facts in `references/status.md`.
+3. Run `npm run package:release`; it builds the compressed cross-platform archive from an explicit file/directory allowlist, not a recursive workspace glob.
+4. For the Windows x64 portable archive, use only an official Node.js runtime whose published SHA-256 has been verified, then run `npm run package:windows -- --runtime-dir <path>`.
+5. Run `npm run package:checksums`, list both archives, and reject `.local`, keys, cookies, profiles, caches, backups, drafts, and work logs.
+6. A matching `vX.Y.Z` tag triggers `.github/workflows/release.yml`, repeats verification/build/runtime checksum validation, and creates or refreshes the GitHub Release without browser upload.
+7. Update only the current facts in `references/status.md`.
 
 ## Optimization directions
 

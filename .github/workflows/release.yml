@@ -1,0 +1,96 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_RUNTIME_VERSION: 24.16.0
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_RUNTIME_VERSION }}
+
+      - name: Validate release tag
+        shell: pwsh
+        run: |
+          $manifest = Get-Content -Raw -LiteralPath package.json | ConvertFrom-Json
+          $expectedTag = "v$($manifest.version)"
+          if ($env:GITHUB_REF_NAME -ne $expectedTag) {
+            throw "Tag $env:GITHUB_REF_NAME does not match package version $expectedTag"
+          }
+
+      - name: Run complete verification
+        run: npm run verify
+
+      - name: Build lightweight release
+        run: npm run package:release
+
+      - name: Download and verify official Windows Node.js runtime
+        shell: pwsh
+        run: |
+          $version = $env:NODE_RUNTIME_VERSION
+          $runtimeRoot = Join-Path $env:RUNNER_TEMP "interview-trainer-node-runtime"
+          $archiveName = "node-v$version-win-x64.zip"
+          $archivePath = Join-Path $runtimeRoot $archiveName
+          $checksumPath = Join-Path $runtimeRoot "SHASUMS256.txt"
+          $extractRoot = Join-Path $runtimeRoot "extracted"
+          New-Item -ItemType Directory -Path $runtimeRoot,$extractRoot -Force | Out-Null
+          Invoke-WebRequest -UseBasicParsing "https://nodejs.org/dist/v$version/$archiveName" -OutFile $archivePath
+          Invoke-WebRequest -UseBasicParsing "https://nodejs.org/dist/v$version/SHASUMS256.txt" -OutFile $checksumPath
+          $line = Get-Content -LiteralPath $checksumPath | Where-Object { $_ -match "  $([regex]::Escape($archiveName))$" } | Select-Object -First 1
+          if (-not $line) { throw "Official checksum not found for $archiveName" }
+          $expected = ($line -split '\s+')[0].ToUpperInvariant()
+          $actual = (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash
+          if ($actual -ne $expected) { throw "Node.js runtime checksum mismatch" }
+          Expand-Archive -LiteralPath $archivePath -DestinationPath $extractRoot -Force
+          $runtimeDir = Join-Path $extractRoot "node-v$version-win-x64"
+          if (-not (Test-Path -LiteralPath (Join-Path $runtimeDir "node.exe"))) { throw "node.exe missing from official runtime" }
+          if (-not (Test-Path -LiteralPath (Join-Path $runtimeDir "LICENSE"))) { throw "Node.js LICENSE missing from official runtime" }
+          Add-Content -LiteralPath $env:GITHUB_ENV -Value "INTERVIEW_TRAINER_NODE_RUNTIME=$runtimeDir"
+
+      - name: Build Windows x64 portable release
+        shell: pwsh
+        run: node scripts/package-windows-portable.mjs --runtime-dir "$env:INTERVIEW_TRAINER_NODE_RUNTIME"
+
+      - name: Generate release checksums
+        run: npm run package:checksums
+
+      - name: Publish GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $manifest = Get-Content -Raw -LiteralPath package.json | ConvertFrom-Json
+          $tag = $env:GITHUB_REF_NAME
+          $assets = @(
+            "dist/interview-trainer-v$($manifest.version).zip",
+            "dist/interview-trainer-windows-x64-v$($manifest.version).zip",
+            "dist/SHA256SUMS.txt"
+          )
+          gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $tag @assets --clobber --repo $env:GITHUB_REPOSITORY
+            if ($LASTEXITCODE -ne 0) { throw "Failed to upload release assets" }
+            gh release edit $tag --title "面试训练场 $tag" --notes-file docs/RELEASE_NOTES.md --repo $env:GITHUB_REPOSITORY
+            if ($LASTEXITCODE -ne 0) { throw "Failed to update release notes" }
+          } else {
+            gh release create $tag @assets --verify-tag --latest --title "面试训练场 $tag" --notes-file docs/RELEASE_NOTES.md --repo $env:GITHUB_REPOSITORY
+            if ($LASTEXITCODE -ne 0) { throw "Failed to create GitHub Release" }
+          }

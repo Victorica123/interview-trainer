@@ -16,6 +16,8 @@
     "test": "npm run test:taxonomy && npm run test:coverage && npm run test:insights && npm run test:content && npm run test:updater && npm run test:server",
     "verify": "npm run check && npm test",
     "package:release": "node scripts/package-release.mjs",
+    "package:windows": "node scripts/package-windows-portable.mjs",
+    "package:checksums": "node scripts/write-release-checksums.mjs",
     "start": "node server.mjs",
     "check": "npm run generate && npm run validate"
   },
