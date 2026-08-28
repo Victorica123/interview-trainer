@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f0e8" />
+    <meta name="description" content="本地优先的 Java 后端与 AI/Agent 面试训练器" />
+    <title>面试训练场</title>
+    <link rel="stylesheet" href="/styles.css?v=0.4.0" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="面试训练场首页">
+          <span class="brand-mark">练</span>
+          <span>
+            <strong>面试训练场</strong>
+            <small>本地 · 开源 · 可追溯</small>
+          </span>
+        </a>
+
+        <nav class="main-nav" aria-label="主导航">
+          <button class="nav-item active" data-view="library">
+            <span>题</span><span>题库训练</span><b id="navQuestionCount">985</b>
+          </button>
+          <button class="nav-item" data-view="path">
+            <span>路</span><span>学习路线</span><b id="navPathProgress">0%</b>
+          </button>
+          <button class="nav-item" data-view="custom">
+            <span>单</span><span>自定义题单</span><b id="navCustomCount">0</b>
+          </button>
+          <button class="nav-item" data-view="daily">
+            <span>今</span><span>今日复习</span><b id="navDueCount">0</b>
+          </button>
+          <button class="nav-item" data-view="mistakes">
+            <span>错</span><span>错题与收藏</span><b id="navMistakeCount">0</b>
+          </button>
+          <button class="nav-item" data-view="progress">
+            <span>图</span><span>学习进度</span>
+          </button>
+          <button class="nav-item" data-view="research">
+            <span>据</span><span>调研依据</span>
+          </button>
+          <button class="nav-item" data-view="insights">
+            <span>趋</span><span>专项与趋势</span>
+          </button>
+          <button class="nav-item" data-view="update">
+            <span>新</span><span>更新题库</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-section">
+          <p class="sidebar-label">学习路线</p>
+          <button class="track-card active" data-track="all">
+            <span>全部题目</span><strong id="allCount">985</strong>
+          </button>
+          <button class="track-card" data-track="backend">
+            <span><i class="dot backend-dot"></i>Java 后端</span><strong id="backendCount">500</strong>
+          </button>
+          <button class="track-card" data-track="agent">
+            <span><i class="dot agent-dot"></i>AI / Agent</span><strong id="agentCount">200</strong>
+          </button>
+        </div>
+
+        <div class="sidebar-footer">
+          <button id="exportButton" class="text-button" title="学习进度绑定当前浏览器地址；换端口、浏览器或项目副本前请先导出">导出进度</button>
+          <label class="text-button file-button" title="从备份文件恢复当前浏览器地址下的学习进度">导入进度<input id="importInput" type="file" accept="application/json" /></label>
+          <small class="sidebar-storage-note">换端口、浏览器或项目副本前，先导出学习进度。</small>
+          <button class="settings-button" data-open-appearance>◐ 主题与阅读外观</button>
+          <button id="settingsButton" class="settings-button">⚙ AI 模型设置</button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="viewEyebrow">QUESTION BANK · 2026</p>
+            <h1 id="viewTitle">先回答，再看答案</h1>
+            <p id="viewDescription">题目按近期真实面经、岗位匹配与基础必要性分层，不用从第一页硬背到最后一页。</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="secondary-button appearance-top-button" data-open-appearance>配色</button>
+            <button id="randomButton" class="secondary-button">随机一题</button>
+            <button id="dailyButton" class="primary-button">开始今日训练</button>
+          </div>
+        </header>
+
+        <section id="libraryView" class="view-section active">
+          <div class="stats-grid">
+            <article class="stat-card warm">
+              <span>今日到期</span><strong id="dueStat">0</strong><small>优先完成主动回忆</small>
+            </article>
+            <article class="stat-card">
+              <span>已经接触</span><strong id="seenStat">0</strong><small id="seenPercent">占全部 0%</small>
+            </article>
+            <article class="stat-card">
+              <span>能完整回答</span><strong id="masteredStat">0</strong><small>熟悉度达到 3 级</small>
+            </article>
+            <article class="stat-card evidence-card">
+              <span>近期面经强信号</span><strong id="evidenceStat">0</strong><small>优先级最高的一组</small>
+            </article>
+          </div>
+
+          <div id="activeTrainingBanner" class="active-training-banner" hidden></div>
+
+          <section class="catalog-browser" aria-label="题库分类目录">
+            <div class="catalog-heading">
+              <div><span class="section-kicker">KNOWLEDGE CATALOG</span><strong>八股专题目录</strong><small>专题同级展示，下面的筛选可以组合使用</small></div>
+              <button id="clearCatalogFilters" class="text-list-button">清除分类</button>
+            </div>
+            <div id="categoryDirectory" class="category-directory"></div>
+            <div class="facet-panel">
+              <label>二级知识组<select id="topicGroupFilter" aria-label="二级知识组"><option value="all">全部知识组</option></select></label>
+              <label>具体知识点<select id="conceptFilter" aria-label="具体知识点"><option value="all">全部知识点</option></select></label>
+              <label>题目类型<select id="angleFilter" aria-label="题目类型"><option value="all">全部题型</option></select></label>
+              <label>公司面经<select id="companyFilter" aria-label="公司面经"><option value="all">全部公司</option></select></label>
+            </div>
+            <div id="activeCatalogFilters" class="active-catalog-filters"></div>
+          </section>
+
+          <div class="filter-panel">
+            <label class="search-box">
+              <span>⌕</span>
+              <input id="searchInput" type="search" placeholder="搜索题目、知识点或分类…" autocomplete="off" />
+              <kbd>/</kbd>
+            </label>
+            <select id="tierFilter" aria-label="题目分层">
+              <option value="all">全部层级</option>
+              <option value="core">核心必会</option>
+              <option value="high">高频主线</option>
+              <option value="extended">完整备战</option>
+            </select>
+            <select id="statusFilter" aria-label="熟悉程度">
+              <option value="all">全部熟悉度</option>
+              <option value="unseen">从未学习</option>
+              <option value="weak">薄弱（0～1）</option>
+              <option value="learning">学习中（2）</option>
+              <option value="mastered">已掌握（3～4）</option>
+            </select>
+          </div>
+
+          <div class="workspace-grid">
+            <section class="question-browser" aria-label="题目列表">
+              <div class="list-heading">
+                <div><strong id="resultCount">0</strong><span> 道匹配题目</span></div>
+                <select id="sortSelect" aria-label="排序方式">
+                  <option value="importance">按重要度</option>
+                  <option value="recent">近期面经优先</option>
+                  <option value="category">按模块</option>
+                  <option value="weak">薄弱项优先</option>
+                </select>
+              </div>
+              <div id="questionList" class="question-list"></div>
+              <button id="loadMoreButton" class="load-more">加载更多</button>
+            </section>
+
+            <section id="questionDetail" class="question-detail empty-state">
+              <div>
+                <span class="empty-icon">↗</span>
+                <h2>选择一道题开始</h2>
+                <p>先在脑中或纸上作答，再展开提示和答案。真正的训练发生在“想不起来”的那几秒。</p>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="dailyView" class="view-section">
+          <div class="simple-view-card">
+            <span class="section-kicker">DAILY RECALL</span>
+            <h2>今日复习队列</h2>
+            <p>到期题优先，其次加入少量核心新题。每次评级都会决定下一次出现时间。</p>
+            <div id="dailyQueue" class="daily-queue"></div>
+          </div>
+        </section>
+
+        <section id="pathView" class="view-section">
+          <div class="simple-view-card path-view">
+            <span class="section-kicker">BEGINNER ROADMAP</span>
+            <h2>先走一条够短、能走完的主线</h2>
+            <p>路线从 985 道题中精选入门主线，不要求一次学完完整题库。阶段不会锁死；先修知识只是帮助你理解为什么这样排序。</p>
+            <div class="path-track-switch" role="tablist" aria-label="学习方向">
+              <button class="active" data-path-track="backend" role="tab">Java 后端</button>
+              <button data-path-track="agent" role="tab">AI / Agent</button>
+            </div>
+            <div id="pathSummary" class="path-summary"></div>
+            <div id="pathStages" class="path-stages"></div>
+            <div id="pathStageDetail" class="path-stage-detail"></div>
+          </div>
+        </section>
+
+        <section id="customView" class="view-section">
+          <div class="simple-view-card custom-view">
+            <span class="section-kicker">CUSTOM STUDY SET</span>
+            <h2>每个模块，按自己的方式练</h2>
+            <p>为每个专题分别选择知识点、题型、层级、题量和抽题策略。保存后的题单固定题目范围；题库更新时由你决定是否纳入新题。</p>
+            <div class="path-track-switch" role="tablist" aria-label="自定义题单方向">
+              <button class="active" data-custom-track="backend" role="tab">Java 后端</button>
+              <button data-custom-track="agent" role="tab">AI / Agent</button>
+            </div>
+            <div class="custom-toolbar">
+              <label>题单名称<input id="customSessionName" maxlength="60" placeholder="例如：MySQL + Redis 冲刺" /></label>
+              <label>学习状态<select id="customStatusFilter"><option value="all">全部状态</option><option value="unseen">只练未学习</option><option value="weak">只练薄弱题</option><option value="learning">只练学习中</option><option value="mastered">只练已掌握</option></select></label>
+            </div>
+            <div id="customModuleList" class="custom-module-list"></div>
+            <div id="customPreview" class="custom-preview"></div>
+            <div class="custom-actions">
+              <button id="saveCustomSession" class="secondary-button">保存题单</button>
+              <button id="startCustomSession" class="primary-button">开始当前题单</button>
+            </div>
+            <section class="saved-session-section">
+              <div class="section-heading-inline"><h3>已保存题单</h3><small>随学习进度一起导入导出</small></div>
+              <div id="savedSessionList" class="saved-session-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="mistakesView" class="view-section">
+          <div class="simple-view-card mistakes-view">
+            <span class="section-kicker">PERSONAL REVIEW</span>
+            <h2>把不会的题集中解决</h2>
+            <p>熟悉度评为 0～1 时会自动进入错题本；收藏和个人笔记彼此独立。掌握后不会被系统擅自移除，你可以手动整理。</p>
+            <div id="mistakeSummary" class="mistake-summary"></div>
+            <div class="mistake-tabs" role="tablist" aria-label="个人题目筛选">
+              <button class="active" data-mistake-filter="mistakes" role="tab">错题本 <b id="mistakeTabCount">0</b></button>
+              <button data-mistake-filter="favorites" role="tab">收藏 <b id="favoriteTabCount">0</b></button>
+              <button data-mistake-filter="notes" role="tab">有笔记 <b id="noteTabCount">0</b></button>
+            </div>
+            <div id="mistakeList" class="mistake-list"></div>
+          </div>
+        </section>
+
+        <section id="progressView" class="view-section">
+          <div class="simple-view-card">
+            <span class="section-kicker">LEARNING MAP</span>
+            <h2>不是“看过多少”，而是“能讲出多少”</h2>
+            <div id="progressDashboard" class="progress-dashboard"></div>
+          </div>
+        </section>
+
+        <section id="insightsView" class="view-section">
+          <div class="simple-view-card insights-view">
+            <span class="section-kicker">AUDITABLE INTERVIEW SIGNALS</span>
+            <h2>按公司和岗位，练已被样本支持的题</h2>
+            <p>这里展示的是可审计的已采集面经样本，不是牛客、小红书或招聘市场的全站统计。五个训练角度会按同一知识点去重后再计算趋势。</p>
+            <div id="insightCoverage" class="insight-coverage"></div>
+            <div class="insight-filters">
+              <label>岗位方向<select id="insightTrackSelect"><option value="backend">Java 后端</option><option value="agent">AI / Agent 应用开发</option></select></label>
+              <label>公司专项<select id="insightCompanySelect"><option value="all">全部可审计公司</option></select></label>
+              <button id="insightStartButton" class="primary-button">开始这组训练</button>
+            </div>
+            <div id="insightSelectionSummary" class="insight-selection-summary"></div>
+            <div class="insight-layout">
+              <section>
+                <div class="section-heading-inline"><h3>专项考点</h3><small id="insightConceptCount"></small></div>
+                <div id="insightConceptList" class="insight-concept-list"></div>
+              </section>
+              <aside>
+                <div class="section-heading-inline"><h3>高频趋势</h3><small>按知识点统计</small></div>
+                <div id="insightTrendList" class="insight-trend-list"></div>
+              </aside>
+            </div>
+            <div id="insightLimitations" class="insight-limitations"></div>
+          </div>
+        </section>
+
+        <section id="researchView" class="view-section">
+          <div class="simple-view-card research-view">
+            <span class="section-kicker">EVIDENCE & METHOD</span>
+            <h2>题目为什么会出现在这里？</h2>
+            <p>排序优先采用近期真实面经，再结合岗位要求、多个维护中题库的共识和基础必要性。转载会回溯并按同一来源去重。</p>
+            <div class="method-grid">
+              <article><b>1.0</b><span>近期真实面经来源系数</span></article>
+              <article><b>×0.55</b><span>2026 年前来源时效衰减</span></article>
+              <article><b>≤13</b><span>多来源加权支持奖励</span></article>
+              <article><b>≤4</b><span>不同公司/主体多样性</span></article>
+              <article><b>1–5</b><span>岗位概念优先级</span></article>
+              <article><b>2–5</b><span>五类考查角度奖励</span></article>
+            </div>
+            <div id="researchCoverage" class="research-coverage"></div>
+            <h3>当前公开来源样本</h3>
+            <div id="sourceList" class="source-list"></div>
+          </div>
+        </section>
+
+        <section id="updateView" class="view-section">
+          <div class="simple-view-card update-view">
+            <span class="section-kicker">QUESTION BANK UPDATER</span>
+            <h2>让题库跟上最新面经</h2>
+            <p>AI 可以复查已登记的面经，也可以分析你新粘贴的链接或正文；系统会提取概念、生成新题草案并重算旧题重要度，你审阅后才写入题库。它不会自动发现全站新帖。</p>
+
+            <div id="updateConfigBanner" class="update-config-banner">
+              <div><span id="updateConfigDot" class="config-dot"></span><span class="update-config-copy"><strong id="updateConfigTitle">检查 AI 配置中…</strong><small id="updateConfigSub">更新题库需要 AI 模型参与分析。</small></span></div>
+              <button id="updateOpenSettings" class="secondary-button">⚙ AI 模型设置</button>
+            </div>
+
+            <div class="update-method-explainer">
+              <h3>「高频 / 重要度」是怎么算出来的</h3>
+              <p>每个知识点先由调研给出 1–5 的岗位优先级，再按公式算每题分数：</p>
+              <p class="update-formula"><code>importance = 38 + 优先级×7 + 角度奖励(2~5) + 多来源加权支持(≤13) + 来源多样性(≤4)</code>（封顶 98）</p>
+              <p>多来源加权支持 = Σ 来源权重 × 类型系数（面经1.0 / 岗位0.6 / 维护指南0.35 / 研究0.3 / 官方0.25）× 时效系数（2026 年前 ×0.55）× 直接性（非直接问法 ×0.8）。≥88 为核心必会，≥74 为高频主线，其余为扩展。官方文档只作学习来源，不会虚增「高频」分数。</p>
+              <p>本地公式是「约束基线」：更新题库时，AI 会在 <b>±6 分</b>范围内复核每道受影响的题并给出理由（越界自动驳回），公式基线分与 AI 最终分都会展示在更新报告中。</p>
+              <p>考察口径：以近期真实面经为主，同时要求 AI 结合 <b>JavaGuide、面试鸭、小林coding</b> 等八股网站交叉验证，并为每个知识点标注对应学习章节（网站、章节名、直达链接），显示在题目详解的「八股文网站对应章节」里；标注仅作学习辅助，不参与高频分数。</p>
+            </div>
+
+            <div class="update-report-block source-candidate-block">
+              <div class="list-heading"><strong>新来源候选池</strong><span id="sourceCandidateCount">0 条</span></div>
+              <p class="muted">把你从牛客、小红书或其他网站搜索到的面经链接先保存在本机；候选池不会自动搜索全站，也不会在你审阅前写入题库。勾选的候选会随下一次更新分析一起处理。</p>
+              <textarea id="sourceCandidateInput" class="update-textarea" rows="3" placeholder="每行一个 http/https 链接；重复链接和 # 页面片段会自动合并"></textarea>
+              <div class="update-actions source-candidate-actions">
+                <button id="sourceCandidateAddButton" class="primary-button">加入候选池</button>
+                <button id="sourceCandidateDeleteButton" class="secondary-button" disabled>删除所选</button>
+                <span id="sourceCandidateStatus" class="update-hint">候选只保存在当前项目的 .local 目录</span>
+              </div>
+              <div id="sourceCandidateList" class="source-candidate-list" aria-live="polite"></div>
+            </div>
+
+            <div class="update-controls">
+              <div class="update-limit-row">
+                <label>分析模式<select id="updateAnalysisMode"><option value="compatible" selected>兼容慢模型（推荐）</option><option value="balanced">均衡模式</option><option value="quality">高质量模式</option></select></label>
+                <label>单篇分析上限<select id="updatePerSourceTimeout"><option value="120">2 分钟</option><option value="180">3 分钟</option><option value="300" selected>5 分钟</option><option value="600">10 分钟</option></select></label>
+                <label>整次总时长上限<select id="updateBudget"><option value="10">10 分钟</option><option value="20">20 分钟</option><option value="30" selected>30 分钟</option><option value="60">60 分钟</option><option value="0">不限时</option></select></label>
+                <span class="update-hint">兼容模式会本地筛选正文、单路调用、缩短输出并跳过 AI 评分复核。每个完成来源立即缓存；等待过久时可用已完成内容提前生成草案。</span>
+              </div>
+              <label class="checkbox-row"><input type="checkbox" id="updateAutoFetch" checked />复查已登记的最近 16 篇面经（不会自动发现全站新帖）</label>
+              <textarea id="updateManualUrls" class="update-textarea" rows="3" placeholder="可选：仅本次分析的临时链接，每行一个（http/https）。想留待以后处理的链接请放入上方候选池"></textarea>
+              <textarea id="updateManualText" class="update-textarea" rows="5" placeholder="可选：直接粘贴面经正文、题目列表或笔记，AI 会一并分析"></textarea>
+              <div class="update-actions">
+                <button id="updateRunButton" class="primary-button" disabled>开始更新分析</button>
+                <button id="updateFinalizeButton" class="primary-button" hidden>用已完成结果生成草案</button>
+                <button id="updateCancelButton" class="secondary-button" hidden>取消分析</button>
+                <span id="updateRunHint" class="update-hint">需要先在 AI 模型设置中配置 Base URL 和模型名称。</span>
+              </div>
+            </div>
+
+            <div class="update-report-block update-site-cookies">
+              <h4>站点登录态（可选）——访问需登录的牛客 / 小红书内容</h4>
+              <p class="muted">小红书和牛客没有开放第三方登录接口，这里采用「本地登录态桥接」。你可以选择自己习惯的浏览器；Cookie 只保存在本机 <code>.local/site-cookies.json</code>（不进 ZIP、不上传、可一键清除）。登录解决的是「访问需登录页面」，最新帖子仍需要你把链接粘贴到上方输入框。</p>
+              <div class="site-browser-choice">
+                <label for="loginBrowserSelect">登录页打开方式
+                  <select id="loginBrowserSelect">
+                    <option value="auto">正在检测本机浏览器…</option>
+                  </select>
+                </label>
+                <span id="loginBrowserCapability" class="update-hint">正在检测是否支持自动采集登录态</span>
+              </div>
+              <div class="site-cookie-grid">
+                <label>牛客 Cookie<textarea id="nowcoderCookieInput" class="update-textarea" rows="3" placeholder="粘贴 nowcoder.com 的 Cookie（留空保存 = 清除该站登录态）"></textarea></label>
+                <label>小红书 Cookie<textarea id="xhsCookieInput" class="update-textarea" rows="3" placeholder="粘贴 xiaohongshu.com 的 Cookie（留空保存 = 清除该站登录态）"></textarea></label>
+              </div>
+              <div class="site-browser-row">
+                <div class="site-browser-buttons">
+                  <button id="loginNowcoderButton" class="secondary-button">① 打开牛客登录页</button>
+                  <button id="collectNowcoderButton" class="primary-button">② 采集牛客登录态</button>
+                  <button id="loginXhsButton" class="secondary-button">① 打开小红书登录页</button>
+                  <button id="collectXhsButton" class="primary-button">② 采集小红书登录态</button>
+                  <button id="loginCloseButton" class="secondary-button">关闭登录浏览器</button>
+                </div>
+                <span id="loginBrowserStatus" class="update-hint">登录浏览器未启动</span>
+              </div>
+              <p class="muted"><b>自动方式</b>：Chrome、Edge、Brave、Chromium 会使用项目专属的本地登录资料，登录后可点「② 采集登录态」，之后抓取也会复用这个浏览器。<b>手动方式</b>：系统默认浏览器或 Firefox 只负责打开登录页；登录后按 F12 → 网络（Network）→ 刷新页面 → 点该站请求 → 复制请求头中的整段 Cookie，粘贴到上方保存。</p>
+              <div class="update-actions">
+                <button id="siteCookieSaveButton" class="primary-button">保存粘贴的 Cookie</button>
+                <button id="siteCookieClearButton" class="secondary-button">清除全部登录态</button>
+                <span id="siteCookieStatus" class="update-hint"></span>
+              </div>
+            </div>
+
+            <div id="updateProgress" class="update-progress" hidden>
+              <div class="list-heading"><strong>分析进度</strong><span id="updateProgressCount">0</span></div>
+              <ol id="updateProgressLog" class="update-log"></ol>
+            </div>
+
+            <div id="updateReport" class="update-report" hidden>
+              <div id="updateEmptyBanner" class="update-empty-banner" hidden></div>
+              <div class="list-heading"><strong>更新报告（应用前请审阅）</strong><span id="updateReportSummary"></span></div>
+              <div class="update-report-block">
+                <h4>新增来源</h4>
+                <div id="updateNewSources" class="update-check-list"></div>
+              </div>
+              <div class="update-report-block">
+                <h4>既有来源复查与质量提示</h4>
+                <div id="updateSourceRefreshes" class="update-check-list"></div>
+              </div>
+              <div class="update-report-block">
+                <h4>新增概念（每个概念生成 5 道题）</h4>
+                <div id="updateNewConcepts" class="update-check-list"></div>
+              </div>
+              <div class="update-report-block">
+                <h4>旧题分数重算</h4>
+                <div id="updateRescore" class="update-rescore"></div>
+              </div>
+              <div class="update-actions">
+                <button id="updateApplyButton" class="primary-button">应用所选更新</button>
+                <button id="updateDiscardButton" class="secondary-button">放弃本次分析</button>
+              </div>
+            </div>
+
+            <div class="update-report-block">
+              <h4>最近一次更新</h4>
+              <div id="updateHistoryBox" class="update-history"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <button id="aiToggle" class="ai-toggle"><span>AI</span>问教练</button>
+    <aside id="aiPanel" class="ai-panel" aria-label="AI面试教练">
+      <header>
+        <div><span class="ai-orb">AI</span><div><strong>面试教练</strong><small id="aiModelLabel">尚未配置模型</small></div></div>
+        <button id="closeAiButton" aria-label="关闭AI面板">×</button>
+      </header>
+      <div id="aiContext" class="ai-context">选择题目后，AI会自动获得当前题目和评分点。</div>
+      <div class="quick-actions">
+        <button data-ai-mode="hint">给点提示</button>
+        <button data-ai-mode="explain">新手解释</button>
+        <button data-ai-mode="review">评价回答</button>
+        <button data-ai-mode="followup">继续追问</button>
+      </div>
+      <div id="chatMessages" class="chat-messages">
+        <div class="chat-bubble assistant">我可以围绕当前题目给提示、解释概念、评价你的回答，或者模拟面试官追问。</div>
+      </div>
+      <form id="chatForm" class="chat-form">
+        <textarea id="chatInput" rows="3" placeholder="输入问题或粘贴你的回答…"></textarea>
+        <div><span id="chatStatus"></span><button type="submit">发送</button></div>
+      </form>
+    </aside>
+
+    <dialog id="settingsDialog" class="settings-dialog">
+      <form id="settingsForm" method="dialog">
+        <div class="dialog-heading">
+          <div><span class="section-kicker">LOCAL AI CONFIG</span><h2>配置自己的模型</h2></div>
+          <button type="button" id="closeSettingsButton" aria-label="关闭">×</button>
+        </div>
+        <p class="privacy-note">配置只发送给你本机的服务。API Key 不会回显；未勾选保存时只在本次运行内存中有效，服务重启后需要重新输入。勾选后才会写入当前项目被 Git 忽略的 <code>.local/ai-config.json</code>，更换项目副本不会自动迁移。</p>
+        <div class="form-grid">
+          <label>配置名称<input name="name" placeholder="例如：我的中转站" /></label>
+          <label>Base URL<input name="baseUrl" type="url" placeholder="https://example.com/v1" required /></label>
+          <label>API Key<input name="apiKey" type="password" placeholder="sk-…（留空表示保留现有密钥）" /></label>
+          <label>模型名称<input name="model" placeholder="例如：gpt-4o-mini" required /></label>
+          <label>Temperature<input name="temperature" type="number" min="0" max="2" step="0.1" value="0.2" /></label>
+          <label>最大输出 Token<input name="maxTokens" type="number" min="64" max="32768" value="1200" /></label>
+          <label class="wide-field">自定义请求头（JSON）<textarea name="customHeaders" rows="4" placeholder='{"X-Custom-Header":"value"}'></textarea></label>
+        </div>
+        <label class="checkbox-row"><input name="rememberKey" type="checkbox" />跨服务重启保留 API Key（仅适合可信的个人设备）</label>
+        <div id="apiKeyStorageHint" class="key-storage-hint" role="status"></div>
+        <div id="settingsStatus" class="settings-status"></div>
+        <div class="dialog-actions">
+          <button type="button" id="fetchModelsButton" class="secondary-button">保存并获取模型</button>
+          <button type="submit" class="primary-button">保存配置</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="appearanceDialog" class="settings-dialog appearance-dialog">
+      <form method="dialog">
+        <div class="dialog-heading">
+          <div><span class="section-kicker">READING APPEARANCE</span><h2>选择更舒服的配色</h2></div>
+          <button type="button" id="closeAppearanceButton" aria-label="关闭外观设置">×</button>
+        </div>
+        <p class="appearance-note">配色和阅读字号只保存在当前浏览器，不会影响题库数据或上传到任何服务。</p>
+        <h3 class="appearance-label">主题颜色</h3>
+        <div class="theme-options" role="group" aria-label="主题颜色">
+          <button type="button" class="theme-option" data-theme-choice="forest"><span class="theme-swatches forest"><i></i><i></i><i></i></span><b>纸张墨绿</b><small>默认 · 安静</small></button>
+          <button type="button" class="theme-option" data-theme-choice="ocean"><span class="theme-swatches ocean"><i></i><i></i><i></i></span><b>雾海蓝</b><small>清爽 · 专注</small></button>
+          <button type="button" class="theme-option" data-theme-choice="violet"><span class="theme-swatches violet"><i></i><i></i><i></i></span><b>灰紫</b><small>柔和 · 低饱和</small></button>
+          <button type="button" class="theme-option" data-theme-choice="amber"><span class="theme-swatches amber"><i></i><i></i><i></i></span><b>暖琥珀</b><small>温暖 · 纸书感</small></button>
+          <button type="button" class="theme-option" data-theme-choice="night"><span class="theme-swatches night"><i></i><i></i><i></i></span><b>深夜</b><small>暗色 · 夜间</small></button>
+        </div>
+        <h3 class="appearance-label">答案阅读字号</h3>
+        <div class="reading-size-options" role="group" aria-label="答案阅读字号">
+          <button type="button" data-reading-size="compact">紧凑</button>
+          <button type="button" data-reading-size="comfortable">舒适</button>
+          <button type="button" data-reading-size="large">大字</button>
+        </div>
+        <div class="dialog-actions appearance-actions">
+          <button type="button" id="resetAppearanceButton" class="secondary-button">恢复默认</button>
+          <button type="button" id="finishAppearanceButton" class="primary-button">完成</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status"></div>
+    <script type="module" src="/app.js?v=0.4.0"></script>
+  </body>
+</html>

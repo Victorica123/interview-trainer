@@ -1,0 +1,974 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-28T12:00:00.000Z",
+  "concepts": [
+    {
+      "name": "LLM与Agent的区别",
+      "track": "agent",
+      "category": "Agent架构",
+      "definition": "LLM是大型语言模型，负责文本理解与生成，是智能体的'大脑'；Agent是基于LLM构建的完整智能体系统，具备规划、工具调用、记忆与行动能力，是'带手脚的智能体'。二者是内核与整体的关系。",
+      "mechanism": "Agent以LLM为推理引擎，通过ReAct循环将模型输出与外部工具、记忆、环境反馈结合，形成感知-决策-行动闭环；LLM本身只做概率化文本生成，不具备执行、记忆和与环境交互的能力。",
+      "application": "项目中用LLM做意图识别、任务拆解和答案生成，用Agent框架（如LangGraph、Claude Code）编排工具调用、上下文管理和多步任务执行，LLM输出经Agent调度后落地为实际动作。",
+      "pitfall": "常见误区是把调LLM API等同于做Agent，忽略规划、工具、记忆等模块；或把Agent能力全归因于模型，导致排查问题时只调prompt不查框架链路。",
+      "compare": "Agent与Workflow",
+      "tradeoff": "LLM通用但不可控、无状态，适合单轮生成；Agent增加工程约束与外部能力，但引入编排复杂度和延迟。简单任务用LLM直出，多步交互任务用Agent编排。",
+      "priority": 4,
+      "tags": [
+        "LLM",
+        "Agent",
+        "智能体"
+      ],
+      "sourceIds": [
+        "nc-agent-data-2026-07"
+      ]
+    },
+    {
+      "name": "RAG与Fine-tuning选型",
+      "track": "agent",
+      "category": "RAG与知识库",
+      "definition": "RAG通过检索外部知识库给模型补充上下文，适合知识频繁更新、数据量大、不想动模型的场景；Fine-tuning通过调整模型参数固化知识，适合固定领域、风格迁移、格式强约束。",
+      "mechanism": "RAG在推理时把用户问题向量化后召回相关文档，拼进Prompt让模型生成；Fine-tuning用领域数据继续训练模型，把知识写进权重，推理时无需检索。",
+      "application": "知识库更新频繁时选RAG，更新只需重灌文档；需要强输出格式或领域风格时选Fine-tuning；也可两者结合，先RAG检索再微调模型理解格式。",
+      "pitfall": "RAG对检索质量敏感，召回不准会误导模型；Fine-tuning更新成本高，且可能遗忘旧知识；不能只看概念，要在项目里做取舍。",
+      "compare": "RAG端到端流程",
+      "tradeoff": "RAG成本低、更新快但依赖检索质量；Fine-tuning效果稳定但训练和更新成本高。知识变动频繁选RAG，领域固定且格式要求高选Fine-tuning。",
+      "priority": 5,
+      "tags": [
+        "RAG",
+        "Fine-tuning",
+        "选型"
+      ],
+      "sourceIds": [
+        "nc-agent-byte-2026-08"
+      ]
+    },
+    {
+      "name": "分布式限流",
+      "track": "backend",
+      "category": "分布式与微服务",
+      "topicGroup": "服务治理",
+      "definition": "分布式限流是在多实例/多节点环境下对请求速率进行统一控制，防止系统被突发流量打垮；需要解决计数器一致性、时钟偏差和动态扩缩容等问题。",
+      "mechanism": "常见实现有Redis+Lua脚本的令牌桶/滑动窗口、网关层集中限流、客户端本地限流+服务端兜底；通过原子操作维护全局计数，超限直接拒绝或排队。",
+      "application": "在AI异步生成场景中，对每分钟大量任务请求做速率限制；用Redis记录窗口计数，配合重试和降级保护下游模型服务。",
+      "pitfall": "单机限流在集群下失效；Redis限流要注意Lua脚本原子性和网络开销；限流阈值设置不当会误伤正常请求，需要结合容量压测调整。",
+      "compare": "限流、熔断与降级",
+      "tradeoff": "集中式限流准确但引入Redis依赖和延迟；本地限流性能好但配额不均。按流量规模和一致性要求选型，核心入口用集中式，边缘节点用本地。",
+      "priority": 4,
+      "tags": [
+        "分布式限流",
+        "Redis",
+        "系统设计"
+      ],
+      "sourceIds": [
+        "nc-agent-byte-2026-08"
+      ]
+    },
+    {
+      "name": "模型微调与对齐",
+      "track": "agent",
+      "category": "模型与API",
+      "definition": "通过SFT（监督微调）和RLHF（人类反馈强化学习）等方法让预训练大模型适配特定任务或对齐人类偏好。SFT用标注数据做有监督训练，PPO/DPO/GRPO是不同对齐策略。",
+      "mechanism": "SFT基于交叉熵损失微调模型参数；PPO需要训练奖励模型并在线采样，DPO直接基于偏好对优化，GRPO是PPO的简化变体，去掉价值网络，用组内相对奖励估计优势。",
+      "application": "在Agent项目中，用SFT让模型学会工具调用格式和JSON输出，用DPO/GRPO让模型偏好正确工具和答案，减少幻觉。",
+      "pitfall": "常见错误：混淆SFT和RLHF的适用场景，在数据量不足时盲目用RLHF；忽略DPO需要高质量偏好对；GRPO超参敏感，训练不稳定。",
+      "compare": "PPO、DPO、GRPO",
+      "tradeoff": "PPO稳定但实现复杂、算力消耗大；DPO简单高效但依赖偏好数据质量；GRPO在PPO和DPO之间取得平衡，适合可验证奖励场景。",
+      "priority": 3,
+      "tags": [
+        "SFT",
+        "PPO",
+        "DPO",
+        "GRPO",
+        "模型对齐"
+      ],
+      "sourceIds": [
+        "nc-agent-pdd-2026-08"
+      ]
+    },
+    {
+      "name": "Agentic RAG",
+      "track": "agent",
+      "category": "RAG与知识库",
+      "definition": "Agentic RAG 是将 Agent 的规划、工具调用与多轮检索结合起来的 RAG 形态，模型可自主决定是否补检、查什么、何时停止，而不是一次检索后直接生成。",
+      "mechanism": "系统先根据用户问题做初步检索，若答案置信度不足或缺少关键信息，Agent 会改写查询、调用检索工具或进行多轮追问，直到信息充分再生成回答；整个过程由 LLM 决策并受预算约束。",
+      "application": "适用于复杂、多跳或需要对比多份文档的问题；在项目中可结合 RAG 链路，对低分检索结果触发补检，并设置最大轮数和成本上限。",
+      "pitfall": "容易把延迟和成本拉高，多轮补检可能引入无关信息；需要设置终止条件、评分阈值和降级策略，避免 Agent 无限检索。",
+      "compare": "固定RAG（一次检索后直接生成）",
+      "tradeoff": "固定 RAG 简单可控、延迟低，但复杂问题准确率有限；Agentic RAG 准确率更高、能处理多跳问题，但延迟、成本和失败风险更高，适合对准确性要求高且预算充足的场景。",
+      "priority": 4,
+      "tags": [
+        "Agentic RAG",
+        "多轮检索",
+        "RAG优化"
+      ],
+      "sourceIds": [
+        "nc-agent-lingmai-2026-07"
+      ]
+    },
+    {
+      "name": "Agent Harness",
+      "track": "agent",
+      "category": "Agent架构",
+      "definition": "Agent Harness 是承载 Agent 运行的外层框架，负责在 LLM 之外管理工具调用、上下文预算、权限控制、日志与安全策略，让模型只专注于推理和生成。",
+      "mechanism": "Harness 拦截模型发出的工具调用请求，先做参数校验、工作区权限检查和危险操作审批，再执行工具；同时维护上下文长度、去重重复调用、脱敏日志，并控制 Agent 的循环终止。",
+      "application": "在 Coding Agent 中用于限制可操作文件范围、防止越权访问、审批删除覆盖等危险操作，并通过日志脱敏保护敏感数据。",
+      "pitfall": "若 Harness 缺少参数校验或权限隔离，模型可能传入危险参数或访问越权文件；重复工具调用和上下文无限增长也会导致成本失控。",
+      "compare": "裸LLM调用（无外层约束）",
+      "tradeoff": "Harness 增加了工程复杂度和调用开销，但能显著提升安全性与可控性；简单场景直接用 LLM 更轻量，生产级 Agent 必须引入 Harness 来兜底。",
+      "priority": 4,
+      "tags": [
+        "Agent Harness",
+        "工具调用",
+        "安全"
+      ],
+      "sourceIds": [
+        "nc-agent-lingmai-2026-07"
+      ]
+    },
+    {
+      "name": "CoT思维链",
+      "track": "agent",
+      "category": "Prompt与上下文",
+      "definition": "思维链（Chain-of-Thought）是一种提示词技术，通过让模型在回答前生成中间推理步骤，提升复杂问题的推理能力。",
+      "mechanism": "在Prompt中要求模型逐步思考，将问题分解为多个子步骤，模型先输出推理过程再给出结论，从而减少跳跃性错误。",
+      "application": "在Agent任务规划、数学推理、多步工具调用等场景中，通过CoT引导模型生成可解释的决策路径。",
+      "pitfall": "CoT会增加Token消耗和延迟；对简单问题可能过度推理；模型可能生成看似合理但错误的推理链，需要结合校验。",
+      "compare": "Zero-shot CoT / Few-shot CoT / ToT（思维树）",
+      "tradeoff": "CoT提升推理准确率但牺牲成本和速度；简单任务用直接回答更高效，复杂任务才需要CoT，可根据任务难度动态选择。",
+      "priority": 4,
+      "tags": [
+        "CoT",
+        "提示词",
+        "推理"
+      ],
+      "sourceIds": [
+        "nc-agent-multi-2026-08"
+      ]
+    },
+    {
+      "name": "Agent会话并发设计",
+      "track": "agent",
+      "category": "Agent架构",
+      "definition": "指在多用户、多轮对话场景下，如何设计Agent会话的状态管理、并发隔离和资源控制，保证会话数据不串线、系统稳定。",
+      "mechanism": "每个会话维护独立的上下文和记忆存储，通过会话ID隔离；使用线程池或协程处理请求，对共享资源加锁或采用无状态设计。",
+      "application": "在Agent后端服务中，为每个会话分配独立session，使用Redis存储会话状态，通过异步队列处理长任务。",
+      "pitfall": "共享内存导致会话串扰；长轮询或SSE连接数过多导致线程耗尽；未考虑会话超时和清理，导致内存泄漏。",
+      "compare": "无状态服务 + 外部存储 / 有状态会话",
+      "tradeoff": "无状态设计易扩展但需外部存储，有状态设计性能高但难水平扩展；根据并发量和一致性要求选择。",
+      "priority": 4,
+      "tags": [
+        "Agent",
+        "并发",
+        "会话管理"
+      ],
+      "sourceIds": [
+        "nc-agent-multi-2026-08"
+      ]
+    },
+    {
+      "name": "LangChain与LlamaIndex选型",
+      "track": "agent",
+      "category": "Agent架构",
+      "definition": "LangChain和LlamaIndex是两类主流LLM应用框架，LangChain侧重Agent编排与工具调用，LlamaIndex侧重数据索引与检索增强。",
+      "mechanism": "LangChain提供Chain、Agent、Tool等抽象，灵活编排多步骤流程；LlamaIndex提供文档加载、索引构建、查询引擎，聚焦RAG。",
+      "application": "复杂Agent任务选LangChain，知识库问答/文档处理选LlamaIndex，也可两者结合使用，例如用LlamaIndex做检索，用LangChain做决策编排。",
+      "pitfall": "盲目引入框架增加抽象层，调试困难；框架版本更新快，API不稳定；简单场景用框架反而笨重。",
+      "compare": "LangGraph / Semantic Kernel / 自研编排",
+      "tradeoff": "LangChain灵活但学习成本高，LlamaIndex开箱即用但扩展性受限；根据业务重心是编排还是检索来选择。",
+      "priority": 4,
+      "tags": [
+        "LangChain",
+        "LlamaIndex",
+        "框架选型"
+      ],
+      "sourceIds": [
+        "nc-agent-multi-2026-08"
+      ]
+    },
+    {
+      "name": "RAG知识库热更新",
+      "track": "agent",
+      "category": "RAG与知识库",
+      "definition": "在不停止RAG服务的前提下，对向量知识库中的文档进行新增、修改或删除，使检索结果及时反映最新知识，解决知识过期和发布窗口问题。",
+      "mechanism": "文档经解析、切片、向量化后写入新版本索引或临时集合，通过双缓冲或原子切换让查询流量平滑切到新索引；删除采用tombstone标记或定期合并，避免查询期间数据不一致。",
+      "application": "金融、客服等场景中，公告或规则变更时触发增量更新任务，更新期间旧索引继续服务，完成后切换，保证线上问答不中断。",
+      "pitfall": "直接覆盖索引会造成查询期间数据不一致；增量更新漏处理删除会使脏数据长期命中；向量化耗时长时需用异步队列和失败重试兜底。",
+      "compare": "全量重建索引",
+      "tradeoff": "热更新延迟低、资源占用小，但实现复杂，需处理版本切换和删除标记；全量重建简单可靠，适合数据量小或低频更新场景，选型取决于更新频率和可用性要求。",
+      "priority": 4,
+      "tags": [
+        "RAG",
+        "知识库",
+        "热更新"
+      ],
+      "sourceIds": [
+        "nc-agent-tencent-2026-04"
+      ]
+    },
+    {
+      "name": "线程池",
+      "track": "backend",
+      "category": "Java并发",
+      "topicGroup": "线程池",
+      "definition": "线程池是一种多线程处理形式，通过复用一组工作线程来执行任务，避免频繁创建销毁线程的开销，并控制并发度。核心构造参数包括核心线程数、最大线程数、空闲存活时间、工作队列、线程工厂和拒绝策略。",
+      "mechanism": "当任务提交时，若当前线程数小于核心线程数则创建新线程；否则加入工作队列；若队列满且线程数小于最大线程数则创建临时线程；若超过最大线程数则触发拒绝策略。核心线程默认不回收，非核心线程空闲超过存活时间后回收。",
+      "application": "在Java后端中，使用ThreadPoolExecutor或Executors创建线程池处理异步任务、定时任务、并发请求等。在Agent项目中，可用线程池控制多个Agent的并发执行，避免资源耗尽。",
+      "pitfall": "常见错误包括使用Executors的newFixedThreadPool导致无界队列堆积内存溢出，或未正确设置拒绝策略导致任务丢失。排查时需监控线程池活跃线程数、队列大小和拒绝次数。",
+      "compare": "ForkJoinPool",
+      "tradeoff": "线程池与ForkJoinPool相比，前者适合任务数量波动大、执行时间短的场景，后者适合可分解的并行计算。选型需根据任务特性、CPU密集或IO密集调整核心线程数，IO密集可设较大值，CPU密集设为核心数+1。",
+      "priority": 5,
+      "tags": [
+        "Java并发",
+        "线程池",
+        "ThreadPoolExecutor"
+      ],
+      "learningHints": [
+        {
+          "site": "JavaGuide",
+          "title": "线程池详解",
+          "url": ""
+        }
+      ],
+      "sourceIds": [
+        "nc-agent-multi-2026-04"
+      ]
+    },
+    {
+      "name": "多Agent并发控制",
+      "track": "agent",
+      "category": "Agent架构",
+      "definition": "多Agent并发控制是指在多个Agent并行执行时，对共享资源（如数据库、文件、API）的访问进行协调，避免数据竞争、死锁和一致性问题。常见手段包括锁、队列、事务和分布式协调。",
+      "mechanism": "当多个Agent同时操作同一资源时，可通过加锁（如Redis分布式锁）保证互斥，或通过消息队列串行化任务，或使用数据库事务保证原子性。对于无状态Agent，可通过异步编排和超时重试降低冲突。",
+      "application": "在Agent平台中，多个Agent可能同时读写数据库或文件，需要引入分布式锁或乐观锁；对于任务调度，可用队列将并发写转为顺序写；对于外部API，可限制并发数。",
+      "pitfall": "常见错误是忽略锁的粒度导致性能瓶颈，或锁超时设置不当导致死锁；多个Agent并发操作数据库时，未处理唯一键冲突或版本号校验，导致数据覆盖。",
+      "compare": "消息队列串行化",
+      "tradeoff": "与分布式锁相比，消息队列串行化更简单但延迟高；数据库乐观锁适合冲突少的场景，悲观锁适合写冲突多的场景。选型需根据并发量、一致性要求和响应时间权衡。",
+      "priority": 4,
+      "tags": [
+        "Multi-Agent",
+        "并发控制",
+        "分布式锁"
+      ],
+      "sourceIds": [
+        "nc-agent-multi-2026-04"
+      ]
+    },
+    {
+      "name": "RAG系统架构",
+      "track": "agent",
+      "category": "RAG与知识库",
+      "definition": "RAG（检索增强生成）系统通过外部知识库检索相关内容，辅助大模型生成回答，解决知识过时和幻觉问题。架构包括文档加载、切片、向量化、索引、检索、重排和生成等环节。",
+      "mechanism": "离线阶段将文档切片并Embedding存入向量数据库；在线阶段将用户查询向量化，在向量库中检索Top-K相关片段，可选混合检索（向量+关键词）和MMR去重，再与Prompt拼接送入LLM生成答案。",
+      "application": "用于企业知识库问答、客服机器人等场景。选型时考虑Milvus/Pinecone/Chroma等向量数据库，设计文档切片策略（按语义或固定长度），并建立RAG效果评估体系。",
+      "pitfall": "常见问题包括切片粒度不当导致检索不准确、Embedding模型与领域不匹配、长上下文超出限制、评估指标单一。需结合召回率、准确率和人工反馈迭代优化。",
+      "compare": "Fine-tuning（微调）",
+      "tradeoff": "RAG相比微调无需重新训练模型，知识更新快、可解释性强，但检索质量依赖切片和Embedding效果；微调能改变模型行为但成本高、更新慢。场景中知识频繁变化选RAG，风格/能力固化选微调。",
+      "priority": 5,
+      "tags": [
+        "RAG",
+        "向量数据库",
+        "Embedding",
+        "检索"
+      ],
+      "sourceIds": [
+        "nc-java-summary-2026-03"
+      ]
+    },
+    {
+      "name": "Agent系统设计",
+      "track": "agent",
+      "category": "Agent架构",
+      "definition": "Agent系统通过大模型进行任务规划（Planning）、调用工具（Tool Use）并维护记忆（Memory），自主完成复杂任务。核心组件包括规划器、记忆模块、工具执行器和反思机制。",
+      "mechanism": "LLM接收用户目标后，将任务分解为子步骤，选择并调用外部工具（如搜索、代码执行），根据执行结果更新短期/长期记忆，必要时进行反思和迭代，直到完成任务。",
+      "application": "用于自动化工作流、智能助手等。实现时需设计状态管理、工具协议（如MCP/Skill），并对比不同Agent框架的规划能力和稳定性。",
+      "pitfall": "常见问题包括任务规划发散、工具调用失败、上下文丢失、幻觉累积。需要设置最大迭代次数、错误重试和人工确认机制，并评估任务完成质量。",
+      "compare": "Workflow（工作流）",
+      "tradeoff": "Agent相比Workflow更灵活，能处理动态任务，但不可控性和成本更高；Workflow固定流程稳定可预测，适合确定性场景。复杂任务用Agent，简单重复任务用Workflow。",
+      "priority": 5,
+      "tags": [
+        "Agent",
+        "Planning",
+        "Memory",
+        "工具调用"
+      ],
+      "sourceIds": [
+        "nc-java-summary-2026-03"
+      ]
+    },
+    {
+      "name": "消息顺序性",
+      "track": "backend",
+      "category": "消息队列",
+      "topicGroup": "消息顺序",
+      "definition": "消息顺序性指在分布式消息队列中，保证同一业务主题或分区的消息按发送顺序被消费，避免乱序导致状态错乱。",
+      "mechanism": "通过将同一业务键（如订单ID）哈希到同一分区，利用分区内有序特性；消费端单线程或按key串行处理；必要时使用全局顺序队列。",
+      "application": "订单状态变更、支付回调等场景，需保证同一订单的创建、支付、完成消息按序处理，避免状态回退。",
+      "pitfall": "仅依赖Kafka分区无法解决跨分区乱序；消费端多线程并发处理同一key会乱序；重试和补偿可能打乱顺序。",
+      "compare": "全局顺序消息",
+      "tradeoff": "分区有序吞吐高但只能保证key内有序；全局有序实现复杂且吞吐低，通常只在金融等强顺序场景使用。",
+      "priority": 4,
+      "tags": [
+        "消息队列",
+        "顺序消费",
+        "Kafka"
+      ],
+      "sourceIds": [
+        "nc-java-scenario-2026-08"
+      ]
+    },
+    {
+      "name": "接口与抽象类",
+      "track": "backend",
+      "category": "Java基础",
+      "topicGroup": "面向对象与设计",
+      "definition": "Java中接口（interface）与抽象类（abstract class）都是抽象类型，用于定义子类必须实现的行为契约；接口侧重能力约定，抽象类侧重模板复用。",
+      "mechanism": "抽象类用extends继承，可有构造器、成员变量和具体方法；接口用implements实现，Java 8后可有default/static方法，但本质是契约。一个类只能继承一个抽象类，可实现多个接口。",
+      "application": "项目里用接口定义服务层方法（如UserService），用抽象类抽取公共流程模板（如BaseHandler），实现开闭原则和依赖倒置。",
+      "pitfall": "常见错误：把公共字段放接口、滥用default方法、混淆is-a与has-a关系；面试需说清设计意图而非语法差异。",
+      "compare": "抽象类",
+      "tradeoff": "优先用接口表达能力，用抽象类做代码复用；若需多继承能力选接口，若需共享状态选抽象类。",
+      "priority": 4,
+      "tags": [
+        "Java基础",
+        "面向对象"
+      ],
+      "sourceIds": [
+        "nc-xhs-java-2025-11"
+      ]
+    },
+    {
+      "name": "动态线程池",
+      "track": "backend",
+      "category": "Java并发",
+      "topicGroup": "线程池",
+      "definition": "动态线程池是在ThreadPoolExecutor基础上支持运行时动态调整核心线程数、最大线程数、队列容量等参数，以应对流量波动的线程池方案。",
+      "mechanism": "通过配置中心或管理接口修改参数，调用ThreadPoolExecutor的setCorePoolSize/setMaximumPoolSize等方法，或替换阻塞队列；通常配合监控指标（活跃线程、队列积压）触发调整。",
+      "application": "项目里用动态线程池替代固定参数线程池，在高峰期调大线程数、低谷期调小，避免资源浪费或任务堆积。",
+      "pitfall": "直接修改最大线程数可能引发线程频繁创建销毁；队列容量调整需注意已有任务；要防止参数调整与任务提交并发时的竞态。",
+      "compare": "ThreadPoolExecutor",
+      "tradeoff": "动态调整提升弹性，但增加配置中心和监控复杂度；若流量平稳，固定线程池更简单可靠。",
+      "priority": 4,
+      "tags": [
+        "线程池",
+        "动态调整",
+        "配置中心"
+      ],
+      "sourceIds": [
+        "nc-xhs-java-2025-11"
+      ]
+    },
+    {
+      "name": "排行榜设计",
+      "track": "backend",
+      "category": "系统设计与场景",
+      "topicGroup": "高并发系统",
+      "definition": "排行榜设计是处理海量玩家分数排序、TopN查询和自身排名的高并发场景方案，核心是读写性能、数据一致性和近似排名的权衡。",
+      "mechanism": "用Redis ZSet存储分数与成员，O(logN)维护有序集合；TopN用ZREVRANGE，自身排名用ZREVRANK；高峰期可异步合并更新、批量刷盘，或分层存储（热数据Redis+冷数据DB）。",
+      "application": "游戏战力榜：写入时ZADD，查询Top100用ZREVRANGE 0 99；自身排名用ZREVRANK；近似排名可用分桶计数或HyperLogLog估算。",
+      "pitfall": "高频更新导致ZSet热点和延迟；直接实时算全量排名会打爆DB；排行榜变动时自身排名可能短暂不准，需接受最终一致或加缓存。",
+      "compare": "分桶近似排名",
+      "tradeoff": "精确排名用ZSet但写放大；近似排名用分桶/概率结构降低开销；根据QPS和榜单规模选择同步或异步更新。",
+      "priority": 4,
+      "tags": [
+        "Redis",
+        "ZSet",
+        "排行榜",
+        "高并发"
+      ],
+      "sourceIds": [
+        "nc-xhs-java-2025-11"
+      ]
+    },
+    {
+      "name": "Spring Boot启动流程",
+      "track": "backend",
+      "category": "Spring生态",
+      "topicGroup": "Spring Boot",
+      "definition": "Spring Boot启动流程指从main方法调用SpringApplication.run()开始，到应用完全就绪并执行Runner的完整过程。它负责创建并刷新Spring容器、加载自动配置，是理解Spring Boot应用生命周期的基础。",
+      "mechanism": "run()先创建SpringApplication并推断应用类型，准备Environment和Banner；创建对应ApplicationContext，执行初始化器并加载Bean定义；刷新上下文时实例化非懒加载单例Bean，发布事件；最后执行CommandLineRunner/ApplicationRunner，完成启动。",
+      "application": "在项目启动阶段可通过ApplicationRunner或ApplicationListener执行初始化任务；通过ApplicationContextInitializer在容器刷新前注入配置；通过SpringApplication自定义启动行为，如关闭Banner、设置启动参数。",
+      "pitfall": "在Bean初始化阶段依赖未就绪组件会导致启动失败；多个Runner执行顺序不确定；过度使用懒加载可能掩盖启动问题；自定义初始化器执行时机错误会破坏容器装配。",
+      "compare": "Spring Boot自动配置",
+      "tradeoff": "理解启动流程有助于排查启动慢、Bean创建失败等问题；但Spring Boot封装较深，源码调试成本高；可结合启动事件和指标观测，而非完全依赖源码分析。",
+      "priority": 4,
+      "tags": [
+        "Spring Boot",
+        "启动流程",
+        "SpringApplication"
+      ],
+      "sourceIds": [
+        "nc-byte-java-2026-03"
+      ]
+    },
+    {
+      "name": "JDK、JRE、JVM与字节码",
+      "track": "backend",
+      "category": "Java基础",
+      "topicGroup": "运行环境与字节码",
+      "definition": "JDK是开发工具包，包含编译器、诊断工具和JRE；JRE提供Java类库与JVM运行环境；JVM负责加载、验证并执行class字节码，使同一份字节码可以在不同平台运行。",
+      "mechanism": "javac把.java源码编译为平台无关的.class字节码，类加载器把类装入JVM，字节码验证器检查安全性，解释器先执行热点不明显的代码，JIT再把热点字节码编译成本地机器码。",
+      "application": "排查线上环境时先核对JDK版本、供应商、启动参数和class文件版本；构建使用完整JDK，生产可按依赖裁剪运行时，但仍要保留必要的诊断能力。",
+      "pitfall": "常见误区是把JRE和JVM视为同一层，或认为Java完全不编译；遇到UnsupportedClassVersionError应比较编译目标与运行时版本，而不是盲目重装依赖。",
+      "compare": "原生编译语言的机器码",
+      "tradeoff": "字节码带来跨平台、动态优化和成熟工具链，但需要JVM启动与运行时资源；原生机器码启动快、部署轻，跨平台构建和动态优化能力则不同。",
+      "priority": 4,
+      "tags": ["JDK", "JRE", "JVM", "字节码"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-spec-21"]
+    },
+    {
+      "name": "基本类型、包装类型与BigDecimal",
+      "track": "backend",
+      "category": "Java基础",
+      "topicGroup": "基础类型",
+      "definition": "Java有八种基本类型，包装类型把值包装成对象以适配泛型和集合；BigDecimal用任意精度十进制表示金额等精确数值，避免二进制浮点无法精确表示部分小数。",
+      "mechanism": "自动装箱和拆箱由编译器转换为valueOf与xxxValue调用，部分包装类型有缓存；BigDecimal以非标度整数和scale表示数值，运算时显式处理精度与舍入模式。",
+      "application": "金额从字符串构造BigDecimal，统一scale和RoundingMode后运算，数值比较使用compareTo；业务DTO若允许缺省值可用包装类型并在边界处做非空校验。",
+      "pitfall": "new BigDecimal(0.1)会继承double误差；包装类型用==可能比较对象身份且拆箱null会抛异常；BigDecimal.equals还比较scale，数值相等判断通常应使用compareTo。",
+      "compare": "double浮点运算",
+      "tradeoff": "BigDecimal精确且舍入可控，但速度和内存成本高；科学计算可用double，货币、结算和必须可审计的十进制计算优先BigDecimal。",
+      "priority": 4,
+      "tags": ["基本类型", "装箱", "BigDecimal", "精度"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-api-21"]
+    },
+    {
+      "name": "SPI与ServiceLoader",
+      "track": "backend",
+      "category": "Java基础",
+      "topicGroup": "运行环境与字节码",
+      "definition": "SPI是服务提供者接口机制：调用方只依赖接口，具体实现由独立模块声明并在运行时发现，ServiceLoader是JDK提供的标准加载入口。",
+      "mechanism": "提供方实现接口并在META-INF/services/接口全名文件或模块描述中登记实现，ServiceLoader按当前类加载器读取配置、延迟实例化实现并迭代返回。",
+      "application": "适合JDBC驱动、日志适配器和可插拔算法；接口、实现和宿主分模块发布，宿主只定义扩展契约并对加载失败做隔离和可观测记录。",
+      "pitfall": "实现类必须可构造且配置名准确；线程上下文类加载器错误会导致插件找不到；不可信实现会在进程内获得较大权限，不能把SPI当安全沙箱。",
+      "compare": "Spring依赖注入",
+      "tradeoff": "SPI无需容器、模块解耦强，但生命周期、排序和条件装配能力弱；Spring DI能力完整却依赖容器，是否使用取决于扩展边界。",
+      "priority": 3,
+      "tags": ["SPI", "ServiceLoader", "类加载", "插件化"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-api-21"]
+    },
+    {
+      "name": "Java 8到21核心新特性",
+      "track": "backend",
+      "category": "Java基础",
+      "topicGroup": "现代Java",
+      "definition": "Java 8到21的重要演进包括Lambda与Stream、新日期API、模块系统、局部变量类型推断、switch表达式、文本块、record、sealed class、模式匹配和Java 21虚拟线程。",
+      "mechanism": "这些特性分别在函数式抽象、类型系统、语言语法和并发模型上减少样板代码；长期支持版本通常为8、11、17和21，迁移还涉及模块封装、GC和第三方库兼容。",
+      "application": "新项目优先选受支持的LTS版本，用record表达不可变数据载体，用模式匹配简化分支，用虚拟线程承载大量阻塞I/O；升级前通过测试、压测和依赖扫描验证。",
+      "pitfall": "不能只会罗列版本号；record并不自动深度不可变，var不是动态类型，虚拟线程也不能让CPU密集任务变快；升级还可能受反射封装和旧依赖影响。",
+      "compare": "停留在Java 8的技术栈",
+      "tradeoff": "新LTS带来性能、安全与可维护性收益，但升级有兼容和运维成本；稳定系统应按依赖支持矩阵渐进迁移，而非长期放弃安全更新。",
+      "priority": 4,
+      "tags": ["Java 8", "Java 17", "Java 21", "LTS"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-spec-21"]
+    },
+    {
+      "name": "集合迭代与fail-fast",
+      "track": "backend",
+      "category": "Java集合",
+      "topicGroup": "迭代与队列",
+      "definition": "fail-fast是多数非并发集合迭代器的尽力而为错误检测：迭代期间若发现集合结构被迭代器之外的路径修改，会尽快抛出ConcurrentModificationException。",
+      "mechanism": "集合维护modCount，迭代器创建时保存expectedModCount，每次next或remove时比较；Iterator.remove会同步计数，普通增删则可能触发不一致。它不是并发安全保证。",
+      "application": "单线程遍历删除使用Iterator.remove或removeIf；并发读写选择ConcurrentHashMap、CopyOnWriteArrayList等并发容器，或在明确锁范围内保护集合。",
+      "pitfall": "不要依赖ConcurrentModificationException判断线程安全，它可能不抛；增强for中直接remove容易失败；CopyOnWrite迭代看到的是快照，也不代表实时一致。",
+      "compare": "弱一致性并发迭代器",
+      "tradeoff": "fail-fast实现简单、及时暴露误用，但不能容忍结构变化；弱一致迭代支持并发且不抛异常，代价是结果可能不反映全部最新修改。",
+      "priority": 4,
+      "tags": ["Iterator", "fail-fast", "modCount", "并发集合"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-api-21"]
+    },
+    {
+      "name": "BlockingQueue与生产者消费者",
+      "track": "backend",
+      "category": "Java集合",
+      "topicGroup": "迭代与队列",
+      "definition": "BlockingQueue是支持阻塞插入和获取的线程安全队列，天然表达有界生产者消费者关系，并通过容量形成背压。",
+      "mechanism": "put在队列满时等待，take在队列空时等待；offer/poll提供立即或超时版本。ArrayBlockingQueue使用数组和固定容量，LinkedBlockingQueue基于链表节点并可配置容量。",
+      "application": "异步任务管道应设置有界容量、明确超时和拒绝策略，消费者捕获异常并记录积压、等待时间和处理速率，停机时使用中断或结束标记协调退出。",
+      "pitfall": "无界队列会把流量压力转成内存压力；吞掉InterruptedException会破坏取消；只看队列长度而不看生产消费速率，无法判断积压是否正在恶化。",
+      "compare": "非阻塞ConcurrentLinkedQueue",
+      "tradeoff": "阻塞队列易于背压和协调但可能占用平台线程；非阻塞队列吞吐高，却需要额外的通知、限流和空转控制。",
+      "priority": 4,
+      "tags": ["BlockingQueue", "生产者消费者", "背压", "线程安全"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-concurrency-21"]
+    },
+    {
+      "name": "Queue、Deque与PriorityQueue",
+      "track": "backend",
+      "category": "Java集合",
+      "topicGroup": "迭代与队列",
+      "definition": "Queue表示先进先出语义，Deque支持队头和队尾双端操作，也可实现栈；PriorityQueue按自然顺序或比较器维护堆顶最优元素而非完整有序遍历。",
+      "mechanism": "ArrayDeque用循环数组实现双端扩缩容，PriorityQueue通常用二叉小顶堆，插入和删除堆顶为O(log n)，查看堆顶为O(1)。",
+      "application": "BFS使用Queue，滑动窗口和单调队列使用Deque，TopK和任务优先级使用PriorityQueue；元素类型必须提供稳定且与业务一致的比较规则。",
+      "pitfall": "PriorityQueue遍历顺序不是排序结果；比较器减法可能溢出；ArrayDeque不允许null且不是线程安全容器，多线程场景应选并发队列。",
+      "compare": "TreeSet有序集合",
+      "tradeoff": "PriorityQueue适合频繁取极值且允许重复，TreeSet维护全序并去重；需要TopK选堆，需要有序查找和范围操作选树结构。",
+      "priority": 3,
+      "tags": ["Queue", "Deque", "PriorityQueue", "堆"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-api-21"]
+    },
+    {
+      "name": "CompletableFuture与异步编排",
+      "track": "backend",
+      "category": "Java并发",
+      "topicGroup": "异步编排",
+      "definition": "CompletableFuture同时表示未来结果和可组合的异步阶段，可用链式API表达串行、并行汇聚、转换、异常恢复与超时，而不是手工阻塞等待多个Future。",
+      "mechanism": "thenApply转换结果，thenCompose展开依赖异步任务，thenCombine合并独立任务，allOf等待全部；带Async的方法把后续阶段提交到指定Executor，未指定时常使用公共ForkJoinPool。",
+      "application": "聚合多个下游接口时使用独立有界线程池、orTimeout、exceptionally和业务降级，记录每个分支耗时与失败；最后只在边界处统一join，避免链中到处阻塞。",
+      "pitfall": "默认公共线程池可能被阻塞I/O耗尽；join/get过早会把异步写成同步；异常被包装且容易静默吞掉，取消也不会自动可靠传播到所有下游。",
+      "compare": "同步阻塞调用",
+      "tradeoff": "异步编排能降低总等待时间并清晰组合依赖，但增加线程池、异常和上下文传递复杂度；低并发简单链路同步代码更易维护。",
+      "priority": 5,
+      "tags": ["CompletableFuture", "异步", "线程池", "超时"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-concurrency-21"]
+    },
+    {
+      "name": "CountDownLatch、Semaphore与CyclicBarrier",
+      "track": "backend",
+      "category": "Java并发",
+      "topicGroup": "同步器",
+      "definition": "CountDownLatch用于等待一组一次性事件完成，Semaphore用许可数限制同时访问资源的并发量，CyclicBarrier让固定数量线程在可复用栅栏点相互等待。",
+      "mechanism": "三者都可基于AQS协调线程：Latch计数减到零后统一放行且不可重置；Semaphore获取和释放许可；Barrier由最后到达线程触发栅栏动作并开启下一代。",
+      "application": "服务启动依赖汇聚可用Latch，数据库或外部API并发保护可用Semaphore，固定并行阶段同步可用Barrier；所有等待都应设置超时并在finally释放许可。",
+      "pitfall": "漏调countDown会永久等待，重复release会扩大Semaphore许可，Barrier中某线程超时会使整代栅栏破裂；同步器不是任务执行器，不能替代线程池。",
+      "compare": "线程join与Phaser",
+      "tradeoff": "三种同步器语义清晰但模型固定；join适合直接等线程结束，Phaser适合动态参与者和多阶段任务，但理解和维护成本更高。",
+      "priority": 4,
+      "tags": ["CountDownLatch", "Semaphore", "CyclicBarrier", "AQS"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-concurrency-21"]
+    },
+    {
+      "name": "Java虚拟线程",
+      "track": "backend",
+      "category": "Java并发",
+      "topicGroup": "虚拟线程",
+      "definition": "虚拟线程是Java 21正式提供的轻量Thread实现，由JVM把大量虚拟线程调度到少量平台线程上，目标是让高并发阻塞式I/O继续使用直观的一请求一线程代码。",
+      "mechanism": "虚拟线程阻塞在多数JDK I/O操作时会卸载载体线程，稍后再恢复；调度器通常基于ForkJoinPool。长时间在synchronized中阻塞或执行本地调用可能发生载体线程钉住。",
+      "application": "高并发HTTP/RPC/数据库等待任务可用每任务虚拟线程执行器，但数据库连接池等稀缺资源仍需限流；迁移前通过JFR和压测检查钉住、吞吐与延迟。",
+      "pitfall": "虚拟线程不提升CPU密集计算速度，也不意味着可以取消背压；不要池化虚拟线程，ThreadLocal大对象会随海量线程放大内存，依赖库的同步阻塞还需实测。",
+      "compare": "平台线程池",
+      "tradeoff": "虚拟线程显著降低I/O并发的线程成本和回调复杂度，平台线程池对CPU任务及严格限并发仍合适；两者应按任务性质而非追新选型。",
+      "priority": 5,
+      "tags": ["Java 21", "虚拟线程", "Project Loom", "I/O并发"],
+      "sourceIds": ["openjdk-jep-444", "nc-java-scenario-2026-08"]
+    },
+    {
+      "name": "Java对象创建、内存布局与指针压缩",
+      "track": "backend",
+      "category": "JVM",
+      "topicGroup": "对象与执行引擎",
+      "definition": "Java对象通常由对象头、实例数据和对齐填充组成；对象头保存运行时元数据与类型指针，指针压缩用较小引用表示有限堆范围以降低内存占用。",
+      "mechanism": "执行new时先检查类是否加载，再在线程本地分配缓冲或堆中划分内存、清零、设置对象头，随后调用构造方法；字段排列、对象对齐和压缩指针会影响实际大小。",
+      "application": "分析大堆占用时结合JOL、堆转储和对象直方图确认对象数量与布局；通过减少冗余字段、装箱对象和不必要集合节点降低实际内存。",
+      "pitfall": "源码字段大小简单相加不等于对象占用；逃逸对象未必一定在栈上，压缩指针也有堆大小边界；对象地址和布局属于具体JVM实现细节。",
+      "compare": "基本类型值存储",
+      "tradeoff": "对象带来身份、继承和可空语义，但有头部、引用和GC成本；高密度数据可用基本类型数组或紧凑结构换取更低内存。",
+      "priority": 4,
+      "tags": ["对象头", "内存布局", "TLAB", "压缩指针"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-spec-21"]
+    },
+    {
+      "name": "JIT编译、逃逸分析与分层优化",
+      "track": "backend",
+      "category": "JVM",
+      "topicGroup": "对象与执行引擎",
+      "definition": "JIT在程序运行时依据热点画像把频繁执行的字节码编译成本地代码；逃逸分析判断对象是否越过方法或线程边界，为标量替换、锁消除等优化提供依据。",
+      "mechanism": "HotSpot先解释执行并采集计数和类型反馈，再由不同优化层级编译热点方法；激进假设失效时会去优化回退。逃逸分析可能消除分配，但不承诺对象物理栈上分配。",
+      "application": "性能问题先用JFR、async-profiler和编译日志确认热点、分配率与去优化，再优化稳定热点代码；基准测试使用JMH预热并避免死代码消除。",
+      "pitfall": "短基准不预热会测到解释器和编译成本；把偶然内联当语言保证会导致错误推断；频繁类形态变化、超大方法和反射链路可能阻碍优化。",
+      "compare": "AOT提前编译",
+      "tradeoff": "JIT能利用真实运行画像取得高峰值性能，但有预热和运行时开销；AOT启动快、内存可控，却缺少部分动态优化信息。",
+      "priority": 4,
+      "tags": ["JIT", "逃逸分析", "分层编译", "JMH"],
+      "sourceIds": ["javaguide-priority-2026", "oracle-java-spec-21"]
+    },
+    {
+      "name": "Spring Bean作用域与线程安全",
+      "track": "backend",
+      "category": "Spring生态",
+      "topicGroup": "容器与Bean",
+      "definition": "Spring Bean作用域决定实例的创建和共享范围，常见singleton、prototype以及Web场景的request、session；作用域本身不自动保证线程安全，单例无状态Bean通常才可安全共享。",
+      "mechanism": "singleton在每个ApplicationContext中缓存一个实例，prototype每次获取创建新实例且容器不负责完整销毁，request/session通过作用域上下文按请求或会话解析代理目标。",
+      "application": "Service优先设计成无状态单例，把请求状态放在局部变量、DTO或受控存储；确需请求级对象时使用request scope或显式参数传递，并检查代理注入和异步边界。",
+      "pitfall": "把用户数据放进单例字段会串请求；prototype注入singleton时默认只在注入时创建一次；ThreadLocal若在线程池中未清理也会泄漏和串数据。",
+      "compare": "prototype与request作用域",
+      "tradeoff": "单例创建少、易管理且性能好，但共享可变状态风险高；短作用域隔离状态更自然，却增加实例创建、代理和生命周期复杂度。",
+      "priority": 4,
+      "tags": ["Bean作用域", "singleton", "线程安全", "无状态"],
+      "sourceIds": ["javaguide-priority-2026", "spring-framework-reference"]
+    },
+    {
+      "name": "Spring事务传播、回滚与失效",
+      "track": "backend",
+      "category": "Spring生态",
+      "topicGroup": "AOP与事务",
+      "definition": "Spring事务传播定义嵌套调用如何加入、挂起或新建事务；默认声明式事务通常只对未捕获的RuntimeException和Error回滚，并依赖代理拦截调用。",
+      "mechanism": "事务拦截器在代理入口获取TransactionManager，按REQUIRED、REQUIRES_NEW、NESTED等规则绑定连接或保存点，方法结束后根据异常与rollbackOnly状态提交或回滚。",
+      "application": "核心写链路明确事务边界、隔离级别和rollbackFor，跨Bean调用事务方法；独立审计可评估REQUIRES_NEW，批处理失败可结合保存点，但必须考虑连接池容量。",
+      "pitfall": "同类自调用、非代理对象、方法不可代理、异常被吞、checked异常未配置回滚和数据库引擎不支持事务都会导致失效；REQUIRES_NEW嵌套还可能耗尽连接。",
+      "compare": "编程式TransactionTemplate",
+      "tradeoff": "声明式事务代码简洁、关注点分离，但代理边界隐蔽；编程式事务边界清晰且适合复杂分段流程，代价是业务代码与事务控制耦合。",
+      "priority": 5,
+      "tags": ["事务传播", "事务失效", "回滚", "REQUIRES_NEW"],
+      "sourceIds": ["nc-ali-java-2026", "spring-framework-reference", "mianshiya-hot-2026"]
+    },
+    {
+      "name": "InnoDB、MyISAM与字段设计",
+      "track": "backend",
+      "category": "MySQL",
+      "topicGroup": "存储引擎与字段",
+      "definition": "InnoDB是MySQL默认事务存储引擎，支持行级锁、MVCC、崩溃恢复和外键；MyISAM不支持事务与行锁。字段类型会直接影响行大小、索引密度和比较语义。",
+      "mechanism": "InnoDB以聚簇索引组织数据页，redo/undo保证恢复和多版本读取；二级索引叶子保存主键。VARCHAR、数值、时间和字符集选择共同决定存储、排序与索引长度。",
+      "application": "业务表默认InnoDB，主键短且稳定；金额用DECIMAL，时间明确时区语义，枚举值评估可演进性，字符串按真实上限和字符集设计并避免滥用TEXT。",
+      "pitfall": "把MyISAM的表锁和无事务特性用于核心写链路风险高；字段全部VARCHAR、超长主键、隐式类型转换和不一致字符集会放大存储并使索引失效。",
+      "compare": "MyISAM存储引擎",
+      "tradeoff": "InnoDB可靠、并发和事务能力完整，维护成本也更高；MyISAM只在极少数只读或兼容场景有意义，新业务通常不应作为默认选项。",
+      "priority": 5,
+      "tags": ["InnoDB", "MyISAM", "字段设计", "聚簇索引"],
+      "sourceIds": ["mianshiya-hot-2026", "mysql-innodb-84", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "InnoDB Buffer Pool与Change Buffer",
+      "track": "backend",
+      "category": "MySQL",
+      "topicGroup": "存储引擎与字段",
+      "definition": "Buffer Pool是InnoDB缓存数据页和索引页的核心内存区域；Change Buffer暂存不在Buffer Pool中的非唯一二级索引页修改，随后在页被读入时合并以减少随机I/O。",
+      "mechanism": "查询优先命中缓存页，未命中才从磁盘读取；脏页由后台按检查点和刷盘策略持久化。页管理使用改进LRU避免大扫描污染，Change Buffer不能用于唯一索引。",
+      "application": "观察命中率、脏页比例、I/O和检查点压力后配置Buffer Pool；大批量写入评估索引数量、页分裂和刷盘能力，不用单一命中率替代完整压测。",
+      "pitfall": "认为提交事务就必须把数据页立刻刷盘是错误的，持久性主要依赖redo；Buffer Pool过大可能挤压系统和连接内存，Change Buffer也不是所有索引写入都生效。",
+      "compare": "操作系统页缓存",
+      "tradeoff": "大Buffer Pool可显著降低磁盘I/O但占用内存并延长预热；依赖OS缓存控制简单，却缺少InnoDB对页、脏数据和恢复语义的精细管理。",
+      "priority": 5,
+      "tags": ["Buffer Pool", "Change Buffer", "LRU", "脏页"],
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026", "mysql-innodb-84"]
+    },
+    {
+      "name": "深分页与大表查询优化",
+      "track": "backend",
+      "category": "MySQL",
+      "topicGroup": "性能调优",
+      "definition": "深分页是使用LIMIT offset,size访问很靠后的页面，数据库仍需扫描或排序并丢弃offset之前的大量记录，数据越深延迟和资源消耗越高。",
+      "mechanism": "若排序索引不能覆盖查询，还会产生回表、临时表或文件排序；基于上次排序键的游标分页用where key > lastKey直接从索引位置继续读取，避免大范围丢弃。",
+      "application": "无限滚动和批处理采用唯一复合排序键的keyset分页；必须跳页时先用覆盖索引取主键再回表，并限制最大页数、缓存总数或转异步导出。",
+      "pitfall": "只把pageSize调小不能解决大offset扫描；排序键不唯一会漏数或重复；数据实时变化时offset分页也会漂移，优化前应通过Explain与实际执行指标确认。",
+      "compare": "游标分页",
+      "tradeoff": "offset分页支持任意跳页、接口直观，但深页昂贵且易漂移；游标分页稳定高效，却不便随机跳页和计算精确总页数。",
+      "priority": 5,
+      "tags": ["深分页", "LIMIT", "游标分页", "覆盖索引"],
+      "sourceIds": ["mianshiya-hot-2026", "javaguide-priority-2026"]
+    },
+    {
+      "name": "Redis事务、Lua与Pipeline",
+      "track": "backend",
+      "category": "Redis",
+      "topicGroup": "事务与脚本",
+      "definition": "Redis事务用MULTI/EXEC顺序执行命令但不提供数据库式回滚；Lua脚本在服务端原子执行一段逻辑；Pipeline批量发送命令以减少网络往返，但本身不保证原子性。",
+      "mechanism": "MULTI后命令入队并在EXEC执行，WATCH通过乐观锁检测键变化；Lua执行期间阻塞事件循环保证脚本原子；Pipeline让客户端连续写请求再批量读响应。",
+      "application": "计数与条件更新优先用短小Lua保证原子，批量独立读写用分批Pipeline降RTT，跨请求乐观竞争可用WATCH；脚本、批量大小和超时都要监控。",
+      "pitfall": "事务中运行时错误不会回滚已执行命令；长Lua会阻塞整个实例；Pipeline批次过大占用客户端和服务端缓冲，集群多键还受槽位限制。",
+      "compare": "数据库ACID事务",
+      "tradeoff": "Lua原子且少网络往返但难调试、会阻塞；Pipeline吞吐高却不原子；Redis事务轻量，但无法替代关系数据库的完整隔离与回滚。",
+      "priority": 5,
+      "tags": ["Redis事务", "Lua", "Pipeline", "WATCH"],
+      "sourceIds": ["mianshiya-hot-2026", "redis-pipelining-official", "redis-data-types-official"]
+    },
+    {
+      "name": "Redis跳表与概率数据结构",
+      "track": "backend",
+      "category": "Redis",
+      "topicGroup": "数据结构",
+      "definition": "跳表通过多层有序链表实现期望O(log n)查找，是Redis有序集合实现的重要结构之一；Bloom Filter、HyperLogLog等概率结构用可控误差大幅节省内存。",
+      "mechanism": "跳表按随机层高建立快速通道，结合字典支持按成员和分数访问；Bloom Filter用多哈希位图判断可能存在或一定不存在，HyperLogLog用寄存器估计基数。",
+      "application": "排行榜与范围查询用ZSet，缓存穿透预判可用Bloom Filter，海量UV估计用HyperLogLog；上线前根据数据规模和可接受误判率计算容量。",
+      "pitfall": "Bloom误判存在但普通实现不会漏判，删除需要计数型变体；HyperLogLog不能返回成员；跳表层高随机不代表性能不可控，不能把概率结构用于强精确结算。",
+      "compare": "红黑树与精确HashSet",
+      "tradeoff": "跳表范围操作和实现较直观，红黑树最坏复杂度更严格；概率结构内存低但有误差，精确集合可靠却可能占用数量级更高的空间。",
+      "priority": 4,
+      "tags": ["跳表", "Bloom Filter", "HyperLogLog", "ZSet"],
+      "sourceIds": ["mianshiya-hot-2026", "redis-data-types-official"]
+    },
+    {
+      "name": "TCP与UDP及粘包拆包",
+      "track": "backend",
+      "category": "计算机网络",
+      "topicGroup": "传输层",
+      "definition": "TCP是面向连接的可靠字节流协议，没有消息边界；UDP是无连接数据报协议，保留报文边界但不保证到达、顺序或去重。所谓粘包拆包是应用层未正确界定TCP消息边界。",
+      "mechanism": "TCP通过序号、确认、重传、流量与拥塞控制传输连续字节；应用协议必须用固定长度、分隔符、长度字段或自描述格式划分帧。UDP每次发送对应一个数据报并受MTU影响。",
+      "application": "支付和RPC通常基于TCP并设计长度字段与最大帧限制，实时音视频可基于UDP在应用层补充重传或纠错；接收端必须处理半包、多包和恶意长度。",
+      "pitfall": "一次write不对应一次read，TCP也没有发送端粘包这一业务语义；UDP并非绝对更快，分片和丢包会放大问题；协议解析缺少长度上限会造成内存攻击。",
+      "compare": "UDP数据报",
+      "tradeoff": "TCP可靠有序、生态成熟但握手和队头阻塞有成本；UDP低延迟、边界清晰却需应用承担可靠性，选型取决于可容忍丢失和时延目标。",
+      "priority": 5,
+      "tags": ["TCP", "UDP", "粘包", "拆包"],
+      "sourceIds": ["mianshiya-hot-2026", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "TLS握手与证书校验",
+      "track": "backend",
+      "category": "计算机网络",
+      "topicGroup": "HTTP与Web",
+      "definition": "TLS在应用层数据传输前协商协议参数和会话密钥，并用证书链验证服务端身份，从而提供机密性、完整性与身份认证；HTTPS就是HTTP运行在TLS之上。",
+      "mechanism": "TLS 1.3中客户端发送支持参数和密钥份额，服务端选择套件并返回证书与证明，双方通过密钥交换派生对称密钥；客户端校验证书链、域名、有效期和撤销状态。",
+      "application": "生产环境启用现代协议与套件、完整证书链、SNI和自动续期，内部服务根据威胁模型选择单向或双向TLS，并监控证书到期与握手失败。",
+      "pitfall": "只加密却跳过证书校验会遭中间人攻击；证书可信但域名不匹配仍应失败；代理终止TLS后到上游的链路也需明确是否再次加密。",
+      "compare": "明文HTTP",
+      "tradeoff": "TLS增加握手、证书运维和少量CPU成本，却是公网与敏感内部通信的基本要求；会话复用和硬件加速可降低性能代价。",
+      "priority": 4,
+      "tags": ["TLS", "HTTPS", "证书", "密钥交换"],
+      "sourceIds": ["xiaolin-backend-2026", "rfc-8446-tls13"]
+    },
+    {
+      "name": "IP、ARP与ICMP",
+      "track": "backend",
+      "category": "计算机网络",
+      "topicGroup": "网络层",
+      "definition": "IP负责跨网络的尽力而为寻址与路由，ARP在IPv4局域网内把下一跳IP解析为MAC地址，ICMP传递差错和诊断信息，ping与traceroute会利用其部分能力。",
+      "mechanism": "主机用子网掩码判断目标是否同网段，选择目标或网关作为下一跳，通过ARP缓存获取链路层地址，再由路由器逐跳转发IP包；TTL归零等情况产生ICMP消息。",
+      "application": "排查不通时按DNS、路由、ARP、ACL、防火墙和目标端口分层检查，结合ip/route/arp或邻居表、ping、traceroute与抓包定位在哪一跳失败。",
+      "pitfall": "ping不通不等于业务端口不通，ICMP可能被禁；ARP只解析本地链路的下一跳而非远端服务器MAC；NAT与容器网络会改变观测到的路径。",
+      "compare": "TCP传输层协议",
+      "tradeoff": "IP/ICMP提供通用基础转发与诊断但不保证可靠，TCP在其上补充连接和可靠性；分层理解能避免用应用层现象直接推断底层原因。",
+      "priority": 3,
+      "tags": ["IP", "ARP", "ICMP", "路由"],
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "用户态、内核态与系统调用",
+      "track": "backend",
+      "category": "操作系统与Linux",
+      "topicGroup": "内核与文件系统",
+      "definition": "用户态限制应用直接访问硬件和特权资源，内核态运行操作系统核心；系统调用是应用受控进入内核请求文件、网络、进程和内存服务的接口。",
+      "mechanism": "程序通过标准库包装执行syscall指令，CPU切换特权级并进入内核处理程序，验证参数、操作资源后返回用户态；这不同于必然发生线程调度的上下文切换。",
+      "application": "高I/O服务通过批量读写、缓冲、sendfile、epoll和减少小系统调用降低边界开销，性能分析用strace、perf和系统指标定位调用频率与阻塞点。",
+      "pitfall": "用户态到内核态切换不等于进程上下文切换；零拷贝也不是完全没有复制；过度追求减少系统调用可能增加缓冲延迟和代码复杂度。",
+      "compare": "普通函数调用",
+      "tradeoff": "系统调用提供隔离和统一资源管理但比普通调用昂贵；批处理与异步I/O可摊薄成本，仍要在吞吐、延迟和内存之间取舍。",
+      "priority": 4,
+      "tags": ["用户态", "内核态", "系统调用", "strace"],
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "进程通信、调度与上下文切换",
+      "track": "backend",
+      "category": "操作系统与Linux",
+      "topicGroup": "进程与线程",
+      "definition": "进程间通信包括管道、消息队列、共享内存、Socket和信号等；调度器在可运行任务间分配CPU，上下文切换保存当前执行状态并恢复另一个任务。",
+      "mechanism": "共享内存数据复制少但需要同步，Socket可跨主机且协议栈开销更高；时间片耗尽、阻塞、唤醒或更高优先级任务到来都可能触发调度和上下文切换。",
+      "application": "同机高吞吐可选共享内存加明确同步，通用服务通信选Socket；排查CPU抖动时观察运行队列、自愿/非自愿切换、锁等待和线程数，而非只看平均CPU。",
+      "pitfall": "线程越多不等于吞吐越高，过度切换会破坏缓存局部性；共享内存不自带一致性；进程切换通常比线程切换更重但成本取决于实现和工作集。",
+      "compare": "线程内共享内存通信",
+      "tradeoff": "进程隔离强、故障边界清晰但IPC和部署成本更高；线程共享方便、通信快，却更容易产生竞态并扩大故障影响。",
+      "priority": 4,
+      "tags": ["IPC", "调度", "上下文切换", "共享内存"],
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "文件系统、inode与文件描述符",
+      "track": "backend",
+      "category": "操作系统与Linux",
+      "topicGroup": "内核与文件系统",
+      "definition": "文件系统把路径名映射到inode和数据块；inode保存类型、权限、大小和块位置等元数据，进程用文件描述符索引内核打开文件表来访问文件、Socket和管道。",
+      "mechanism": "open解析目录项并创建或引用打开文件对象，返回当前进程的整数fd；read/write通过fd和文件偏移操作页缓存，close减少引用，硬链接共享inode而符号链接保存另一条路径。",
+      "application": "排查Too many open files时同时检查进程限制、系统限制、fd类型和关闭路径；用lsof、/proc/pid/fd、iostat和df/du区分描述符泄漏、inode耗尽与磁盘空间问题。",
+      "pitfall": "删除仍被进程打开的文件不会立即释放空间；df和du差异可能来自这种情况；fd数字可复用，不能跨时间把同一数字当同一资源身份。",
+      "compare": "文件路径名",
+      "tradeoff": "路径便于命名和查找但可被重命名，fd是进程内稳定句柄却受数量限制；正确生命周期管理比单纯提高ulimit更重要。",
+      "priority": 3,
+      "tags": ["文件系统", "inode", "文件描述符", "lsof"],
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "消息积压、重试与死信队列",
+      "track": "backend",
+      "category": "消息队列",
+      "topicGroup": "可靠投递",
+      "definition": "消息积压表示生产速率长期高于消费能力；重试用于处理暂时失败，死信队列收纳超过重试次数、过期或无法路由的消息，供隔离、审计和人工处置。",
+      "mechanism": "消费者失败后按退避策略重新投递或进入延迟队列，并记录尝试次数；达到上限后转入DLQ。积压量、最老消息年龄和消费速率共同描述恢复时间。",
+      "application": "先止损限流并确认下游容量，再扩消费者、优化慢处理或按业务拆分分区；重试设置指数退避、抖动和上限，消费必须幂等，DLQ提供查询、修复与受控重放。",
+      "pitfall": "无上限立即重试会形成重试风暴；只扩消费者可能打垮数据库；盲目清空或全量重放DLQ会丢数据或制造二次峰值，顺序消息还要考虑分区内阻塞。",
+      "compare": "直接丢弃失败消息",
+      "tradeoff": "重试和DLQ提升可恢复性与可审计性，但增加延迟、存储和运维流程；低价值且允许丢失的消息可降级丢弃，核心业务必须保留证据。",
+      "priority": 5,
+      "tags": ["消息积压", "重试", "死信队列", "幂等"],
+      "sourceIds": ["mianshiya-hot-2026", "javaguide-priority-2026"]
+    },
+    {
+      "name": "Kafka副本ISR、Rebalance与Exactly Once",
+      "track": "backend",
+      "category": "消息队列",
+      "topicGroup": "Kafka",
+      "definition": "Kafka分区通过Leader和副本提供扩展与容错，ISR保存与Leader保持同步的副本集合；消费者组Rebalance重新分配分区；Exactly Once依赖幂等生产者与事务保证Kafka链路内的精确一次语义。",
+      "mechanism": "生产者写Leader并按acks等待确认，落后副本退出ISR；消费者组成员或订阅变化触发协调分配。幂等生产者用PID和序列号去重，事务把多分区写入与消费位点原子提交。",
+      "application": "核心流设置合理副本数、min.insync.replicas和acks=all，监控ISR收缩、消费延迟与Rebalance；consume-transform-produce使用事务并让消费者读取已提交数据。",
+      "pitfall": "Kafka的Exactly Once不自动覆盖外部数据库和HTTP副作用；频繁Rebalance会暂停消费；只提高副本数而忽略机架分布、磁盘和最小ISR仍可能丢数据或不可写。",
+      "compare": "至少一次投递加业务幂等",
+      "tradeoff": "Kafka事务减少链路内重复但增加延迟和配置复杂度；至少一次加幂等更通用、易跨系统，业务应按副作用边界选择。",
+      "priority": 5,
+      "tags": ["Kafka", "ISR", "Rebalance", "Exactly Once"],
+      "sourceIds": ["javaguide-priority-2026", "kafka-official-design"]
+    },
+    {
+      "name": "RocketMQ事务消息与延时消息",
+      "track": "backend",
+      "category": "消息队列",
+      "topicGroup": "事务与延时",
+      "definition": "RocketMQ事务消息通过半消息、执行本地事务和事务状态回查协调本地更新与消息可见性；延时消息让消息在指定延迟后可消费，适合超时和重试场景。",
+      "mechanism": "Broker先保存对消费者不可见的半消息，生产者提交或回滚本地事务结果，未知状态由Broker回查；延时消息由服务端按延迟等级或时间调度后转入可消费队列。",
+      "application": "订单创建后通知下游可用事务消息，订单超时关闭和退避重试可用延时消息；本地事务与回查逻辑必须幂等并保存可查询状态。",
+      "pitfall": "事务消息不是跨库强一致的两阶段提交，回查可能重复；延时投递时间不是实时定时器精度；消费者副作用仍需幂等，不能只依赖Broker。",
+      "compare": "本地消息表与定时扫描",
+      "tradeoff": "事务消息实时性和平台集成较好但依赖特定MQ与回查机制；本地消息表通用、可审计，代价是轮询、表维护和延迟。",
+      "priority": 4,
+      "tags": ["RocketMQ", "事务消息", "延时消息", "回查"],
+      "sourceIds": ["javaguide-priority-2026", "mianshiya-hot-2026"]
+    },
+    {
+      "name": "Raft、Paxos与ZAB共识",
+      "track": "backend",
+      "category": "分布式与微服务",
+      "topicGroup": "共识与网关",
+      "definition": "共识算法让存在节点故障和网络延迟的副本对同一日志顺序达成一致。Raft强调可理解的领导者选举和日志复制，Paxos是经典多数派共识族，ZAB服务于ZooKeeper的主备原子广播。",
+      "mechanism": "多数派交集保证已提交决定不会被两个互斥分区同时覆盖；Raft用任期、投票和日志匹配约束选举与复制，ZAB在恢复阶段同步前缀后按zxid广播事务。",
+      "application": "配置、选主和元数据服务常依赖现成Raft/ZAB实现；设计时关注奇数节点、故障域、法定人数、日志持久化、快照和成员变更，而非自行实现共识。",
+      "pitfall": "共识不等于业务数据自动强一致，也不能突破CAP在分区时的取舍；三节点容忍一个故障而不是三个都可停；网络延迟和慢盘会影响选举稳定性。",
+      "compare": "主从异步复制",
+      "tradeoff": "多数派共识提供更强故障一致性但写入需跨节点确认；异步主从延迟低、吞吐高，却可能在主故障时丢失尚未复制的数据。",
+      "priority": 4,
+      "tags": ["Raft", "Paxos", "ZAB", "共识"],
+      "sourceIds": ["javaguide-priority-2026", "raft-paper"]
+    },
+    {
+      "name": "API网关与配置中心",
+      "track": "backend",
+      "category": "分布式与微服务",
+      "topicGroup": "共识与网关",
+      "definition": "API网关是客户端进入微服务的统一入口，承担路由、认证、限流、灰度和协议转换；配置中心集中存储、发布和监听多环境配置，减少散落配置与重启成本。",
+      "mechanism": "网关按路由规则匹配请求并在过滤器链执行横切策略，再转发到服务实例；配置客户端按命名空间和版本拉取配置、监听变更并在本地缓存或失败时降级。",
+      "application": "网关只放通用轻逻辑并设置超时、熔断和观测，业务规则留在服务；配置变更需权限、审计、灰度、校验和回滚，密钥由专门Secret系统管理。",
+      "pitfall": "把网关做成业务巨石会形成单点和发布瓶颈；动态配置不做原子快照可能读到半更新；配置中心不可用时无本地缓存会导致服务无法启动。",
+      "compare": "客户端直连服务",
+      "tradeoff": "统一入口便于治理和演进但增加一跳与关键依赖；直连延迟低、链路简单，却让认证、版本和流量策略分散到每个客户端。",
+      "priority": 5,
+      "tags": ["API网关", "配置中心", "灰度", "服务治理"],
+      "sourceIds": ["nc-byte-java-2026-03", "mianshiya-hot-2026", "javaguide-priority-2026"]
+    },
+    {
+      "name": "Transactional Outbox与可靠事件",
+      "track": "backend",
+      "category": "分布式与微服务",
+      "topicGroup": "分布式事务",
+      "definition": "Transactional Outbox把业务数据和待发布事件写入同一个本地数据库事务，再由后台发布器把Outbox事件发送到消息系统，以避免数据库提交成功但消息发送失败。",
+      "mechanism": "业务事务原子插入事件记录，发布器通过轮询或CDC读取未发布事件并至少一次投递，成功后标记或归档；消费者按事件ID去重并处理乱序和重复。",
+      "application": "订单状态变化与领域事件同事务落库，发布任务分片扫描、重试并监控最老未发布事件；事件结构带版本、聚合ID、顺序号和追踪ID。",
+      "pitfall": "它不提供端到端精确一次，发布成功后标记失败仍会重复；清理过早会失去审计；多个事件并发发布时必须明确同一聚合的顺序。",
+      "compare": "分布式两阶段提交",
+      "tradeoff": "Outbox可用性高、适合最终一致但需要表、发布器和幂等治理；2PC语义更强，却耦合参与者、占用资源且对故障敏感。",
+      "priority": 4,
+      "tags": ["Transactional Outbox", "可靠事件", "最终一致性", "CDC"],
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "容量估算、压测与SLA",
+      "track": "backend",
+      "category": "系统设计与场景",
+      "topicGroup": "容量与基础设施",
+      "definition": "容量估算把用户量、峰值QPS、数据增长、带宽和依赖预算转换为资源需求；压测验证瓶颈与安全水位；SLA定义可用性目标和允许的错误预算。",
+      "mechanism": "从业务峰值和放大系数推导读写量，用Little定律关联并发、吞吐和响应时间；逐级压测观察拐点，结合SLO与错误预算决定发布和可靠性投入。",
+      "application": "设计前给出日活、峰谷比、请求大小、保留周期和副本数假设，压测覆盖稳态、突增与故障降级，最终按P95/P99、资源水位和恢复时间设告警。",
+      "pitfall": "只报平均QPS会隐藏峰值和尾延迟；在共享生产环境无隔离压测有风险；容量数字不写假设无法复核，SLA也不能用单个健康检查代替。",
+      "compare": "经验拍脑袋扩容",
+      "tradeoff": "系统化估算和压测增加前期成本，却能量化风险与预算；过度预留浪费资源，过度贴近极限则会让任何流量或依赖波动触发故障。",
+      "priority": 4,
+      "tags": ["容量估算", "压测", "SLA", "P99"],
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "Nginx、CDN与负载均衡",
+      "track": "backend",
+      "category": "系统设计与场景",
+      "topicGroup": "容量与基础设施",
+      "definition": "Nginx常作为反向代理和七层负载均衡入口，CDN把可缓存内容分发到靠近用户的边缘节点；负载均衡按策略把请求分配到健康后端以扩展容量和隔离故障。",
+      "mechanism": "DNS或Anycast把用户导向边缘，CDN按缓存键与TTL命中或回源；Nginx事件循环接收连接，按轮询、最少连接、一致性哈希等策略选择上游并执行健康检查。",
+      "application": "静态资源设置版本化URL与缓存策略，动态接口在网关/Nginx限制连接、超时和请求体，负载策略结合有状态需求；监控命中率、回源带宽、上游失败和尾延迟。",
+      "pitfall": "缓存键忽略鉴权信息会泄露数据；真实客户端IP需可信代理链；一致性哈希不能替代会话外置，CDN回源风暴和缓存击穿仍需预热、合并请求或限流。",
+      "compare": "客户端直接访问单实例",
+      "tradeoff": "边缘缓存和负载均衡提升性能与可用性但增加缓存一致性、证书和链路排查复杂度；小型内网服务可保持简单，公网高流量必须分层。",
+      "priority": 5,
+      "tags": ["Nginx", "CDN", "负载均衡", "反向代理"],
+      "sourceIds": ["nc-byte-java-2026-03", "nginx-admin-guide", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "Netty Reactor与高性能网络",
+      "track": "backend",
+      "category": "系统设计与场景",
+      "topicGroup": "容量与基础设施",
+      "definition": "Netty是基于事件驱动的异步网络框架，以EventLoop、Channel、Pipeline和ByteBuf封装NIO细节；Reactor模式用少量事件线程分发大量连接上的I/O事件。",
+      "mechanism": "Boss EventLoop接受连接，Worker EventLoop长期绑定Channel并处理读写事件，事件沿ChannelPipeline的Handler传播；ByteBuf支持池化和引用计数以减少分配与复制。",
+      "application": "RPC或长连接服务按连接数和任务性质配置EventLoop，把阻塞业务卸载到有界业务线程池，使用长度字段编解码器、写水位、心跳和空闲检测控制链路。",
+      "pitfall": "在EventLoop执行阻塞操作会拖慢同线程所有连接；ByteBuf漏release会直接内存泄漏；粘包拆包、空轮询、写队列膨胀和处理器线程安全都需监控。",
+      "compare": "一连接一平台线程的阻塞I/O",
+      "tradeoff": "Netty可支撑高连接和低开销，但生命周期、线程模型和内存管理复杂；连接少、业务简单时阻塞模型更易维护。",
+      "priority": 4,
+      "tags": ["Netty", "Reactor", "EventLoop", "ByteBuf"],
+      "sourceIds": ["mianshiya-hot-2026", "netty-user-guide-4x"]
+    },
+    {
+      "name": "单例、工厂与策略模式",
+      "track": "backend",
+      "category": "系统设计与场景",
+      "topicGroup": "设计模式",
+      "definition": "单例控制实例数量与访问点，工厂封装对象创建和实现选择，策略把可替换算法抽成统一接口；三者分别处理生命周期、创建变化和行为变化。",
+      "mechanism": "Java单例可用枚举或安全发布的静态初始化，工厂根据类型或配置返回接口实现，策略通过组合在运行时注入不同算法，配合依赖注入可消除大量条件分支。",
+      "application": "无状态共享组件用容器单例，支付渠道或解析器用工厂注册实现，促销、路由和风控规则用策略；接口应围绕稳定业务能力而非为了模式拆类。",
+      "pitfall": "双重检查忘记volatile会有发布风险；全局单例隐藏依赖、难测试；工厂和策略层级过多会增加跳转，策略内部共享状态仍需线程安全。",
+      "compare": "直接new和if/else分支",
+      "tradeoff": "模式隔离变化、便于扩展测试，但会增加抽象和类数量；变化少的逻辑直接实现更清晰，重复扩展点稳定后再引入模式。",
+      "priority": 4,
+      "tags": ["单例模式", "工厂模式", "策略模式", "设计模式"],
+      "sourceIds": ["mianshiya-hot-2026", "javaguide-priority-2026"]
+    },
+    {
+      "name": "代理、模板与责任链模式",
+      "track": "backend",
+      "category": "系统设计与场景",
+      "topicGroup": "设计模式",
+      "definition": "代理在不改变目标接口的前提下增加访问控制或横切逻辑，模板方法固定算法骨架并开放步骤，责任链让多个处理器按顺序决定处理、增强或继续传递请求。",
+      "mechanism": "代理把调用转发给目标对象，JDK动态代理基于接口而CGLIB常通过子类；模板依靠继承覆盖钩子；责任链以Handler列表或next引用顺序执行。",
+      "application": "Spring AOP和事务使用代理，批处理固定读取-校验-写入骨架可用模板，网关过滤器、审批和校验流程适合责任链；每个节点应单一职责并可观测。",
+      "pitfall": "代理自调用绕过增强、final限制子类代理；模板继承过深会僵化；责任链顺序隐蔽、异常和短路规则不清会造成重复处理或安全绕过。",
+      "compare": "装饰器与组合式函数",
+      "tradeoff": "这些模式复用流程并隔离横切逻辑，但控制流更隐式；组合式函数通常更轻量，复杂框架集成和稳定扩展协议才需要完整模式。",
+      "priority": 3,
+      "tags": ["代理模式", "模板方法", "责任链", "Spring AOP"],
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    {
+      "name": "Docker容器与JVM部署",
+      "track": "backend",
+      "category": "系统设计与场景",
+      "topicGroup": "容量与基础设施",
+      "definition": "容器用镜像打包应用与用户态依赖，并通过namespace和cgroup隔离进程与限制资源；Java容器部署还需让堆、直接内存、线程和GC适配容器配额。",
+      "mechanism": "镜像由只读层组成，容器增加可写层并共享宿主内核；cgroup限制CPU和内存，现代JVM能识别容器资源，但总内存仍包括堆外、元空间、代码缓存和线程栈。",
+      "application": "使用多阶段构建、非root用户、固定基础镜像摘要和健康检查，明确-Xmx或MaxRAMPercentage并为堆外留余量；优雅处理SIGTERM并在预停阶段停止接流量。",
+      "pitfall": "只按宿主内存设堆会触发容器OOM Kill；latest标签不可复现；把日志和状态写进容器层会丢失且撑满磁盘，精简镜像也不能替代漏洞扫描。",
+      "compare": "虚拟机部署",
+      "tradeoff": "容器启动快、交付一致、密度高但共享内核且资源边界更易误配；虚拟机隔离强、系统完整，启动和资源成本更高。",
+      "priority": 3,
+      "tags": ["Docker", "JVM", "cgroup", "容器化"],
+      "sourceIds": ["mianshiya-hot-2026", "docker-java-containerize"]
+    },
+    {
+      "name": "Elasticsearch倒排索引与搜索",
+      "track": "backend",
+      "category": "系统设计与场景",
+      "topicGroup": "搜索与数据平台",
+      "definition": "Elasticsearch是基于Lucene的分布式搜索与分析引擎，倒排索引从词项映射到包含它的文档，使全文检索无需逐文档扫描。",
+      "mechanism": "写入文档经Analyzer分词、规范化后形成词典和posting list，分片刷新生成不可变segment，后台合并；查询在各分片执行匹配和评分，再由协调节点归并结果。",
+      "application": "日志和商品搜索先设计mapping、keyword/text边界、Analyzer与分片规模，写入通过稳定文档ID保证幂等，查询限制深分页并用search_after，监控段合并、堆和磁盘水位。",
+      "pitfall": "字段动态爆炸、分片过多、把ES当强事务主库和大from/size深分页都会造成问题；近实时刷新不等于写后立即全局可见，mapping多数变更需重建索引。",
+      "compare": "MySQL B+树索引与LIKE查询",
+      "tradeoff": "ES擅长全文相关性、聚合和横向扩展，但一致性、资源和运维复杂；精确事务查询仍应由关系数据库负责，搜索索引作为可重建副本。",
+      "priority": 4,
+      "tags": ["Elasticsearch", "倒排索引", "Lucene", "全文检索"],
+      "sourceIds": ["javaguide-priority-2026", "elasticsearch-inverted-index"]
+    }
+  ]
+}

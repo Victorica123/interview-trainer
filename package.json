@@ -1,0 +1,26 @@
+{
+  "name": "interview-trainer",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "description": "面向初学者的本地优先 Java 后端与 AI/Agent 面试训练器",
+  "scripts": {
+    "generate": "node scripts/generate-questions.mjs",
+    "validate": "node scripts/validate-data.mjs",
+    "test:taxonomy": "node scripts/test-taxonomy.mjs",
+    "test:coverage": "node scripts/test-coverage.mjs",
+    "test:insights": "node scripts/test-insights.mjs",
+    "test:content": "node scripts/test-content-reviews.mjs",
+    "test:server": "node scripts/test-server-api.mjs",
+    "test:updater": "node scripts/test-updater.mjs",
+    "test": "npm run test:taxonomy && npm run test:coverage && npm run test:insights && npm run test:content && npm run test:updater && npm run test:server",
+    "verify": "npm run check && npm test",
+    "package:release": "node scripts/package-release.mjs",
+    "start": "node server.mjs",
+    "check": "npm run generate && npm run validate"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

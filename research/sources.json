@@ -1,0 +1,924 @@
+{
+  "schemaVersion": 1,
+  "snapshotDate": "2026-08-28",
+  "methodology": "近期真实面经优先；转载回溯到原帖并去重；岗位要求用于验证技术栈；维护中题库用于补齐基础与交叉验证。公开页面可能存在幸存者偏差和推广内容，因此分数表示当前样本支持度，不代表全市场精确概率。",
+  "sources": [
+    {
+      "id": "nc-java-summary-2026-03",
+      "title": "2026 Java 后端开发面试真题汇总（含 AI 工程方向）",
+      "shortTitle": "牛客·Java 2026汇总",
+      "url": "https://www.nowcoder.com/discuss/864594486704291840",
+      "type": "interview",
+      "track": [
+        "backend",
+        "agent"
+      ],
+      "publishedAt": "2026-03-20",
+      "company": "多公司",
+      "weight": 0.9,
+      "directQuestionEvidence": true,
+      "notes": "作者称近期面试10余位候选人；覆盖Java、并发、JVM、MySQL、Redis与AI工程。",
+      "supportsConcepts": [
+        "HashMap",
+        "事务隔离级别",
+        "Explain与慢SQL排查",
+        "Redis分布式锁"
+      ]
+    },
+    {
+      "id": "nc-java-scenario-2026-08",
+      "title": "2026 年 Java 面试从八股转向工程场景的复盘",
+      "shortTitle": "牛客·Java场景趋势",
+      "url": "https://www.nowcoder.com/discuss/919547742072897536",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-19",
+      "company": "多公司",
+      "weight": 0.82,
+      "directQuestionEvidence": true,
+      "notes": "包含Spring、MySQL、Redis、MQ和线上排查场景；带推广内容，降低来源权重。",
+      "supportsConcepts": [
+        "ThreadLocal",
+        "HashMap",
+        "缓存穿透、击穿与雪崩",
+        "Redis分布式锁",
+        "缓存与数据库一致性",
+        "Java虚拟线程"
+      ]
+    },
+    {
+      "id": "nc-meituan-intern-2026-03",
+      "title": "26届美团暑期实习后端开发一面面经",
+      "shortTitle": "美团后端实习面经",
+      "url": "https://www.nowcoder.com/feed/main/detail/3db24573b8f146e0b0ec6088bfb8c3a6",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-03-25",
+      "company": "美团",
+      "weight": 1,
+      "directQuestionEvidence": true,
+      "notes": "项目、缓存一致性、Spring、SQL执行与优化等直接问题。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "nc-meituan-offer-2024",
+      "title": "美团后端到家暑期实习面经（已offer）",
+      "shortTitle": "美团后端历史基线",
+      "url": "https://www.nowcoder.com/discuss/614236533700194304",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2024-04-28",
+      "company": "美团",
+      "weight": 0.35,
+      "directQuestionEvidence": true,
+      "notes": "用于识别长期稳定考点，不用于判断2026独有趋势。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "nc-ali-java-2026",
+      "title": "阿里淘天 Java 后端一面面经",
+      "shortTitle": "阿里淘天Java一面",
+      "url": "https://www.nowcoder.com/discuss/874219579965259776",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-04-15",
+      "company": "阿里巴巴",
+      "weight": 0.82,
+      "directQuestionEvidence": true,
+      "notes": "项目深挖、联合索引、高并发一致性；正文含参考答案，按问题证据使用。",
+      "supportsConcepts": [
+        "Spring事务传播、回滚与失效"
+      ]
+    },
+    {
+      "id": "nc-byte-java-2026-03",
+      "title": "字节跳动 Java 后端开发二面面经",
+      "shortTitle": "字节Java二面",
+      "url": "https://www.nowcoder.com/discuss/860815475284955136",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-03-10",
+      "company": "字节跳动",
+      "weight": 0.75,
+      "directQuestionEvidence": true,
+      "notes": "分布式事务、消息幂等、服务治理、监控与容灾；答案疑似整理加工，降权。",
+      "supportsConcepts": [
+        "分布式事务",
+        "高可用与容灾",
+        "Spring Boot自动配置",
+        "类加载与双亲委派",
+        "线上OOM与内存泄漏排查",
+        "API网关与配置中心",
+        "Nginx、CDN与负载均衡"
+      ]
+    },
+    {
+      "id": "nc-pdd-java-2026-03",
+      "title": "PDD一面：Redis 深挖面经",
+      "shortTitle": "拼多多Redis深挖",
+      "url": "https://www.nowcoder.com/discuss/863380155400458240",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-03-17",
+      "company": "拼多多",
+      "weight": 0.9,
+      "directQuestionEvidence": true,
+      "notes": "体现Redis、MySQL、MQ深挖优先于泛泛覆盖。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "nc-pdd-java-2026-08",
+      "title": "拼多多 Java 后端两轮面经",
+      "shortTitle": "拼多多Java面经",
+      "url": "https://www.nowcoder.com/discuss/904455987388563456",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-07-01",
+      "company": "拼多多",
+      "weight": 0.72,
+      "directQuestionEvidence": true,
+      "notes": "Java集合、并发与底层机制；文章带内推，降低权重。",
+      "supportsConcepts": [
+        "HashMap",
+        "ConcurrentHashMap",
+        "CAS与ABA问题",
+        "volatile与Java内存模型",
+        "可观测性与链路追踪",
+        "REST、RPC、WebSocket与SSE"
+      ]
+    },
+    {
+      "id": "nc-jd-java-core-2026-08",
+      "title": "Java后端面试通关指南：25道高频核心题",
+      "shortTitle": "Java后端核心题复盘",
+      "url": "https://www.nowcoder.com/discuss/919268328370077696",
+      "type": "guide",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-18",
+      "company": "阿里/字节/美团/京东等",
+      "weight": 0.45,
+      "directQuestionEvidence": false,
+      "notes": "适合跨来源共识，不当作单场真实面经。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "nc-java-interview-index-2026",
+      "title": "Java面经实录与模块索引",
+      "shortTitle": "牛客·Java面经索引",
+      "url": "https://www.nowcoder.com/discuss/868544567509905408",
+      "type": "guide",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-28",
+      "company": "多公司",
+      "weight": 0.4,
+      "directQuestionEvidence": false,
+      "notes": "用于覆盖审计，不计作独立公司面经。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "nc-agent-multi-2026-04",
+      "title": "Agent开发面经：阿里、蚂蚁、字节、腾讯",
+      "shortTitle": "多公司Agent面经",
+      "url": "https://www.nowcoder.com/discuss/877151327091027968",
+      "type": "interview",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-04-24",
+      "company": "阿里/蚂蚁/字节/腾讯",
+      "weight": 0.95,
+      "directQuestionEvidence": true,
+      "notes": "聚合多个带原帖链接的近期面经；覆盖RAG、工具、SSE、多Agent和故障恢复。",
+      "supportsConcepts": [
+        "Spring Boot自动配置",
+        "多Agent协作与编排",
+        "Agent项目架构讲解",
+        "RDB、AOF与混合持久化"
+      ]
+    },
+    {
+      "id": "nc-agent-tencent-2026-04",
+      "title": "腾讯Agent与AI应用开发面经整理",
+      "shortTitle": "腾讯Agent面经",
+      "url": "https://www.nowcoder.com/discuss/878945851924627456",
+      "type": "interview",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-04-28",
+      "company": "腾讯",
+      "weight": 0.9,
+      "directQuestionEvidence": true,
+      "notes": "多模态RAG、记忆、Text2SQL、Rerank、Query Rewrite、MCP与后端基础。",
+      "supportsConcepts": [
+        "多Agent协作与编排",
+        "循环、超时与故障恢复",
+        "上下文工程",
+        "I/O模型与epoll",
+        "Spring循环依赖与三级缓存"
+      ]
+    },
+    {
+      "id": "nc-agent-baidu-2026-05",
+      "title": "百度 Agent 面经",
+      "shortTitle": "百度Agent面经",
+      "url": "https://www.nowcoder.com/discuss/880841659733311488",
+      "type": "interview",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-05-04",
+      "company": "百度",
+      "weight": 0.9,
+      "directQuestionEvidence": true,
+      "notes": "项目链路、LangGraph状态、checkpoint、记忆边界、工具协议与RAG。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "nc-agent-lingmai-2026-07",
+      "title": "AI应用开发实习面经：RAG、MCP与Coding Agent",
+      "shortTitle": "AI应用开发实习面经",
+      "url": "https://www.nowcoder.com/feed/main/detail/76f5be8b8bd5420b94d32a66e26a7ad9",
+      "type": "interview",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-07-11",
+      "company": "凌脉",
+      "weight": 1,
+      "directQuestionEvidence": true,
+      "notes": "时间、岗位和流程明确；RAG链路、Token、MCP、重复工具调用与工程约束。",
+      "supportsConcepts": [
+        "RAG端到端流程",
+        "MCP架构与生命周期",
+        "Token与上下文窗口",
+        "Agent与Workflow"
+      ]
+    },
+    {
+      "id": "nc-agent-pdd-2026-08",
+      "title": "拼多多 AI Agent 岗两轮技术面经",
+      "shortTitle": "拼多多Agent面经",
+      "url": "https://www.nowcoder.com/discuss/918542384726540288",
+      "type": "interview",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-16",
+      "company": "拼多多",
+      "weight": 1,
+      "directQuestionEvidence": true,
+      "notes": "近期直接面经；项目流程、RAG切块、ASR评测、隐私与架构取舍。",
+      "supportsConcepts": [
+        "Token与上下文窗口",
+        "短期记忆与长期记忆",
+        "多Agent协作与编排",
+        "工具校验、重试与幂等",
+        "可观测性与链路追踪"
+      ]
+    },
+    {
+      "id": "nc-agent-byte-2026-08",
+      "title": "字节 AI Agent 开发一面复盘",
+      "shortTitle": "字节Agent一面",
+      "url": "https://www.nowcoder.com/discuss/920075216078786560",
+      "type": "interview",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-20",
+      "company": "字节跳动",
+      "weight": 0.9,
+      "directQuestionEvidence": true,
+      "notes": "Plan-Then-Act、Checker、重规划与项目架构深挖；带总结加工，略降权。",
+      "supportsConcepts": [
+        "ReAct与Agent循环",
+        "Plan-and-Execute",
+        "短期记忆与长期记忆",
+        "Agent与Workflow"
+      ]
+    },
+    {
+      "id": "nc-agent-multi-2026-08",
+      "title": "网易、阿里、腾讯 AI-Agent 后端岗复盘",
+      "shortTitle": "三场Agent后端复盘",
+      "url": "https://www.nowcoder.com/discuss/919608103723622400",
+      "type": "interview",
+      "track": [
+        "backend",
+        "agent"
+      ],
+      "publishedAt": "2026-08-19",
+      "company": "网易/阿里/腾讯",
+      "weight": 0.9,
+      "directQuestionEvidence": true,
+      "notes": "框架选型、RAG分片、工具输出校验、规划、记忆、并发会话与后端基础。",
+      "supportsConcepts": [
+        "工具校验、重试与幂等",
+        "向量索引与Vector DB",
+        "短期记忆与长期记忆"
+      ]
+    },
+    {
+      "id": "nc-agent-data-2026-07",
+      "title": "Data Agent开发一面面经",
+      "shortTitle": "Data Agent面经",
+      "url": "https://www.nowcoder.com/discuss/905053490773250048",
+      "type": "interview",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-07-12",
+      "company": "快手/拼多多（原帖标注存在冲突）",
+      "weight": 0.72,
+      "directQuestionEvidence": true,
+      "notes": "原帖公司字段冲突，降低权重；问题覆盖ReAct、MCP、Skill、记忆与输出质量。",
+      "supportsConcepts": [
+        "ReAct与Agent循环",
+        "MCP与Function Calling",
+        "短期记忆与长期记忆",
+        "Skills与渐进式披露",
+        "Agent项目架构讲解"
+      ]
+    },
+    {
+      "id": "nc-agent-application-trend-2026-08",
+      "title": "Agent应用岗、框架岗与算法岗面试差异",
+      "shortTitle": "Agent岗位分型",
+      "url": "https://www.nowcoder.com/discuss/916347378695692288",
+      "type": "guide",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-10",
+      "company": "多公司",
+      "weight": 0.55,
+      "directQuestionEvidence": false,
+      "notes": "用于岗位匹配和分层，不计作独立面经。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "job-agent-python-2026-06",
+      "title": "AI Agent + Python 后端开发工程师岗位要求",
+      "shortTitle": "AI Agent+Python JD",
+      "url": "https://www.randstad.com/jobs/ai-agent-pythonhou-duan-kai-fa-gong-cheng-shi-_shang-hai-_46970632/",
+      "type": "job",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-06-05",
+      "company": "企业招聘",
+      "weight": 0.65,
+      "directQuestionEvidence": false,
+      "notes": "LangChain、LangGraph、MCP、Skills、多Agent与Python服务工程。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "job-java-backend-2026-04",
+      "title": "Java后端开发工程师岗位要求样本",
+      "shortTitle": "Java后端JD样本",
+      "url": "https://job.proginn.com/job/detail/5af3107a9a6a",
+      "type": "job",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-04-13",
+      "company": "企业招聘",
+      "weight": 0.55,
+      "directQuestionEvidence": false,
+      "notes": "Spring Boot、MySQL、索引、Redis、MQ、幂等与项目生命周期。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "javaguide-priority-2026",
+      "title": "2026 Java后端面试重点与复习顺序",
+      "shortTitle": "JavaGuide后端重点",
+      "url": "https://interview.javaguide.cn/interview-preparation/key-points-of-interview.html",
+      "type": "guide",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-07-01",
+      "company": "JavaGuide",
+      "weight": 0.5,
+      "directQuestionEvidence": false,
+      "notes": "长期维护资料，用于基础必要性和模块权重交叉验证。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "javaguide-ai-2026",
+      "title": "AI应用开发面试指南：LLM、Agent、RAG与系统设计",
+      "shortTitle": "JavaGuide AI指南",
+      "url": "https://javaguide.cn/ai/interview-questions/ai-interview-guide.html",
+      "type": "guide",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-16",
+      "company": "JavaGuide",
+      "weight": 0.55,
+      "directQuestionEvidence": false,
+      "notes": "覆盖Agent Loop、Memory、MCP、RAG、评测、权限和生产架构。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "xiaolin-backend-2026",
+      "title": "小林coding：网络、操作系统、MySQL、Redis与后端面经",
+      "shortTitle": "小林coding",
+      "url": "https://xiaolincoding.com/",
+      "type": "guide",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-06-28",
+      "company": "小林coding",
+      "weight": 0.45,
+      "directQuestionEvidence": false,
+      "notes": "用于基础解释与计算机基础覆盖审计。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "kamacoder-agent-2026",
+      "title": "Agent大厂面试题：ReAct、Function Calling、MCP与RAG",
+      "shortTitle": "卡码Agent题",
+      "url": "https://notes.kamacoder.com/interview/llm/agent_interview.html",
+      "type": "guide",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-06-01",
+      "company": "卡码笔记",
+      "weight": 0.42,
+      "directQuestionEvidence": false,
+      "notes": "用于概念覆盖和追问线索；不作为真实出现次数。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "elegy-agent-wiki-2026",
+      "title": "Agent / 大模型应用开发面经 Wiki",
+      "shortTitle": "Agent面经Wiki",
+      "url": "https://elegy.show/interview/",
+      "type": "guide",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-01",
+      "company": "多来源汇编",
+      "weight": 0.45,
+      "directQuestionEvidence": false,
+      "notes": "有来源索引；用于补充RAG、Agent、工程系统和真实情景题。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "mianshiya-hot-2026",
+      "title": "面试鸭热门面试题库榜",
+      "shortTitle": "面试鸭热门榜",
+      "url": "https://www.mianshiya.com/hot/question_bank",
+      "type": "guide",
+      "track": [
+        "backend",
+        "agent"
+      ],
+      "publishedAt": "2026-04-01",
+      "company": "面试鸭",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "2026-08-28 采集的近30天公开热门榜及Java热门200题快照，用于目录覆盖和用户关注度辅助信号；它不是直接面经，不参与真实面试频率统计。",
+      "supportsConcepts": [
+        "InnoDB、MyISAM与字段设计",
+        "深分页与大表查询优化",
+        "Redis事务、Lua与Pipeline",
+        "Redis跳表与概率数据结构",
+        "TCP与UDP及粘包拆包",
+        "Spring事务传播、回滚与失效",
+        "API网关与配置中心",
+        "消息积压、重试与死信队列",
+        "Netty Reactor与高性能网络",
+        "单例、工厂与策略模式"
+      ]
+    },
+    {
+      "id": "openai-chat-api-2026",
+      "title": "OpenAI Chat Completions API Reference",
+      "shortTitle": "OpenAI官方API",
+      "url": "https://developers.openai.com/api/reference/resources/chat",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "OpenAI",
+      "weight": 0.5,
+      "directQuestionEvidence": false,
+      "notes": "用于核对消息、流式响应和工具调用等API事实，不用于面试频率统计。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "retrieval-practice-review",
+      "title": "The critical role of retrieval practice in long-term retention",
+      "shortTitle": "主动回忆研究综述",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1364661310002081",
+      "type": "research",
+      "track": [
+        "backend",
+        "agent"
+      ],
+      "publishedAt": "2011-01-01",
+      "company": "Trends in Cognitive Sciences",
+      "weight": 0.4,
+      "directQuestionEvidence": false,
+      "notes": "用于产品的先回答后反馈设计，不参与技术题频率。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "oracle-java-api-21",
+      "title": "Java SE 21 API Specification：Collections Framework",
+      "shortTitle": "Oracle Java集合API",
+      "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "Oracle",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "持续更新的官方API入口；本日期为题库核查日期，用于集合与Java基础的进一步学习。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "oracle-java-concurrency-21",
+      "title": "Java SE 21 API：java.util.concurrent",
+      "shortTitle": "Oracle Java并发API",
+      "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "Oracle",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "线程池、并发集合、同步器、锁和原子类的官方API说明；不参与面经频率。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "oracle-java-spec-21",
+      "title": "Java SE 21 Language and Virtual Machine Specifications",
+      "shortTitle": "Oracle Java/JVM规范",
+      "url": "https://docs.oracle.com/en/java/javase/21/docs/specs/",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "Oracle",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对Java内存模型、类加载、线程与JVM语义；内容较深，建议在精简答案之后阅读。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "spring-framework-reference",
+      "title": "Spring Framework Reference：Core Technologies",
+      "shortTitle": "Spring官方参考",
+      "url": "https://docs.spring.io/spring-framework/reference/core.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "Spring",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "IoC、AOP、Bean与事务等核心技术的官方参考入口；持续更新，本日期为核查日期。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "mysql-innodb-84",
+      "title": "MySQL 8.4 Reference Manual：InnoDB",
+      "shortTitle": "MySQL InnoDB手册",
+      "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-storage-engine.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "Oracle MySQL",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "覆盖ACID、MVCC、索引、日志、锁、死锁与复制；用于技术事实核查。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "redis-data-types-official",
+      "title": "Redis Docs：Data Types",
+      "shortTitle": "Redis数据类型文档",
+      "url": "https://redis.io/docs/latest/develop/data-types/",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "Redis",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "Redis原生数据类型、适用场景与命令参考入口。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "redis-persistence-official",
+      "title": "Redis Docs：Persistence",
+      "shortTitle": "Redis持久化文档",
+      "url": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "Redis",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "RDB、AOF及组合策略的官方说明，用于核对持久化机制和取舍。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "kafka-official-design",
+      "title": "Apache Kafka Documentation and Design",
+      "shortTitle": "Kafka官方文档",
+      "url": "https://kafka.apache.org/documentation/",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "Apache Kafka",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "Topic、Partition、Producer、Consumer、顺序与投递语义的官方入口。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "mcp-architecture-official",
+      "title": "Model Context Protocol：Architecture",
+      "shortTitle": "MCP官方架构",
+      "url": "https://modelcontextprotocol.io/specification/2025-06-18/architecture",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2025-06-18",
+      "company": "Model Context Protocol",
+      "weight": 0.4,
+      "directQuestionEvidence": false,
+      "notes": "Host、Client、Server、能力协商与安全边界的协议规范。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "langgraph-official-persistence",
+      "title": "LangGraph Docs：Overview and Persistence",
+      "shortTitle": "LangGraph持久化文档",
+      "url": "https://docs.langchain.com/oss/python/langgraph/persistence",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-27",
+      "company": "LangChain",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "Checkpoint、状态历史、恢复、Human-in-the-loop与短期/长期记忆的官方说明。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "owasp-genai-top10-2026",
+      "title": "OWASP GenAI LLM Top 10 2026",
+      "shortTitle": "OWASP GenAI安全",
+      "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-04",
+      "company": "OWASP",
+      "weight": 0.4,
+      "directQuestionEvidence": false,
+      "notes": "用于Prompt注入、不安全输出处理、过度代理和敏感信息泄露等安全知识。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "openjdk-jep-444",
+      "title": "JEP 444：Virtual Threads",
+      "shortTitle": "OpenJDK虚拟线程",
+      "url": "https://openjdk.org/jeps/444",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2023-09-19",
+      "company": "OpenJDK",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "核对Java 21虚拟线程的目标、调度和适用边界；官方资料不参与面经频率。",
+      "supportsConcepts": [
+        "Java虚拟线程"
+      ]
+    },
+    {
+      "id": "redis-pipelining-official",
+      "title": "Redis Docs：Pipelining",
+      "shortTitle": "Redis Pipeline文档",
+      "url": "https://redis.io/docs/latest/develop/using-commands/pipelining/",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-28",
+      "company": "Redis",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "核对Pipeline减少网络往返的机制、内存批量和与事务/Lua的边界。",
+      "supportsConcepts": [
+        "Redis事务、Lua与Pipeline"
+      ]
+    },
+    {
+      "id": "rfc-8446-tls13",
+      "title": "RFC 8446：The Transport Layer Security Protocol Version 1.3",
+      "shortTitle": "TLS 1.3规范",
+      "url": "https://www.rfc-editor.org/rfc/rfc8446",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2018-08-01",
+      "company": "IETF",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对TLS 1.3握手、密钥协商与证书校验流程。",
+      "supportsConcepts": [
+        "TLS握手与证书校验"
+      ]
+    },
+    {
+      "id": "raft-paper",
+      "title": "In Search of an Understandable Consensus Algorithm (Raft)",
+      "shortTitle": "Raft论文",
+      "url": "https://raft.github.io/raft.pdf",
+      "type": "research",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2014-06-01",
+      "company": "Stanford",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对Raft领导者选举、日志复制和安全性；不参与直接面经频率。",
+      "supportsConcepts": [
+        "Raft、Paxos与ZAB共识"
+      ]
+    },
+    {
+      "id": "netty-user-guide-4x",
+      "title": "Netty User Guide for 4.x",
+      "shortTitle": "Netty官方指南",
+      "url": "https://netty.io/wiki/user-guide-for-4.x.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-28",
+      "company": "Netty",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对EventLoop、ChannelPipeline和高性能网络编程模型。",
+      "supportsConcepts": [
+        "Netty Reactor与高性能网络"
+      ]
+    },
+    {
+      "id": "nginx-admin-guide",
+      "title": "NGINX Admin Guide",
+      "shortTitle": "NGINX官方指南",
+      "url": "https://docs.nginx.com/nginx/admin-guide/",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-28",
+      "company": "F5 NGINX",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对反向代理、负载均衡、缓存和连接处理。",
+      "supportsConcepts": [
+        "Nginx、CDN与负载均衡"
+      ]
+    },
+    {
+      "id": "docker-java-containerize",
+      "title": "Docker Docs：Containerize a Java application",
+      "shortTitle": "Docker Java容器化",
+      "url": "https://docs.docker.com/guides/java/containerize/",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-28",
+      "company": "Docker",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对Java应用镜像构建、运行时配置与容器化实践。",
+      "supportsConcepts": [
+        "Docker容器与JVM部署"
+      ]
+    },
+    {
+      "id": "elasticsearch-inverted-index",
+      "title": "Elasticsearch Reference：Text analysis and search",
+      "shortTitle": "Elasticsearch搜索文档",
+      "url": "https://www.elastic.co/docs/manage-data/data-store/text-analysis",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-28",
+      "company": "Elastic",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对文本分析、倒排索引和搜索链路；官方资料不参与面经频率。",
+      "supportsConcepts": [
+        "Elasticsearch倒排索引与搜索"
+      ]
+    },
+    {
+      "id": "nc-xhs-backend-2025-10",
+      "title": "小红书后端开发面经Java",
+      "shortTitle": "小红书后端面经",
+      "url": "https://www.nowcoder.com/feed/main/detail/7082cd266472479494d3c5f83432127b?sourceSSR=users",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2025-10-19",
+      "company": "小红书",
+      "weight": 0.7,
+      "directQuestionEvidence": true,
+      "notes": "牛客托管的小红书公司面经；2025 年，按时效规则衰减。",
+      "supportsConcepts": []
+    },
+    {
+      "id": "nc-xhs-java-2025-11",
+      "title": "小红书后端Java秋招二面50min",
+      "shortTitle": "小红书Java二面",
+      "url": "https://www.nowcoder.com/feed/main/detail/e219c5c5371944ed873b86081f2596cc?sourceSSR=users",
+      "type": "interview",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2025-11-19",
+      "company": "小红书",
+      "weight": 0.7,
+      "directQuestionEvidence": true,
+      "notes": "牛客托管的小红书公司二面；2025 年，按时效规则衰减。",
+      "supportsConcepts": [
+        "ThreadPoolExecutor",
+        "线上OOM与内存泄漏排查",
+        "联合索引与最左前缀"
+      ]
+    },
+    {
+      "id": "nc-xhs-agent-2026",
+      "title": "小红书AI agent一面面经",
+      "shortTitle": "小红书Agent一面",
+      "url": "https://www.nowcoder.com/feed/main/detail/156254d412434209a16e9e71b7180905?toCommentId=22600140",
+      "type": "interview",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": null,
+      "company": "小红书",
+      "weight": 0.7,
+      "directQuestionEvidence": true,
+      "notes": "牛客托管的小红书公司 Agent 面经；发帖日期未标注，按旧来源系数衰减。",
+      "supportsConcepts": []
+    }
+  ]
+}

@@ -1,0 +1,489 @@
+{
+  "schemaVersion": 1,
+  "reviewBatches": [
+    { "id": "highest-ranked-core-1", "reviewedAt": "2026-08-28", "questionCount": 40 },
+    { "id": "highest-ranked-core-2", "reviewedAt": "2026-08-28", "questionCount": 40 }
+  ],
+  "questions": {
+    "ai-018-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Workflow 固定编排与 Agent 动态决策的定义、组合关系和适用边界。",
+      "sourceIds": ["javaguide-ai-2026", "kamacoder-agent-2026"]
+    },
+    "ai-018-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 DAG、状态机与观察—行动循环的执行差异，保留停止条件边界。",
+      "sourceIds": ["javaguide-ai-2026", "kamacoder-agent-2026"]
+    },
+    "ai-030-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查短期任务状态与跨会话长期记忆的定义、权限和时效边界。",
+      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+    },
+    "ai-030-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查上下文、checkpoint、持久化与按需检索注入的机制描述。",
+      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+    },
+    "ai-038-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已明确该题考查真实项目表达与架构取舍，不宣称存在固定 Agent 模板。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-038-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已将常见模块改为按真实请求链路选用，避免为凑架构虚构未使用组件。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "be-069-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 RDB、AOF 与混合持久化语义，数据丢失窗口与刷盘策略分开表述。",
+      "sourceIds": ["redis-persistence-official"]
+    },
+    "be-069-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已补充 fork、写时复制、AOF 刷盘与后台重写的机制和资源边界。",
+      "sourceIds": ["redis-persistence-official"]
+    },
+    "ai-001-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Token 与上下文窗口定义，避免将上下文容量等同模型知识或记忆。",
+      "sourceIds": ["openai-chat-api-2026", "javaguide-ai-2026"]
+    },
+    "ai-001-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查分词、输入输出预算与超限后的裁剪、压缩和外置检索机制。",
+      "sourceIds": ["openai-chat-api-2026", "javaguide-ai-2026"]
+    },
+    "ai-019-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 ReAct 的推理、行动、观察交替定义及其多步任务适用边界。",
+      "sourceIds": ["javaguide-ai-2026", "kamacoder-agent-2026"]
+    },
+    "ai-019-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查控制器、工具结果回写、完成判据与预算上限构成的循环机制。",
+      "sourceIds": ["javaguide-ai-2026", "kamacoder-agent-2026"]
+    },
+    "ai-026-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查输入输出校验、错误分类与副作用操作幂等三项可靠性边界。",
+      "sourceIds": ["javaguide-ai-2026", "owasp-genai-top10-2026"]
+    },
+    "ai-026-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Schema、业务权限、超时重试、熔断和幂等键的分层职责。",
+      "sourceIds": ["javaguide-ai-2026", "owasp-genai-top10-2026"]
+    },
+    "ai-037-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Agent 循环限制、等待超时和跨故障安全恢复的定义范围。",
+      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+    },
+    "ai-037-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查总预算、可重试性、checkpoint、熔断与外部副作用确认机制。",
+      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+    },
+    "be-042-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 OOM 与内存泄漏并非等价，保留内存区域和可回收性边界。",
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    "be-042-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查异常区域、堆转储、GC 日志、增长趋势和引用链的排查顺序。",
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    "be-072-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查缓存一致性本质是不一致窗口与新鲜度取舍，不承诺绝对强一致。",
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    "be-072-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Cache Aside 更新数据库后删缓存及删除失败后的可观测补偿机制。",
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+    },
+    "ai-010-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 RAG 外部检索证据、时效性与可追溯性的定义和能力边界。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-010-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查离线采集建索引与在线改写、召回、重排、组装、生成的完整链路。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-017-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查检索、生成和端到端评测需分层，Badcase 归因不能被单一总分替代。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-017-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Recall@K、MRR、NDCG、忠实度、引用及索引版本更新机制。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "be-057-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查联合索引复合有序键和最左前缀定义，避免机械化绝对规则。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-057-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已区分范围后的扫描区间定位与索引下推过滤，并保留优化器决定边界。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-059-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Explain 是执行计划入口，慢 SQL 仍需结合耗时、锁与负载证据。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-059-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查访问类型、索引、估算行数及 EXPLAIN ANALYZE 实际执行边界。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-067-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Redis 抽象数据类型与内部编码不是固定一一对应关系。",
+      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+    },
+    "be-067-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查整数、listpack、哈希表、跳表等内部结构及阈值转换表述。",
+      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+    },
+    "be-068-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Redis 低延迟来自内存、数据结构和事件驱动等组合因素。",
+      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+    },
+    "be-068-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已按版本区分命令执行主路径与可选网络 I/O 线程，避免单线程绝对化。",
+      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+    },
+    "ai-007-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查上下文工程覆盖信息选择、组织、压缩与隔离，不等同只改 Prompt。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-007-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查按预算从会话、记忆、检索、工具状态和业务规则构造快照的机制。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-027-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已按协议核查 MCP Host、Client、Server 的职责和工具、资源、提示边界。",
+      "sourceIds": ["mcp-architecture-official"]
+    },
+    "ai-027-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已补充 initialize、能力协商、发现调用、关闭与断线重建会话的生命周期。",
+      "sourceIds": ["mcp-architecture-official"]
+    },
+    "ai-028-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Function Calling 是模型接口形式，MCP 是外部能力连接协议。",
+      "sourceIds": ["mcp-architecture-official", "openai-chat-api-2026"]
+    },
+    "ai-028-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 MCP 工具发现、Schema 转换、模型调用意图与 Client 转发链路。",
+      "sourceIds": ["mcp-architecture-official", "openai-chat-api-2026"]
+    },
+    "ai-033-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Agent 评测需同时覆盖任务成功、过程、资源与安全约束。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-033-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查可重置环境、判定器、工具轨迹、步数、延迟、费用和违规事件机制。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-039-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 RAG 优化复盘必须先分层定位数据、召回、排序、上下文或生成问题。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "ai-039-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查带证据测试集、单变量实验、离线指标与线上成功率和延迟闭环。",
+      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+    },
+    "be-018-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已按 JDK 8 及以后实现核查哈希桶、链表与条件树化定义，区分接口契约和实现细节。",
+      "sourceIds": ["oracle-java-api-21", "javaguide-priority-2026"]
+    },
+    "be-018-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已补充索引定位、扩容拆分、树化阈值8与最小容量64的实现边界。",
+      "sourceIds": ["oracle-java-api-21", "javaguide-priority-2026"]
+    },
+    "be-035-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查线程复用、队列、生命周期和拒绝策略共同形成受控并发边界。",
+      "sourceIds": ["oracle-java-concurrency-21", "javaguide-priority-2026"]
+    },
+    "be-035-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已按 execute 实际路径核查核心线程、入队、扩至最大线程、拒绝及预启动边界。",
+      "sourceIds": ["oracle-java-concurrency-21", "javaguide-priority-2026"]
+    },
+    "be-048-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查自动配置依赖类路径、属性和已有Bean条件，不再表述成无条件或零配置。",
+      "sourceIds": ["spring-framework-reference", "javaguide-priority-2026"]
+    },
+    "be-048-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查自动配置候选导入、Conditional筛选与MissingBean条件退让，并区分Bean覆盖。",
+      "sourceIds": ["spring-framework-reference", "javaguide-priority-2026"]
+    },
+    "be-054-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 MySQL 连接、解析、预处理、优化、执行和存储引擎访问的层次。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-054-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 Server层执行计划到InnoDB接口的调用边界，并确认未沿用MySQL 8查询缓存旧说法。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-055-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查 B+树非叶路由键、叶子有序链和聚簇/二级叶子内容差异。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-055-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查高扇出、根到叶定位、范围扫描以及页分裂和缓冲池对实际I/O的影响。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-056-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查聚簇叶子整行、二级叶子聚簇键和仅缺少目标列时才回表的定义。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-056-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查主键、非空唯一索引、隐藏聚簇键的选择顺序及覆盖索引机制。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-058-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查所谓索引失效包含不可用于有序定位与优化器成本选择两类情况。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-058-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查函数、隐式转换、前导模糊匹配、统计信息与数据分布影响访问路径的机制。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-060-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查ACID四项定义，并保留一致性同时依赖数据库约束与业务不变量的边界。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-060-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查undo回滚与版本、redo崩溃恢复、锁与MVCC隔离的职责分工。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-062-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查MVCC服务一致性读、Read View保存事务边界且并非所有操作无锁。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-062-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查隐藏事务ID、回滚指针、undo版本链与活跃事务上下界的可见性判断。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-061-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查隔离级别定义必须结合数据库实现和快照读、锁定读类型说明。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-061-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查InnoDB RC每次一致性读与RR首次快照复用机制，并区分当前读锁行为。",
+      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+    },
+    "be-075-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查BigKey按内存、元素或操作成本判断，HotKey按访问集中判断且无固定阈值。",
+      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+    },
+    "be-075-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查事件循环、网络、复制和分片热点机制，并补充安全采样与异步删除边界。",
+      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+    },
+    "be-076-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查消息队列通过Broker缓冲和可配置持久化实现异步、解耦与削峰的边界。",
+      "sourceIds": ["kafka-official-design", "javaguide-priority-2026"]
+    },
+    "be-076-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查生产、Broker、消费确认链路，并明确积压只能吸收容量内的短期流量差。",
+      "sourceIds": ["kafka-official-design", "javaguide-priority-2026"]
+    },
+    "be-077-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查可靠投递覆盖发送、Broker持久化、消费处理与确认，但不承诺业务天然Exactly Once。",
+      "sourceIds": ["kafka-official-design", "javaguide-priority-2026"]
+    },
+    "be-077-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查至少一次、幂等消费、Outbox、事务消息和最终对账构成的端到端机制。",
+      "sourceIds": ["kafka-official-design", "javaguide-priority-2026"]
+    },
+    "be-087-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查最终一致性允许受控差异窗口，并以权威源和最大收敛时间定义目标。",
+      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+    },
+    "be-087-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查本地状态与事件、异步消费、幂等补偿和定时对账的收敛链路。",
+      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+    },
+    "ai-021-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查LangChain组件抽象与LangGraph状态编排侧重点，明确二者可组合也可独立使用。",
+      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+    },
+    "ai-021-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查LangGraph节点、状态、转移和checkpointer机制，并保留版本API快速变化边界。",
+      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+    },
+    "ai-022-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查状态机与Checkpoint定义，并明确状态快照不会自动回滚外部副作用。",
+      "sourceIds": ["langgraph-official-persistence"]
+    },
+    "ai-022-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查按执行步保存版本化状态、位置和线程标识，恢复后仍需工具幂等。",
+      "sourceIds": ["langgraph-official-persistence"]
+    },
+    "be-082-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查2PC、TCC、Saga和事务消息提供的保证、阻塞与补偿语义不同。",
+      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+    },
+    "be-082-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查2PC两阶段、TCC三动作和Saga本地事务补偿机制及外部可见边界。",
+      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+    },
+    "be-085-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查限流、熔断和降级的保护对象、触发条件与返回语义不可混用。",
+      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+    },
+    "be-085-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查令牌桶、熔断关闭/打开/半开状态及有证据降级的执行机制。",
+      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+    },
+    "be-086-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查幂等按业务操作、时间窗口和有效副作用定义，不要求HTTP响应字节相同。",
+      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+    },
+    "be-086-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-28",
+      "note": "已核查同一幂等键、请求一致性、原子状态判定、结果复用和记录过期机制。",
+      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+    }
+  }
+}

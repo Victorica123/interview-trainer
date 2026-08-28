@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-27T22:16:19.530Z",
+  "hints": {
+    "ReAct与Agent循环": [
+      {
+        "site": "官方文档",
+        "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+        "url": "https://arxiv.org/abs/2210.03629"
+      }
+    ],
+    "MCP与Function Calling": [
+      {
+        "site": "官方文档",
+        "title": "Model Context Protocol 官方文档",
+        "url": "https://modelcontextprotocol.io"
+      }
+    ],
+    "Spring Boot自动配置": [
+      {
+        "site": "JavaGuide",
+        "title": "Spring Boot自动配置原理",
+        "url": ""
+      }
+    ],
+    "RDB、AOF与混合持久化": [
+      {
+        "site": "小林coding",
+        "title": "Redis持久化机制",
+        "url": ""
+      }
+    ]
+  }
+}
