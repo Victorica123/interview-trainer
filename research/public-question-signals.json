@@ -1,0 +1,4803 @@
+{
+  "schemaVersion": 1,
+  "site": "面试鸭",
+  "sourceUrl": "https://www.mianshiya.com/hot/question_bank",
+  "capturedAt": "2026-08-28T19:02:56.665Z",
+  "period": "近30天",
+  "access": "title-only",
+  "policy": "仅记录公开列表中的榜单、热度、题目标题和链接；不访问或推断 VIP 答案。",
+  "banks": [
+    {
+      "bankId": "2052284728362414082",
+      "title": "AI Agent 智能体面试题",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082",
+      "rank": 1,
+      "heat": 5100,
+      "heatText": "5.1k",
+      "titleSnapshotIncluded": true
+    },
+    {
+      "bankId": "1860871861809897474",
+      "title": "Java 热门面试题 200 道",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474",
+      "rank": 2,
+      "heat": 2600,
+      "heatText": "2.6k",
+      "titleSnapshotIncluded": true
+    },
+    {
+      "bankId": "1906189461556076546",
+      "title": "最全AI大模型面试题库（含详细答案）",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546",
+      "rank": 3,
+      "heat": 2100,
+      "heatText": "2.1k",
+      "titleSnapshotIncluded": true
+    },
+    {
+      "bankId": "2082027801073975298",
+      "title": "Claude Code面试题",
+      "url": "https://www.mianshiya.com/bank/2082027801073975298",
+      "rank": 4,
+      "heat": 2100,
+      "heatText": "2.1k",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1787463103423897602",
+      "title": "Java 基础面试题",
+      "url": "https://www.mianshiya.com/bank/1787463103423897602",
+      "rank": 5,
+      "heat": 1800,
+      "heatText": "1.8k",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1791003439968264194",
+      "title": "MySQL 面试题",
+      "url": "https://www.mianshiya.com/bank/1791003439968264194",
+      "rank": 6,
+      "heat": 1800,
+      "heatText": "1.8k",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1791375592078610434",
+      "title": "Redis 面试题",
+      "url": "https://www.mianshiya.com/bank/1791375592078610434",
+      "rank": 7,
+      "heat": 1400,
+      "heatText": "1.4k",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1810643768400019458",
+      "title": "Python 面试题",
+      "url": "https://www.mianshiya.com/bank/1810643768400019458",
+      "rank": 8,
+      "heat": 1100,
+      "heatText": "1.1k",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1789249312885223425",
+      "title": "Java 并发面试题",
+      "url": "https://www.mianshiya.com/bank/1789249312885223425",
+      "rank": 9,
+      "heat": 1000,
+      "heatText": "1.0k",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1788408712975282177",
+      "title": "Java 集合面试题",
+      "url": "https://www.mianshiya.com/bank/1788408712975282177",
+      "rank": 10,
+      "heat": 982,
+      "heatText": "982",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1790948499480616961",
+      "title": "计算机网络面试题",
+      "url": "https://www.mianshiya.com/bank/1790948499480616961",
+      "rank": 11,
+      "heat": 952,
+      "heatText": "952",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1929747035048828930",
+      "title": "AI 超级智能体项目面试题",
+      "url": "https://www.mianshiya.com/bank/1929747035048828930",
+      "rank": 12,
+      "heat": 943,
+      "heatText": "943",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1797452903309508610",
+      "title": "SpringBoot 面试题",
+      "url": "https://www.mianshiya.com/bank/1797452903309508610",
+      "rank": 13,
+      "heat": 921,
+      "heatText": "921",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1795650132375805954",
+      "title": "后端场景面试题",
+      "url": "https://www.mianshiya.com/bank/1795650132375805954",
+      "rank": 14,
+      "heat": 896,
+      "heatText": "896",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1833388074819624961",
+      "title": "中小公司面经",
+      "url": "https://www.mianshiya.com/bank/1833388074819624961",
+      "rank": 15,
+      "heat": 888,
+      "heatText": "888",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1790683494127804418",
+      "title": "Spring 面试题",
+      "url": "https://www.mianshiya.com/bank/1790683494127804418",
+      "rank": 16,
+      "heat": 829,
+      "heatText": "829",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1789931432793948162",
+      "title": "Java 虚拟机面试题",
+      "url": "https://www.mianshiya.com/bank/1789931432793948162",
+      "rank": 17,
+      "heat": 827,
+      "heatText": "827",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1795650093939204097",
+      "title": "后端系统设计面试题",
+      "url": "https://www.mianshiya.com/bank/1795650093939204097",
+      "rank": 18,
+      "heat": 768,
+      "heatText": "768",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "2031640554575519745",
+      "title": "OpenClaw面试题",
+      "url": "https://www.mianshiya.com/bank/2031640554575519745",
+      "rank": 19,
+      "heat": 765,
+      "heatText": "765",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1801255316257841153",
+      "title": "消息队列面试题",
+      "url": "https://www.mianshiya.com/bank/1801255316257841153",
+      "rank": 20,
+      "heat": 762,
+      "heatText": "762",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1983888023644901377",
+      "title": "Java 面试题",
+      "url": "https://www.mianshiya.com/bank/1983888023644901377",
+      "rank": 21,
+      "heat": 748,
+      "heatText": "748",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1790684063773007874",
+      "title": "操作系统面试题",
+      "url": "https://www.mianshiya.com/bank/1790684063773007874",
+      "rank": 22,
+      "heat": 743,
+      "heatText": "743",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1797453053310402561",
+      "title": "SpringCloud 面试题",
+      "url": "https://www.mianshiya.com/bank/1797453053310402561",
+      "rank": 23,
+      "heat": 732,
+      "heatText": "732",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1860931478862618626",
+      "title": "前端热门面试题 200 道",
+      "url": "https://www.mianshiya.com/bank/1860931478862618626",
+      "rank": 24,
+      "heat": 719,
+      "heatText": "719",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1818997293283516418",
+      "title": "HR 面试题",
+      "url": "https://www.mianshiya.com/bank/1818997293283516418",
+      "rank": 25,
+      "heat": 671,
+      "heatText": "671",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1801559627969929217",
+      "title": "设计模式面试题",
+      "url": "https://www.mianshiya.com/bank/1801559627969929217",
+      "rank": 26,
+      "heat": 615,
+      "heatText": "615",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1817900864917000193",
+      "title": "Vue 基础面试题",
+      "url": "https://www.mianshiya.com/bank/1817900864917000193",
+      "rank": 27,
+      "heat": 613,
+      "heatText": "613",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1827968176412418050",
+      "title": "27 届校招后端热题",
+      "url": "https://www.mianshiya.com/bank/1827968176412418050",
+      "rank": 28,
+      "heat": 594,
+      "heatText": "594",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1850081848441466881",
+      "title": "RabbitMQ 面试题",
+      "url": "https://www.mianshiya.com/bank/1850081848441466881",
+      "rank": 29,
+      "heat": 586,
+      "heatText": "586",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1815649049726590977",
+      "title": "Git 基础面试题",
+      "url": "https://www.mianshiya.com/bank/1815649049726590977",
+      "rank": 30,
+      "heat": 573,
+      "heatText": "573",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1828256616509071362",
+      "title": "美团 Java 面经",
+      "url": "https://www.mianshiya.com/bank/1828256616509071362",
+      "rank": 31,
+      "heat": 490,
+      "heatText": "490",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1827949046607110145",
+      "title": "27 届校招 Java 热题",
+      "url": "https://www.mianshiya.com/bank/1827949046607110145",
+      "rank": 32,
+      "heat": 465,
+      "heatText": "465",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1801424748099739650",
+      "title": "MyBatis 面试题",
+      "url": "https://www.mianshiya.com/bank/1801424748099739650",
+      "rank": 33,
+      "heat": 455,
+      "heatText": "455",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1824363422328864769",
+      "title": "Nginx 面试题",
+      "url": "https://www.mianshiya.com/bank/1824363422328864769",
+      "rank": 34,
+      "heat": 446,
+      "heatText": "446",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1828348675744063489",
+      "title": "字节跳动 Java 面经",
+      "url": "https://www.mianshiya.com/bank/1828348675744063489",
+      "rank": 35,
+      "heat": 426,
+      "heatText": "426",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1811358596541374466",
+      "title": "DevOps 运维面试题",
+      "url": "https://www.mianshiya.com/bank/1811358596541374466",
+      "rank": 36,
+      "heat": 417,
+      "heatText": "417",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1824727406021644290",
+      "title": "算法和数据结构面试题",
+      "url": "https://www.mianshiya.com/bank/1824727406021644290",
+      "rank": 37,
+      "heat": 407,
+      "heatText": "407",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1811358545672855553",
+      "title": "系统运维面试题",
+      "url": "https://www.mianshiya.com/bank/1811358545672855553",
+      "rank": 38,
+      "heat": 405,
+      "heatText": "405",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1812067560819048449",
+      "title": "Linux 系统面试题",
+      "url": "https://www.mianshiya.com/bank/1812067560819048449",
+      "rank": 39,
+      "heat": 394,
+      "heatText": "394",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1811358325988474882",
+      "title": "IT 运维工程师面试题",
+      "url": "https://www.mianshiya.com/bank/1811358325988474882",
+      "rank": 40,
+      "heat": 387,
+      "heatText": "387",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1983888665591517186",
+      "title": "C++ 面试题",
+      "url": "https://www.mianshiya.com/bank/1983888665591517186",
+      "rank": 41,
+      "heat": 372,
+      "heatText": "372",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1815650476159049730",
+      "title": "测试基础理论面试题",
+      "url": "https://www.mianshiya.com/bank/1815650476159049730",
+      "rank": 42,
+      "heat": 360,
+      "heatText": "360",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1821834688998707201",
+      "title": "AI 应用面试题",
+      "url": "https://www.mianshiya.com/bank/1821834688998707201",
+      "rank": 43,
+      "heat": 352,
+      "heatText": "352",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1824727630718898177",
+      "title": "数据结构面试题",
+      "url": "https://www.mianshiya.com/bank/1824727630718898177",
+      "rank": 44,
+      "heat": 347,
+      "heatText": "347",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1812067352871829505",
+      "title": "Docker 面试题",
+      "url": "https://www.mianshiya.com/bank/1812067352871829505",
+      "rank": 45,
+      "heat": 346,
+      "heatText": "346",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1985254538721894401",
+      "title": "字节跳动面试题",
+      "url": "https://www.mianshiya.com/bank/1985254538721894401",
+      "rank": 46,
+      "heat": 344,
+      "heatText": "344",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1983892313021190145",
+      "title": "Go 面试题",
+      "url": "https://www.mianshiya.com/bank/1983892313021190145",
+      "rank": 47,
+      "heat": 332,
+      "heatText": "332",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1817900465338241026",
+      "title": "React 基础面试题",
+      "url": "https://www.mianshiya.com/bank/1817900465338241026",
+      "rank": 48,
+      "heat": 330,
+      "heatText": "330",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1820434920244424705",
+      "title": "前端手写代码面试题",
+      "url": "https://www.mianshiya.com/bank/1820434920244424705",
+      "rank": 49,
+      "heat": 329,
+      "heatText": "329",
+      "titleSnapshotIncluded": false
+    },
+    {
+      "bankId": "1828313560884174849",
+      "title": "阿里巴巴 Java 面经",
+      "url": "https://www.mianshiya.com/bank/1828313560884174849",
+      "rank": 50,
+      "heat": 308,
+      "heatText": "308",
+      "titleSnapshotIncluded": false
+    }
+  ],
+  "questions": [
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284768782921729",
+      "position": 1,
+      "title": "什么是 AI Agent？它和直接调用大模型 API 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284768782921729"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284768199913474",
+      "position": 2,
+      "title": "AI Agent 的核心组件有哪些？感知、决策、执行、记忆各自的作用是什么？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284768199913474"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284775367979010",
+      "position": 3,
+      "title": "什么是 AI Agent 中的工具调用（Tool Calling）？它的基本流程是怎样的？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284775367979010"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284774025801729",
+      "position": 4,
+      "title": "什么是 Agent 的上下文窗口？为什么它是 Agent 工程中最核心的约束？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284774025801729"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284769391095809",
+      "position": 5,
+      "title": "AI Agent 如何处理工具调用返回超大结果的问题？有哪些实用的解决方案？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284769391095809"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284763179331586",
+      "position": 6,
+      "title": "什么是 Agent Loop（智能体循环）？一个典型的 Agent Loop 包含哪些步骤？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284763179331586"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284765498781698",
+      "position": 7,
+      "title": "ReAct 推理范式是什么？它如何让 Agent 更可靠地完成任务？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284765498781698"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284762055258114",
+      "position": 8,
+      "title": "什么是 Reflexion？它和 ReAct 有什么区别？如何提升 Agent 的自我纠错能力？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284762055258114"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284762629877762",
+      "position": 9,
+      "title": "Agent 系统中如何设计优雅的终止条件？避免死循环有哪些策略？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284762629877762"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284767310721026",
+      "position": 10,
+      "title": "MCP 协议是什么？它在 AI Agent 系统中解决了什么问题？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284767310721026"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284766648020994",
+      "position": 11,
+      "title": "MCP 协议的架构包含哪些核心组件？Server 和 Client 分别负责什么？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284766648020994"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284766136315906",
+      "position": 12,
+      "title": "什么是 A2A 协议？它和 MCP 协议有什么区别？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284766136315906"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284761493221377",
+      "position": 13,
+      "title": "A2A 协议中的 Agent Card 是什么？它在多 Agent 发现和协作中起什么作用？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284761493221377"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284770259316738",
+      "position": 14,
+      "title": "当对话历史超出上下文窗口时，有哪些上下文压缩策略？各自的优缺点是什么？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284770259316738"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284770817159170",
+      "position": 15,
+      "title": "MCP 协议和 A2A 协议如何协同工作？请设计一个同时使用两者的多 Agent 系统架构",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284770817159170"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284771488247809",
+      "position": 16,
+      "title": "在生产环境中，如何保证 Agent 系统的安全性？需要防范哪些风险？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284771488247809"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284772746539009",
+      "position": 17,
+      "title": "多 Agent 协作有哪些常见的编排模式？各自适合什么场景？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284772746539009"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284773392461825",
+      "position": 18,
+      "title": "Agent 系统中的 Function Calling 和 MCP 有什么区别？各自的优缺点是什么？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284773392461825"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284774613004289",
+      "position": 19,
+      "title": "AI Agent 的记忆机制有哪些类型？短期记忆和长期记忆分别怎么实现？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284774613004289"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284764907384833",
+      "position": 20,
+      "title": "如何让 AI Agent 具备长期记忆能力？有哪些存储和检索方案？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284764907384833"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284775955181570",
+      "position": 21,
+      "title": "如何设计 AI Agent 的工具权限控制？不同场景下的工具应该有什么样的权限差异？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284775955181570"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284776634658817",
+      "position": 22,
+      "title": "子 Agent（Subagent）模式有什么优势和挑战？父 Agent 调用子 Agent 时需要考虑哪些边界问题？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284776634658817"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284772146753537",
+      "position": 23,
+      "title": "如果让你从零设计一个 Agent 框架，你会优先实现哪些核心模块？为什么？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284772146753537"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284763770728450",
+      "position": 24,
+      "title": "如何设计一个生产级的 Agent 系统架构？需要考虑哪些关键模块？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284763770728450"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "2052284764349542401",
+      "position": 25,
+      "title": "如何评估 AI Agent 的效果？有哪些评估维度和方法？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/2052284764349542401"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1914241826055909377",
+      "position": 26,
+      "title": "MCP 的工作流程是什么？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1914241826055909377"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1914241826546642946",
+      "position": 27,
+      "title": "MCP 协议安全性设计包含哪些层面？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1914241826546642946"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1914241826789912577",
+      "position": 28,
+      "title": "如何将已有的应用转换成 MCP 服务？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1914241826789912577"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1915679443658973185",
+      "position": 29,
+      "title": "什么是 Manus？说说你对它的了解",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1915679443658973185"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1915691942156283906",
+      "position": 30,
+      "title": "Computer Use 是什么？说说它的原理",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1915691942156283906"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1915710074900160513",
+      "position": 31,
+      "title": "ReAct 是什么？说说它的原理",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1915710074900160513"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916410560665989122",
+      "position": 32,
+      "title": "在大模型应用中，通常如何实现长短期记忆机制？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916410560665989122"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425038718943233",
+      "position": 33,
+      "title": "什么是大模型 Agent？它与传统的 AI 系统有什么不同？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425038718943233"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425039008350210",
+      "position": 34,
+      "title": "LLM Agent 的基本架构有哪些组成部分？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425039008350210"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425039243231233",
+      "position": 35,
+      "title": "LLM Agent 常见功能有哪些？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425039243231233"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425039528443905",
+      "position": 36,
+      "title": "Agent智能体的工作过程是怎样的？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425039528443905"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425039918514178",
+      "position": 37,
+      "title": "如何让 LLM Agent 具备长期记忆能力？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425039918514178"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425040195338241",
+      "position": 38,
+      "title": "LLM Agent 如何进行动态 API 调用？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425040195338241"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425040451190785",
+      "position": 39,
+      "title": "LLM Agent 在多模态任务中如何执行推理？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425040451190785"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425040719626241",
+      "position": 40,
+      "title": "市面上有哪些主流的 LLM Agent 框架？各自的特点是什么？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425040719626241"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425042661588994",
+      "position": 41,
+      "title": "AutoGPT 如何实现自主决策？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425042661588994"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425042913247233",
+      "position": 42,
+      "title": "什么是 A2A 协议，它的核心架构及主要组件有哪些？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425042913247233"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425043148128258",
+      "position": 43,
+      "title": "A2A 协议有哪五大设计原则？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425043148128258"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425043395592193",
+      "position": 44,
+      "title": "A2A 协议的工作原理是怎样的？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425043395592193"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916425043643056130",
+      "position": 45,
+      "title": "A2A 协议的工作流程是怎样的？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916425043643056130"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1916432330246103042",
+      "position": 46,
+      "title": "A2A 协议 与 MCP 协议的关系是怎样的？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1916432330246103042"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1924281357186498562",
+      "position": 47,
+      "title": "什么是 Google ADK？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1924281357186498562"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1929742306206928897",
+      "position": 48,
+      "title": "什么是工具调用 Tool Calling？如何利用 Spring AI 实现工具调用？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1929742306206928897"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1929742309348462593",
+      "position": 49,
+      "title": "什么是 OpenManus？它的实现原理是什么？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1929742309348462593"
+    },
+    {
+      "bankId": "2052284728362414082",
+      "questionId": "1935997509803618306",
+      "position": 50,
+      "title": "Agent 死循环问题有遇到过吗？如何解决？",
+      "url": "https://www.mianshiya.com/bank/2052284728362414082/question/1935997509803618306"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1834107117591187457",
+      "position": 1,
+      "title": "说说 Java 中 HashMap 的原理？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1834107117591187457"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294813114369",
+      "position": 2,
+      "title": "Java 中 ConcurrentHashMap 1.7 和 1.8 之间有哪些区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294813114369"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294771171329",
+      "position": 3,
+      "title": "为什么 JDK 1.8 对 HashMap 进行了红黑树的改动？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294771171329"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294775365634",
+      "position": 4,
+      "title": "JDK 1.8 对 HashMap 除了红黑树还进行了哪些改动？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294775365634"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294699868162",
+      "position": 5,
+      "title": "Java 中有哪些集合类？请简单介绍",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294699868162"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295450648578",
+      "position": 6,
+      "title": "MySQL 索引的最左前缀匹配原则是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295450648578"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295496785922",
+      "position": 7,
+      "title": "数据库的脏读、不可重复读和幻读分别是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295496785922"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295433871361",
+      "position": 8,
+      "title": "MySQL 的存储引擎有哪些？它们之间有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295433871361"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295454842881",
+      "position": 9,
+      "title": "MySQL 的覆盖索引是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295454842881"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295438065665",
+      "position": 10,
+      "title": "MySQL 的索引类型有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295438065665"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295459037186",
+      "position": 11,
+      "title": "MySQL 的索引下推是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295459037186"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295442259970",
+      "position": 12,
+      "title": "MySQL InnoDB 引擎中的聚簇索引和非聚簇索引有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295442259970"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295446454273",
+      "position": 13,
+      "title": "MySQL 中的回表是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295446454273"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295463231490",
+      "position": 14,
+      "title": "MySQL 中使用索引一定有效吗？如何排查索引效果？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295463231490"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1824003166933868546",
+      "position": 15,
+      "title": "RabbitMQ 怎么实现延迟队列？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1824003166933868546"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295467425794",
+      "position": 16,
+      "title": "MySQL 中的索引数量是否越多越好？为什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295467425794"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1806753671221846017",
+      "position": 17,
+      "title": "为什么 RocketMQ 不使用 Zookeeper 作为注册中心呢？而选择自己实现 NameServer？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1806753671221846017"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295471620098",
+      "position": 18,
+      "title": "请详细描述 MySQL 的 B+ 树中查询数据的全过程",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295471620098"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1803522489495052290",
+      "position": 19,
+      "title": "RabbitMQ 中消息什么时候会进入死信交换机？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1803522489495052290"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295475814402",
+      "position": 20,
+      "title": "为什么 MySQL 选择使用 B+ 树作为索引结构？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295475814402"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1803521393330479105",
+      "position": 21,
+      "title": "RabbitMQ 中无法路由的消息会去到哪里？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1803521393330479105"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1849347477245734913",
+      "position": 22,
+      "title": "MySQL 三层 B+ 树能存多少数据？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1849347477245734913"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1803241276880445442",
+      "position": 23,
+      "title": "Kafka为什么要抛弃  Zookeeper？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1803241276880445442"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295429677057",
+      "position": 24,
+      "title": "详细描述一条 SQL 语句在 MySQL 中的执行过程。",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295429677057"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1803079507444752385",
+      "position": 25,
+      "title": "Kafka 中  Zookeeper 的作用？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1803079507444752385"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295475814403",
+      "position": 26,
+      "title": "MySQL 是如何实现事务的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295475814403"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295228350466",
+      "position": 27,
+      "title": "为什么 Java 8 移除了永久代（PermGen）并引入了元空间（Metaspace）？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295228350466"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802605640969166849",
+      "position": 28,
+      "title": "说一下 Kafka 中关于事务消息的实现？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802605640969166849"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1849298413057683458",
+      "position": 29,
+      "title": "MySQL 事务的二阶段提交是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1849298413057683458"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802465623588282370",
+      "position": 30,
+      "title": "说一下 RocketMQ 中关于事务消息的实现？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802465623588282370"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295480008706",
+      "position": 31,
+      "title": "MySQL 中长事务可能会导致哪些问题？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295480008706"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802338786811912193",
+      "position": 32,
+      "title": "RocketMQ 的事务消息有什么缺点？你还了解过别的事务消息实现吗？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802338786811912193"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295484203009",
+      "position": 33,
+      "title": "MySQL 中的 MVCC 是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295484203009"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801517574921723905",
+      "position": 34,
+      "title": "为什么需要消息队列？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801517574921723905"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295492591617",
+      "position": 35,
+      "title": "MySQL 中的事务隔离级别有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295492591617"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801520684633235458",
+      "position": 36,
+      "title": "说一下消息队列的模型有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801520684633235458"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295492591618",
+      "position": 37,
+      "title": "MySQL 默认的事务隔离级别是什么？为什么选择这个级别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295492591618"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1804014835632644098",
+      "position": 38,
+      "title": "谈谈你了解的最常见的几种设计模式，说说他们的应用场景",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1804014835632644098"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295500980225",
+      "position": 39,
+      "title": "MySQL 中有哪些锁类型？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295500980225"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1803305303140720641",
+      "position": 40,
+      "title": "什么是策略模式？一般用在什么场景？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1803305303140720641"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295505174530",
+      "position": 41,
+      "title": "MySQL 的乐观锁和悲观锁是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295505174530"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1803305518413373442",
+      "position": 42,
+      "title": "什么是责任链模式？一般用在什么场景？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1803305518413373442"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295505174531",
+      "position": 43,
+      "title": "MySQL 中如果发生死锁应该如何解决？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295505174531"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802939152477790209",
+      "position": 44,
+      "title": "什么是模板方法模式？一般用在什么场景？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802939152477790209"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295513563137",
+      "position": 45,
+      "title": "MySQL 中 count(*)、count(1) 和 count(字段名) 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295513563137"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802938904808333313",
+      "position": 46,
+      "title": "什么是观察者模式？一般用在什么场景？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802938904808333313"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295521951745",
+      "position": 47,
+      "title": "MySQL 中如何进行 SQL 调优？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295521951745"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802557695141945346",
+      "position": 48,
+      "title": "什么是代理模式？一般用在什么场景？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802557695141945346"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1797569186902441985",
+      "position": 49,
+      "title": "说说 Spring 启动过程？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1797569186902441985"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295651975169",
+      "position": 50,
+      "title": "Redis 集群的实现原理是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295651975169"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295509368833",
+      "position": 51,
+      "title": "如何使用 MySQL 的 EXPLAIN 语句进行查询分析？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295509368833"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295408705538",
+      "position": 52,
+      "title": "你了解的 Spring 都用到哪些设计模式？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295408705538"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295651975170",
+      "position": 53,
+      "title": "Redis 集群会出现脑裂问题吗？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295651975170"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802171196621791233",
+      "position": 54,
+      "title": "请描述简单工厂模式的工作原理。",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802171196621791233"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295417094146",
+      "position": 55,
+      "title": "Spring 有哪几种事务传播行为?",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295417094146"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295660363778",
+      "position": 56,
+      "title": "Redis 中如何实现分布式锁？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295660363778"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295572283394",
+      "position": 57,
+      "title": "MySQL 中如何解决深度分页的问题？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295572283394"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1846441429268488194",
+      "position": 58,
+      "title": "说说 Springboot 的启动流程？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1846441429268488194"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295668752385",
+      "position": 59,
+      "title": "Redis 实现分布式锁时可能遇到的问题有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295668752385"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801818998708707329",
+      "position": 60,
+      "title": "工厂模式和抽象工厂模式有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801818998708707329"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1846171814407757826",
+      "position": 61,
+      "title": "SpringBoot 是如何实现自动配置的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1846171814407757826"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295538728962",
+      "position": 62,
+      "title": "什么是 MySQL 的主从同步机制？它是如何实现的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295538728962"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1833406734003052546",
+      "position": 63,
+      "title": "说说 Redisson 分布式锁的原理?",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1833406734003052546"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1797866285598638082",
+      "position": 64,
+      "title": "如何理解 Spring Boot 中的 starter？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1797866285598638082"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295681335299",
+      "position": 65,
+      "title": "如何使用 Redis 快速实现排行榜？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295681335299"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295677140994",
+      "position": 66,
+      "title": "Redis 中如何保证缓存与数据库的数据一致性？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295677140994"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295731666945",
+      "position": 67,
+      "title": "说说 TCP 的三次握手？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295731666945"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1804893517888823297",
+      "position": 68,
+      "title": "简单说说 Netty 的零拷贝机制？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1804893517888823297"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1795829113869697025",
+      "position": 69,
+      "title": "什么是配置中心？有哪些常见的配置中心？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1795829113869697025"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295740055554",
+      "position": 70,
+      "title": "说说 TCP 的四次挥手？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295740055554"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1805371281377009665",
+      "position": 71,
+      "title": "Netty 是如何解决粘包和拆包问题的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1805371281377009665"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1796710513191813121",
+      "position": 72,
+      "title": "Spring Boot 是如何通过 main 方法启动 web 项目的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1796710513191813121"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1797616463733981185",
+      "position": 73,
+      "title": "什么情况下需要使用分布式事务，有哪些方案？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1797616463733981185"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295589060609",
+      "position": 74,
+      "title": "Redis 为什么这么快？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295589060609"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295689723905",
+      "position": 75,
+      "title": "如何使用 Redis 快速实现布隆过滤器？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295689723905"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294758588418",
+      "position": 76,
+      "title": "为什么 Java 中 HashMap 的默认负载因子是 0.75？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294758588418"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295542923266",
+      "position": 77,
+      "title": "如何处理 MySQL 的主从同步延迟？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295542923266"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1806039947026817025",
+      "position": 78,
+      "title": "Netty 如何解决 JDK NIO 中的空轮询 Bug？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1806039947026817025"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294750199809",
+      "position": 79,
+      "title": "Java 中 HashMap 的扩容机制是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294750199809"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295593254914",
+      "position": 80,
+      "title": "为什么 Redis 设计为单线程？6.0 版本为何引入多线程？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295593254914"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295748444163",
+      "position": 81,
+      "title": "为什么 TCP 挥手需要有 TIME_WAIT 状态?",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295748444163"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1796707609684869122",
+      "position": 82,
+      "title": "Spring Boot  的核心特性有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1796707609684869122"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294754394113",
+      "position": 83,
+      "title": "为什么 HashMap 在 Java 中扩容时采用 2 的 n 次方倍？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294754394113"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295698112514",
+      "position": 84,
+      "title": "你在项目中使用的 Redis 客户端是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295698112514"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295761027073",
+      "position": 85,
+      "title": "TCP 超时重传机制是为了解决什么问题？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295761027073"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802872613967831042",
+      "position": 86,
+      "title": "简述 MyBatis 的插件运行原理，以及如何编写一个插件？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802872613967831042"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294704062466",
+      "position": 87,
+      "title": "数组和链表在 Java 中的区别是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294704062466"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295593254915",
+      "position": 88,
+      "title": "Redis 中常见的数据类型有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295593254915"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295777804290",
+      "position": 89,
+      "title": "TCP 滑动窗口的作用是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295777804290"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1804877046357893121",
+      "position": 90,
+      "title": "介绍一下 Reactor 线程模型？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1804877046357893121"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1830885090747584514",
+      "position": 91,
+      "title": "Java 线程池核心线程数在运行过程中能修改吗？如何修改？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1830885090747584514"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295790387202",
+      "position": 92,
+      "title": "TCP/IP 四层模型是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295790387202"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802597639336042498",
+      "position": 93,
+      "title": "说说 MyBatis 的缓存机制？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802597639336042498"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1796705417326362626",
+      "position": 94,
+      "title": "什么是 Spring Boot？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1796705417326362626"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1828722732530307073",
+      "position": 95,
+      "title": "Java 中如何创建多线程？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1828722732530307073"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295597449217",
+      "position": 96,
+      "title": "Redis 中跳表的实现原理是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295597449217"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295702306818",
+      "position": 97,
+      "title": "Redis 性能瓶颈时如何处理？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295702306818"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295798775809",
+      "position": 98,
+      "title": "OSI 七层模型是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295798775809"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295018635266",
+      "position": 99,
+      "title": "说说 AQS 吧？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295018635266"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295798775810",
+      "position": 100,
+      "title": "Cookie、Session、Token 之间有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295798775810"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295542923267",
+      "position": 101,
+      "title": "什么是分库分表？分库分表有哪些类型（或策略）？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295542923267"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801499613443989505",
+      "position": 102,
+      "title": "MyBatis 中 #{} 和 ${} 的区别是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801499613443989505"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295047995393",
+      "position": 103,
+      "title": "Java 中的 final 关键字是否能保证变量的可见性？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295047995393"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295601643521",
+      "position": 104,
+      "title": "Redis 的 hash 是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295601643521"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1826556994582671361",
+      "position": 105,
+      "title": "从网络角度来看，用户从输入网址到网页显示，期间发生了什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1826556994582671361"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1818923905676939265",
+      "position": 106,
+      "title": "Dubbo 和 Spring Cloud Gateway 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1818923905676939265"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295035412481",
+      "position": 107,
+      "title": "什么是 Java 中的原子性、可见性和有序性？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295035412481"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294859251714",
+      "position": 108,
+      "title": "线程和进程有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294859251714"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1804476796656885762",
+      "position": 109,
+      "title": "说说你知道的几种 I/O 模型",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1804476796656885762"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801451484724142081",
+      "position": 110,
+      "title": "MyBatis 与 Hibernate 有哪些不同？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801451484724142081"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295031218178",
+      "position": 111,
+      "title": "什么是 Java 内存模型（JMM）？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295031218178"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295605837825",
+      "position": 112,
+      "title": "Redis 和 Memcached 有哪些区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295605837825"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295861690370",
+      "position": 113,
+      "title": "什么是物理地址，什么是逻辑地址？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295861690370"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1818921408619024386",
+      "position": 114,
+      "title": "说说什么是 API 网关？它有什么作用？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1818921408619024386"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295027023873",
+      "position": 115,
+      "title": "什么是 Java 的 CAS（Compare-And-Swap）操作？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295027023873"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295857496065",
+      "position": 116,
+      "title": "Select、Poll、Epoll 之间有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295857496065"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1772519661640982530",
+      "position": 117,
+      "title": "什么是 MyBatis-Plus？它有什么作用？它和 MyBatis 有哪些区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1772519661640982530"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295073161218",
+      "position": 118,
+      "title": "为什么 Java 中的 ThreadLocal 对 key 的引用为弱引用？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295073161218"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295161241602",
+      "position": 119,
+      "title": "编译执行与解释执行的区别是什么？JVM 使用哪种方式？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295161241602"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295610032129",
+      "position": 120,
+      "title": "Redis 支持事务吗？如何实现？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295610032129"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295706501122",
+      "position": 121,
+      "title": "到底什么是 TCP 连接？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295706501122"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801964482106564610",
+      "position": 122,
+      "title": "消息队列如何处理重复消息（保证消息的幂等性）？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801964482106564610"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295110909953",
+      "position": 123,
+      "title": "Java 中什么情况会导致死锁？如何避免？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295110909953"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802305740993798145",
+      "position": 124,
+      "title": "消息队列如何保证消息的有序性（顺序性）？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802305740993798145"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1804860496687079425",
+      "position": 125,
+      "title": "说一下 Netty 的应用场景？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1804860496687079425"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295329013762",
+      "position": 126,
+      "title": "什么是 Spring IOC？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295329013762"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294892806145",
+      "position": 127,
+      "title": "你了解 Java 线程池的原理吗？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294892806145"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295614226434",
+      "position": 128,
+      "title": "Redis 数据过期后的删除策略是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295614226434"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802306411117748226",
+      "position": 129,
+      "title": "消息队列如何处理消息堆积？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802306411117748226"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1800278016326443010",
+      "position": 130,
+      "title": "什么是服务熔断？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1800278016326443010"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294909583361",
+      "position": 131,
+      "title": "Java 线程池有哪些拒绝策略？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294909583361"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295710695425",
+      "position": 132,
+      "title": "HTTP 1.0 和 2.0 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295710695425"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801955779278086145",
+      "position": 133,
+      "title": "消息队列如何保证消息不丢失？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801955779278086145"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295366762497",
+      "position": 134,
+      "title": "Spring AOP默认用的是什么动态代理，两者的区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295366762497"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294905389057",
+      "position": 135,
+      "title": "如何合理地设置 Java 线程池的线程数？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294905389057"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295618420737",
+      "position": 136,
+      "title": "Redis 中有哪些内存淘汰策略？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295618420737"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1854440758043156482",
+      "position": 137,
+      "title": "MySQL 中 如果我 select * from 一个有 1000 万行的表，内存会飙升么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1854440758043156482"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802333941753257985",
+      "position": 138,
+      "title": "消息队列设计成推消息还是拉消息？推拉模式的优缺点？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802333941753257985"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294930554882",
+      "position": 139,
+      "title": "你使用过哪些 Java 并发工具类？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294930554882"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801818229490130946",
+      "position": 140,
+      "title": "什么是设计模式？请简述其作用。",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801818229490130946"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295362568194",
+      "position": 141,
+      "title": "什么是 AOP？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295362568194"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1800275120583155713",
+      "position": 142,
+      "title": "什么是服务降级？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1800275120583155713"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294976692225",
+      "position": 143,
+      "title": "Synchronized 和 ReentrantLock 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294976692225"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295618420738",
+      "position": 144,
+      "title": "Redis 的 Lua 脚本功能是什么？如何使用？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295618420738"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295710695426",
+      "position": 145,
+      "title": "HTTP 2.0 和 3.0 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295710695426"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801818854546284546",
+      "position": 146,
+      "title": "单例模式有哪几种实现？如何保证线程安全？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801818854546284546"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294980886530",
+      "position": 147,
+      "title": "Java 的 synchronized 是怎么实现的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294980886530"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1818587621468135426",
+      "position": 148,
+      "title": "如何设计一个秒杀功能？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1818587621468135426"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1805360631846215681",
+      "position": 149,
+      "title": "为什么不选择使用原生的 NIO 而选择使用 Netty 呢？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1805360631846215681"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295320625154",
+      "position": 150,
+      "title": "看过源码吗？说下 Spring 由哪些重要的模块组成？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295320625154"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295010246658",
+      "position": 151,
+      "title": "如何优化 Java 中的锁的使用？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295010246658"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295622615042",
+      "position": 152,
+      "title": "Redis 的 Pipeline 功能是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295622615042"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1801517567179038722",
+      "position": 153,
+      "title": "让你设计一个分布式 ID 发号器，怎么设计？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1801517567179038722"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1800272846473469954",
+      "position": 154,
+      "title": "什么是服务雪崩？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1800272846473469954"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1854787878122102785",
+      "position": 155,
+      "title": "JVM 由哪些部分组成？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1854787878122102785"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295584866306",
+      "position": 156,
+      "title": "Redis 通常应用于哪些场景？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295584866306"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1796413025973043202",
+      "position": 157,
+      "title": "让你设计一个短链系统，怎么设计？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1796413025973043202"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295379345410",
+      "position": 158,
+      "title": "什么是循环依赖（常问）？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295379345410"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295303847937",
+      "position": 159,
+      "title": "JVM 垃圾回收调优的主要目标是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295303847937"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295626809345",
+      "position": 160,
+      "title": "Redis 中的 Big Key 问题是什么？如何解决？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295626809345"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295714889729",
+      "position": 161,
+      "title": "HTTP 和 HTTPS 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295714889729"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1800458377811533825",
+      "position": 162,
+      "title": "分布式锁一般都怎样实现？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1800458377811533825"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295308042242",
+      "position": 163,
+      "title": "如何对 Java 的垃圾回收进行调优？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295308042242"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1772882950057148418",
+      "position": 164,
+      "title": "如何设计一个点赞系统？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1772882950057148418"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295383539714",
+      "position": 165,
+      "title": "Spring 如何解决循环依赖？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295383539714"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1799803242210992130",
+      "position": 166,
+      "title": "HTTP 与 RPC 之间的区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1799803242210992130"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295312236546",
+      "position": 167,
+      "title": "常用的 JVM 配置参数有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295312236546"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295631003650",
+      "position": 168,
+      "title": "如何解决 Redis 中的热点 key 问题？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295631003650"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295719084033",
+      "position": 169,
+      "title": "TCP 是用来解决什么问题？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295719084033"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1796073573673205762",
+      "position": 170,
+      "title": "让你设计一个 RPC 框架，怎么设计？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1796073573673205762"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295215767553",
+      "position": 171,
+      "title": "Java 中常见的垃圾收集器有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295215767553"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1802901573531410433",
+      "position": 172,
+      "title": "什么是限流？限流算法有哪些？怎么实现的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1802901573531410433"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1805363325361135618",
+      "position": 173,
+      "title": "Netty 性能为什么这么高？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1805363325361135618"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295387734017",
+      "position": 174,
+      "title": "为什么 Spring 循环依赖需要三级缓存，二级不够吗？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295387734017"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295169630210",
+      "position": 175,
+      "title": "JVM 的内存区域是如何划分的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295169630210"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295635197954",
+      "position": 176,
+      "title": "Redis 的持久化机制有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295635197954"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1823991791071256577",
+      "position": 177,
+      "title": "如果发现 Redis 内存溢出了？你会怎么做？请给出排查思路和解决方案",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1823991791071256577"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1799731326863351810",
+      "position": 178,
+      "title": "负载均衡算法有哪些？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1799731326863351810"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295236739074",
+      "position": 179,
+      "title": "Java 中有哪些垃圾回收算法？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295236739074"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295672946690",
+      "position": 180,
+      "title": "Redis 中的缓存击穿、缓存穿透和缓存雪崩是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295672946690"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1795660206586503170",
+      "position": 181,
+      "title": "线上发现 Redis 机器爆了，如何优化？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1795660206586503170"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295396122626",
+      "position": 182,
+      "title": "说下 Spring Bean 的生命周期？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295396122626"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1855856573426638849",
+      "position": 183,
+      "title": "JVM 有那几种情况会产生 OOM（内存溢出）？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1855856573426638849"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295639392257",
+      "position": 184,
+      "title": "Redis 在生成 RDB 文件时如何处理请求？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295639392257"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295719084034",
+      "position": 185,
+      "title": "TCP 和 UDP 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295719084034"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1807672527650004993",
+      "position": 186,
+      "title": "线上业务服务器 CPU 飙高如何排查？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1807672527650004993"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295115104258",
+      "position": 187,
+      "title": "Java 中 volatile 关键字的作用是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295115104258"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1818990174270726145",
+      "position": 188,
+      "title": "怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1818990174270726145"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295400316931",
+      "position": 189,
+      "title": "Spring MVC 具体的工作原理？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295400316931"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1798351981564264450",
+      "position": 190,
+      "title": "分布式和微服务有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1798351981564264450"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295123492866",
+      "position": 191,
+      "title": "什么是 Java 中的 ABA 问题？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295123492866"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295643586562",
+      "position": 192,
+      "title": "Redis 的哨兵机制是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295643586562"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295727472641",
+      "position": 193,
+      "title": "TCP 的粘包和拆包能说说吗？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295727472641"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933294871834626",
+      "position": 194,
+      "title": "线程的生命周期在 Java 中是如何定义的？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933294871834626"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295459037187",
+      "position": 195,
+      "title": "在 MySQL 中建索引时需要注意哪些事项？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295459037187"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1805374399812673537",
+      "position": 196,
+      "title": "Netty 采用了哪些设计模式？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1805374399812673537"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295333208066",
+      "position": 197,
+      "title": "Spring 中的 DI 是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295333208066"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1780933295647780865",
+      "position": 198,
+      "title": "Redis 主从复制的实现原理是什么？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1780933295647780865"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1805147589229355009",
+      "position": 199,
+      "title": "在什么情况下，不推荐为数据库建立索引？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1805147589229355009"
+    },
+    {
+      "bankId": "1860871861809897474",
+      "questionId": "1797947969769701378",
+      "position": 200,
+      "title": "什么是 Seata？",
+      "url": "https://www.mianshiya.com/bank/1860871861809897474/question/1797947969769701378"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031643525468151809",
+      "position": 1,
+      "title": "最近 OpenClaw 这么火，你知道它的原理吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031643525468151809"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1909864020422012930",
+      "position": 2,
+      "title": "什么是 RAG？RAG 的主要流程是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1909864020422012930"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1909895340787347458",
+      "position": 3,
+      "title": "什么是 RAG 中的 Rerank？具体需要怎么做？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1909895340787347458"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425043148128258",
+      "position": 4,
+      "title": "A2A 协议有哪五大设计原则？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425043148128258"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1910235326833721345",
+      "position": 5,
+      "title": "什么混合检索？在基于大模型的应用开发中，混合检索主要解决什么问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1910235326833721345"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1924281357186498562",
+      "position": 6,
+      "title": "什么是 Google ADK？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1924281357186498562"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1910262700195414018",
+      "position": 7,
+      "title": "RAG 的完整流程是怎么样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1910262700195414018"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425043395592193",
+      "position": 8,
+      "title": "A2A 协议的工作原理是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425043395592193"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1910276173482655746",
+      "position": 9,
+      "title": "在 RAG 应用中为了优化检索精度，其中的数据清洗和预处理怎么做？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1910276173482655746"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425043643056130",
+      "position": 10,
+      "title": "A2A 协议的工作流程是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425043643056130"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1910534938416754689",
+      "position": 11,
+      "title": "什么查询扩展？为什么在 RAG 应用中需要查询扩展？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1910534938416754689"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916432330246103042",
+      "position": 12,
+      "title": "A2A 协议 与 MCP 协议的关系是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916432330246103042"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1910542542891614209",
+      "position": 13,
+      "title": "什么自查询？为什么在 RAG 中需要自查询？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1910542542891614209"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1910609088653524993",
+      "position": 14,
+      "title": "什么提示压缩？为什么在 RAG 中需要提示压缩？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1910609088653524993"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1912765231981187074",
+      "position": 15,
+      "title": "如何进行 RAG 调优后的效果评估？请给出真实应用场景中采用的效果评估标准与方法",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1912765231981187074"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1912781951991074817",
+      "position": 16,
+      "title": "什么是 RAG 中的分块？为什么需要分块？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1912781951991074817"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1912795349320720385",
+      "position": 17,
+      "title": "在 RAG 中，常见的分块策略有哪些？分别有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1912795349320720385"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1912805533338296322",
+      "position": 18,
+      "title": "在 RAG 中的 Embedding 嵌入是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1912805533338296322"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1913119866891001857",
+      "position": 19,
+      "title": "在 RAG 中，你知道有哪些 Embedding Model 嵌入模型？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1913119866891001857"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1913129432949186562",
+      "position": 20,
+      "title": "在 RAG 中，你如何选择 Embedding Model 嵌入模型，需要考虑哪些因素？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1913129432949186562"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1913138628935540737",
+      "position": 21,
+      "title": "在 RAG 中，索引流程中的文档解析你们怎么做的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1913138628935540737"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914601776862990337",
+      "position": 22,
+      "title": "在 RAG 应用的过程中，关于提示工程的设计有什么心得和技巧吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914601776862990337"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914614341832523778",
+      "position": 23,
+      "title": "什么是 Advanced RAG？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914614341832523778"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914621474818531330",
+      "position": 24,
+      "title": "什么是 Modular RAG？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914621474818531330"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915309618303901698",
+      "position": 25,
+      "title": "什么是护栏技术？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915309618303901698"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915316449118035969",
+      "position": 26,
+      "title": "什么是 GPTCache？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915316449118035969"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425465556885506",
+      "position": 27,
+      "title": "大模型的结构化输出指的是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425465556885506"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915324657713266690",
+      "position": 28,
+      "title": "什么是 GPT Structured Outputs？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915324657713266690"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915335173711634433",
+      "position": 29,
+      "title": "什么是 LangChain？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915335173711634433"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425041235525634",
+      "position": 30,
+      "title": "LangChain 的核心组件有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425041235525634"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425041541709826",
+      "position": 31,
+      "title": "LangChain核心架构是什么样的",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425041541709826"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425041839505410",
+      "position": 32,
+      "title": "什么是 LangChain Agent",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425041839505410"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425042099552258",
+      "position": 33,
+      "title": "什么是 LangChain model",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425042099552258"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425042367987714",
+      "position": 34,
+      "title": "LlamaIndex 如何与 LangChain 结合？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425042367987714"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915349256003428353",
+      "position": 35,
+      "title": "什么是 LangGraph ？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915349256003428353"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915664467716059138",
+      "position": 36,
+      "title": "LangGraph 编排的原理是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915664467716059138"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915671751515152385",
+      "position": 37,
+      "title": "​LangChain 和 LangGraph 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915671751515152385"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915679443658973185",
+      "position": 38,
+      "title": "什么是 Manus？说说你对它的了解",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915679443658973185"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915691942156283906",
+      "position": 39,
+      "title": "Computer Use 是什么？说说它的原理",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915691942156283906"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1915710074900160513",
+      "position": 40,
+      "title": "ReAct 是什么？说说它的原理",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1915710074900160513"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916410560665989122",
+      "position": 41,
+      "title": "在大模型应用中，通常如何实现长短期记忆机制？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916410560665989122"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916417383498489857",
+      "position": 42,
+      "title": "Copilot 模式和 Agent 模式的区别是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916417383498489857"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906191836891095042",
+      "position": 43,
+      "title": "什么是向量数据库？在基于大模型的应用开发中，向量数据库主要解决什么问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906191836891095042"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1913169074887905281",
+      "position": 44,
+      "title": "你都了解哪些向量数据库？如何选型？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1913169074887905281"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914209471323762689",
+      "position": 45,
+      "title": "向量数据库原理是什么？ 请简述下它的原理",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914209471323762689"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914214015294304258",
+      "position": 46,
+      "title": "向量数据库中的 HNSW、LSH、PQ 分别是什么意思？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914214015294304258"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914228914488909825",
+      "position": 47,
+      "title": "向量数据库中的 ANN 是什么？为什么需要用它？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914228914488909825"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914248329122074626",
+      "position": 48,
+      "title": "向量数据库中，常见的向量搜索方法：余弦相似度、欧几里得距离和曼哈顿距离分别是什么？有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914248329122074626"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914237034071855106",
+      "position": 49,
+      "title": "向量数据库的工作流程有哪些？请简述下",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914237034071855106"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241824571125761",
+      "position": 50,
+      "title": "什么是 MCP 协议，它在 AI 大模型系统中的作用是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241824571125761"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241825271574530",
+      "position": 51,
+      "title": "MCP 架构包含哪些核心组件？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241825271574530"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241825540009985",
+      "position": 52,
+      "title": "MCP 协议支持哪两种模式？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241825540009985"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241825791668226",
+      "position": 53,
+      "title": "MCP 与 Function Calling 的区别是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241825791668226"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241826055909377",
+      "position": 54,
+      "title": "MCP 的工作流程是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241826055909377"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241826294984705",
+      "position": 55,
+      "title": "在 Spring AI 框架中如何集成 MCP？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241826294984705"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241826546642946",
+      "position": 56,
+      "title": "MCP 协议安全性设计包含哪些层面？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241826546642946"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241826789912577",
+      "position": 57,
+      "title": "如何将已有的应用转换成 MCP 服务？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241826789912577"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241827398086657",
+      "position": 58,
+      "title": "什么是大模型微调？与预训练的核心区别是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241827398086657"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241827695882241",
+      "position": 59,
+      "title": "常见的微调任务有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241827695882241"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241827981094914",
+      "position": 60,
+      "title": "常见的微调方法有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241827981094914"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241828249530369",
+      "position": 61,
+      "title": "PEFT 是什么？为什么需要 PEFT？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241828249530369"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241828509577217",
+      "position": 62,
+      "title": "参数高效微调（PEFT）的核心思路是什么？列举 3 种典型方法",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241828509577217"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241828761235457",
+      "position": 63,
+      "title": "PEFT 和全量微调的区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241828761235457"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241829017088001",
+      "position": 64,
+      "title": "在进行 Fine-Tuning 时，如何选择适合的预训练模型？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241829017088001"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241829637844993",
+      "position": 65,
+      "title": "微调中常用的优化器有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241829637844993"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241829872726018",
+      "position": 66,
+      "title": "如何判断微调效果是否达到预期？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241829872726018"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241830145355777",
+      "position": 67,
+      "title": "介绍几种常见的微调策略的优缺点",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241830145355777"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241830371848193",
+      "position": 68,
+      "title": "什么是低秩适配（LoRA）技术？如何结合 LoRA 技术进行微调？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241830371848193"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241830610923521",
+      "position": 69,
+      "title": "微调的过拟合风险如何通过正则化缓解？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241830610923521"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241830887747585",
+      "position": 70,
+      "title": "请详细讨论微调时如何防止灾难性遗忘问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241830887747585"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1914241831139405825",
+      "position": 71,
+      "title": "在多模态微调（如图文生成）中，如何确保文本和图像数据的对齐质量？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1914241831139405825"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906191099293376513",
+      "position": 72,
+      "title": "请解释大模型微调(Fine-tuning)的原理，并说明在什么业务场景下需要微调而不是直接使用基础模型？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906191099293376513"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906192366640078850",
+      "position": 73,
+      "title": "解释LangChain框架中的Chain和Agent概念，并举例说明各自的应用场景",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906192366640078850"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906192513340055554",
+      "position": 74,
+      "title": "什么是大模型的涌现能力？列举三种典型表现并解释其可能成因",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906192513340055554"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906308851366666242",
+      "position": 75,
+      "title": "要让AI生成一个带表单验证的Vue3组件，请写出包含以下要素的Prompt",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906308851366666242"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906309740869492737",
+      "position": 76,
+      "title": "假设需要让大模型生成一个React表单组件代码，请设计一个包含上下文约束的Prompt（需包含数据验证、错误提示等要求）",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906309740869492737"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906309919110635521",
+      "position": 77,
+      "title": "请描述使用LangChain构建一个文档问答系统的关键技术组件及实现步骤",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906309919110635521"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906310027747856386",
+      "position": 78,
+      "title": "假设要开发一个智能工单分类系统，请拆解AI可参与的环节并说明技术选型思路",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906310027747856386"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906310101176983554",
+      "position": 79,
+      "title": "当需要处理超长大模型上下文窗口限制时，有哪些可行的工程解决方案？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906310101176983554"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906311697466724354",
+      "position": 80,
+      "title": "请举例说明假设在电商系统中，哪些功能适合直接使用大模型完成，哪些需要结合工程化手段？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906311697466724354"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906311825103589378",
+      "position": 81,
+      "title": "假设请你设计一个医疗问诊系统，如何平衡AI幻觉带来的风险与效率提升？需要哪些技术手段？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906311825103589378"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906312178389262337",
+      "position": 82,
+      "title": "设计智能客服系统时，如何通过知识库构建解决长尾问题？请描述具体实现步骤",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906312178389262337"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906312460049358849",
+      "position": 83,
+      "title": "当大模型API响应延迟超过1秒时，前端可以采取哪些优化策略保证用户体验？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906312460049358849"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906314200551301121",
+      "position": 84,
+      "title": "使用LangChain时，如何实现多路召回结果的动态权重分配？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906314200551301121"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906314337000398849",
+      "position": 85,
+      "title": "当大模型上下文窗口扩展到100万token时，哪些现有业务场景可能发生质变？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906314337000398849"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906314515354787842",
+      "position": 86,
+      "title": "当发现RAG系统召回结果与用户query意图不匹配时，有哪些可能的改进方向？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906314515354787842"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906316700050853889",
+      "position": 87,
+      "title": "使用LangChain实现RAG系统时，如何处理PDF文档中的表格数据召回问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906316700050853889"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1906311168761569281",
+      "position": 88,
+      "title": "现场实操：给定一个包含数据Schema的API文档，请使用AI工具在15分钟内生成符合RESTful规范的CRUD接口代码，并解释关键实现逻辑",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1906311168761569281"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425036336578561",
+      "position": 89,
+      "title": "参数高效微调（PEFT）如何减少计算成本？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425036336578561"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425036852477954",
+      "position": 90,
+      "title": "冻结层在微调中的作用是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425036852477954"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425037343211521",
+      "position": 91,
+      "title": "为什么需要混合精度训练？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425037343211521"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425037804584962",
+      "position": 92,
+      "title": "模型输出重复和幻觉如何微调解决？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425037804584962"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425038110769153",
+      "position": 93,
+      "title": "SFT 指令微调数据如何构建？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425038110769153"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425038446313473",
+      "position": 94,
+      "title": "指令微调的好处？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425038446313473"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425038718943233",
+      "position": 95,
+      "title": "什么是大模型 Agent？它与传统的 AI 系统有什么不同？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425038718943233"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425039008350210",
+      "position": 96,
+      "title": "LLM Agent 的基本架构有哪些组成部分？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425039008350210"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425039243231233",
+      "position": 97,
+      "title": "LLM Agent 常见功能有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425039243231233"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425039528443905",
+      "position": 98,
+      "title": "Agent智能体的工作过程是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425039528443905"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425039918514178",
+      "position": 99,
+      "title": "如何让 LLM Agent 具备长期记忆能力？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425039918514178"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425040195338241",
+      "position": 100,
+      "title": "LLM Agent 如何进行动态 API 调用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425040195338241"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425040451190785",
+      "position": 101,
+      "title": "LLM Agent 在多模态任务中如何执行推理？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425040451190785"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425040719626241",
+      "position": 102,
+      "title": "市面上有哪些主流的 LLM Agent 框架？各自的特点是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425040719626241"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425042661588994",
+      "position": 103,
+      "title": "AutoGPT 如何实现自主决策？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425042661588994"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1916425042913247233",
+      "position": 104,
+      "title": "什么是 A2A 协议，它的核心架构及主要组件有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1916425042913247233"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742304764088322",
+      "position": 105,
+      "title": "什么是查询重写？它有什么作用？如何基于 Spring AI 实现查询重写？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742304764088322"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742305481314305",
+      "position": 106,
+      "title": "什么是上下文查询增强？它有什么作用？如何基于 Spring AI 实现上下文查询增强来处理无关问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742305481314305"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742305821052929",
+      "position": 107,
+      "title": "什么是 Spring AI 提出的模块化 RAG 架构？预检索、检索和后检索阶段各自负责什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742305821052929"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742306206928897",
+      "position": 108,
+      "title": "什么是工具调用 Tool Calling？如何利用 Spring AI 实现工具调用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742306206928897"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742309012918273",
+      "position": 109,
+      "title": "什么是 ReAct？如何基于 ReAct 模式构建具备自主规划能力的 AI 智能体？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742309012918273"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742309348462593",
+      "position": 110,
+      "title": "什么是 OpenManus？它的实现原理是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742309348462593"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742309935665154",
+      "position": 111,
+      "title": "什么是 CoT 思维链？如何实现 CoT 思维链？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742309935665154"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742311311396865",
+      "position": 112,
+      "title": "如何保证 AI 应用的性能和稳定性？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742311311396865"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742545105997826",
+      "position": 113,
+      "title": "有哪些设计和优化 Prompt 的技巧？请举例说明",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742545105997826"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742545445736450",
+      "position": 114,
+      "title": "如何优化 RAG 的检索效果？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742545445736450"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742545751920642",
+      "position": 115,
+      "title": "什么是 CoT 思维链和 ReAct 模式？它们如何提高 AI 推理能力？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742545751920642"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742546058104833",
+      "position": 116,
+      "title": "本地部署大模型和调用云端大模型各有什么优缺点？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742546058104833"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742546393649154",
+      "position": 117,
+      "title": "如何进行 AI 应用的测试和效果评估？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742546393649154"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742302566273026",
+      "position": 118,
+      "title": "RAG 的文档处理流程是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742302566273026"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1935974080089128962",
+      "position": 119,
+      "title": "提示词优化考虑哪些维度？你们提示词模板有哪些字段？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1935974080089128962"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742299907084290",
+      "position": 120,
+      "title": "你在 AI 超级智能体项目中如何利用 Spring AI 开发应用？用到了哪些特性？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742299907084290"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1935980352104529921",
+      "position": 121,
+      "title": "你有多个知识库，做 RAG 的时候，怎么保证查询效率和准确性兼容，并尽可能减少幻觉？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1935980352104529921"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742300288765953",
+      "position": 122,
+      "title": "如何实现程序和 AI 大模型的集成？有哪些方式？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742300288765953"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1935997509803618306",
+      "position": 123,
+      "title": "Agent 死循环问题有遇到过吗？如何解决？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1935997509803618306"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742301052129281",
+      "position": 124,
+      "title": "如何实现 AI 多轮对话功能？如何解决对话记忆持久化问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742301052129281"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1937353814227668994",
+      "position": 125,
+      "title": "如果一个GPU集群的LLM处理能力为1000tokenss，那1000个用户同时并发访问，响应给每个用户的性能只有1 tokens吗？怎么分析性能瓶颈",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1937353814227668994"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742301668691969",
+      "position": 126,
+      "title": "什么是结构化输出？Spring AI 是怎么实现结构化输出的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742301668691969"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742301949710338",
+      "position": 127,
+      "title": "什么是 Re-Reading？如何基于 Spring AI 实现 Re-Reading Advisor？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742301949710338"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1929742299558957057",
+      "position": 128,
+      "title": "什么是 Spring AI 框架？它有哪些核心特性？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1929742299558957057"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031664941567598594",
+      "position": 129,
+      "title": "（OpenClaw前置知识）什么是 AI Agent？它和直接调用大模型 API 做一次问答有什么本质区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031664941567598594"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031934134963691521",
+      "position": 130,
+      "title": "（OpenClaw前置知识）请解释 Tool Calling（工具调用）的完整链路：工具是怎么定义的、LLM 怎么调用它、结果怎么回传",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031934134963691521"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031943636563812353",
+      "position": 131,
+      "title": "（OpenClaw前置知识）System Prompt 在 Agent 系统中承载了哪些职责？如果 System Prompt 越来越长，你会怎么处理？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031943636563812353"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031966109057441794",
+      "position": 132,
+      "title": "（OpenClaw前置知识）什么是 Agent 的 Context Window？为什么它是 Agent 工程中最核心的约束之一？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031966109057441794"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031968091352621057",
+      "position": 133,
+      "title": "（OpenClaw前置知识）解释「短期记忆」和「长期记忆」在 Agent 系统中的区别，分别适合怎么存储和检索？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031968091352621057"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031972227099942914",
+      "position": 134,
+      "title": "OpenClaw 是什么？它要解决什么问题？它的核心能力有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031972227099942914"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031974625235197953",
+      "position": 135,
+      "title": "OpenClaw 的核心组件有哪些？请描述它们之间的关系",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031974625235197953"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031978073372516354",
+      "position": 136,
+      "title": "在 OpenClaw 中，一条用户消息从进入系统到收到回复，完整链路是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031978073372516354"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031980452067172353",
+      "position": 137,
+      "title": "OpenClaw 的 Agent Runner 是如何工作的？一次 Agent 运行经历了哪些阶段？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031980452067172353"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031982168447672321",
+      "position": 138,
+      "title": "LLM 的 Context Window 有上限，长对话时如何保证 Agent 仍然能正常工作？OpenClaw 是怎么做的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031982168447672321"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031985434829021186",
+      "position": 139,
+      "title": "Agent 调用工具可能返回超大结果（比如代码搜索返回 50KB），这会带来什么问题？你会怎么处理？OpenClaw 是怎么做的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031985434829021186"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2031992088660303874",
+      "position": 140,
+      "title": "当对话历史实在太长、裁剪也不够用时，还有什么办法？什么是 Compaction？OpenClaw 的 Compaction 策略是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2031992088660303874"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2032003420637913090",
+      "position": 141,
+      "title": "OpenClaw 把 Context 管理抽象成了可插拔的 Context Engine，为什么要做这层抽象？这个设计能支持哪些不同的策略？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2032003420637913090"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2032428158229176321",
+      "position": 142,
+      "title": "如果一个 Agent 系统要同时接入 Telegram、飞书、钉钉等渠道，你会怎么设计抽象层？OpenClaw 的 Channel Plugin 接口是怎么设计的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2032428158229176321"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036355828784586754",
+      "position": 143,
+      "title": "什么是 AI Agent 中的 Skills？它有什么用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036355828784586754"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036357514601193474",
+      "position": 144,
+      "title": "MCP 和 Skills 有什么区别？分别适用于什么场景？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036357514601193474"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036358432298131457",
+      "position": 145,
+      "title": "如何设计和管理 AI Agent 的 Skills 体系？在实际项目中有哪些挑战？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036358432298131457"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036708793047400450",
+      "position": 146,
+      "title": "同一个系统里可能有多个 Agent，不同渠道用户群组的消息需要路由到不同的 Agent。你会怎么设计这个路由？OpenClaw 的路由匹配优先级是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036708793047400450"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036711024706535426",
+      "position": 147,
+      "title": "同一个用户在 Telegram 私聊和 Discord 群组里和 Agent 对话，应该共享会话还是隔离？OpenClaw 是怎么设计会话隔离粒度的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036711024706535426"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036713958370525186",
+      "position": 148,
+      "title": "同一个工具（比如「执行命令」）在不同场景下应该有不同的权限。你会怎么设计工具的权限控制？OpenClaw 的工具策略管道是怎么分层的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036713958370525186"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036716799235538945",
+      "position": 149,
+      "title": "不同的 LLM Provider 对 Tool Schema 的支持不完全一致，你会怎么处理这种差异？OpenClaw 是怎么做 Schema 适配的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036716799235538945"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036720429414039554",
+      "position": 150,
+      "title": "Agent 系统中 Hook中间件模式有什么用？能举几个典型场景吗？OpenClaw 的 Hook 系统是怎么设计的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036720429414039554"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036732695857414145",
+      "position": 151,
+      "title": "什么场景下需要多 Agent 协作而不是单个 Agent 解决？OpenClaw 是怎么支持子 Agent（Subagent）的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036732695857414145"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036734120691843073",
+      "position": 152,
+      "title": "父 Agent spawn 子 Agent 时，有哪些边界问题需要考虑？OpenClaw 做了哪些限制和保护？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036734120691843073"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036736171492589570",
+      "position": 153,
+      "title": "多 Agent 之间如何通信和协调？OpenClaw 的 Gateway 在其中扮演什么角色？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036736171492589570"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036789078409691137",
+      "position": 154,
+      "title": "OpenClaw 采用插件架构，第三方可以注册新渠道、工具、Hook。设计一个插件系统需要考虑哪些关键问题？OpenClaw 的插件 API 长什么样？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036789078409691137"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036789985465679873",
+      "position": 155,
+      "title": "OpenClaw 的 Gateway 对 Agent 请求做了幂等性处理。为什么 Agent 系统特别需要幂等性？工具已经产生副作用时怎么办？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036789985465679873"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2036796020414824450",
+      "position": 156,
+      "title": "如果让你基于 OpenClaw 的设计理念从零搭建一个 Agent 框架，你会先做哪三个模块？为什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2036796020414824450"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284733940838401",
+      "position": 157,
+      "title": "什么是 LoRA？它的原理是什么？为什么能减少训练参数？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284733940838401"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284735173963778",
+      "position": 158,
+      "title": "微调大模型需要什么样的硬件？7B 和 70B 模型分别需要多少显存？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284735173963778"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284735870218241",
+      "position": 159,
+      "title": "LoRA 的数学原理是什么？为什么低秩分解能近似全量微调的效果？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284735870218241"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284736440643585",
+      "position": 160,
+      "title": "2026 年主流的微调工具有哪些？Unsloth、Axolotl、TRL 各有什么特点？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284736440643585"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284737732489218",
+      "position": 161,
+      "title": "什么是 SFT 指令微调？微调数据需要什么格式？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284737732489218"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284738428743681",
+      "position": 162,
+      "title": "RLHF 的完整训练流程是怎样的？从 SFT 到 Reward Model 到 PPO 每个阶段做了什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284738428743681"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284739041112066",
+      "position": 163,
+      "title": "LoRA 的超参数应该怎么设置？有什么经验法则？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284739041112066"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284739632508929",
+      "position": 164,
+      "title": "对比 LoRA、QLoRA、DoRA 和全量微调，在不同场景下应该如何选择？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284739632508929"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284740194545665",
+      "position": 165,
+      "title": "什么是 DPO？它相比 RLHF 和 PPO 有什么优势？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284740194545665"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284740794331138",
+      "position": 166,
+      "title": "在多模态微调中，如何确保文本和图像数据的对齐质量？有哪些技术挑战？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284740794331138"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284741385728002",
+      "position": 167,
+      "title": "微调时出现过拟合怎么办？有哪些正则化方法可以使用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284741385728002"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284741981319169",
+      "position": 168,
+      "title": "为什么需要微调？直接用 Prompt Engineering 或 RAG 不行吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284741981319169"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284742644019201",
+      "position": 169,
+      "title": "如何评估微调的效果？需要关注哪些指标？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284742644019201"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284743201861634",
+      "position": 170,
+      "title": "Adapter Tuning 和 Prefix Tuning 是什么？它们和 LoRA 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284743201861634"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284743776481281",
+      "position": 171,
+      "title": "ORPO 是什么？它如何将指令微调和偏好对齐合二为一？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284743776481281"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284744355295233",
+      "position": 172,
+      "title": "微调过程中如何防止灾难性遗忘？有哪些实用的缓解策略？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284744355295233"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284744946692098",
+      "position": 173,
+      "title": "LoRA 和 QLoRA 有什么区别？各自适合什么场景？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284744946692098"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284745517117441",
+      "position": 174,
+      "title": "什么是全量微调？它有哪些优缺点？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284745517117441"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284746041405441",
+      "position": 175,
+      "title": "如何构建高质量的 SFT 微调数据集？数据质量和数量哪个更重要？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284746041405441"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284761493221377",
+      "position": 176,
+      "title": "A2A 协议中的 Agent Card 是什么？它在多 Agent 发现和协作中起什么作用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284761493221377"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284762055258114",
+      "position": 177,
+      "title": "什么是 Reflexion？它和 ReAct 有什么区别？如何提升 Agent 的自我纠错能力？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284762055258114"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284762629877762",
+      "position": 178,
+      "title": "Agent 系统中如何设计优雅的终止条件？避免死循环有哪些策略？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284762629877762"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284763179331586",
+      "position": 179,
+      "title": "什么是 Agent Loop（智能体循环）？一个典型的 Agent Loop 包含哪些步骤？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284763179331586"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284763770728450",
+      "position": 180,
+      "title": "如何设计一个生产级的 Agent 系统架构？需要考虑哪些关键模块？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284763770728450"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284764349542401",
+      "position": 181,
+      "title": "如何评估 AI Agent 的效果？有哪些评估维度和方法？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284764349542401"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284764907384833",
+      "position": 182,
+      "title": "如何让 AI Agent 具备长期记忆能力？有哪些存储和检索方案？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284764907384833"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284765498781698",
+      "position": 183,
+      "title": "ReAct 推理范式是什么？它如何让 Agent 更可靠地完成任务？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284765498781698"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284766136315906",
+      "position": 184,
+      "title": "什么是 A2A 协议？它和 MCP 协议有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284766136315906"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284766648020994",
+      "position": 185,
+      "title": "MCP 协议的架构包含哪些核心组件？Server 和 Client 分别负责什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284766648020994"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284767310721026",
+      "position": 186,
+      "title": "MCP 协议是什么？它在 AI Agent 系统中解决了什么问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284767310721026"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284768199913474",
+      "position": 187,
+      "title": "AI Agent 的核心组件有哪些？感知、决策、执行、记忆各自的作用是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284768199913474"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284768782921729",
+      "position": 188,
+      "title": "什么是 AI Agent？它和直接调用大模型 API 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284768782921729"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284769391095809",
+      "position": 189,
+      "title": "AI Agent 如何处理工具调用返回超大结果的问题？有哪些实用的解决方案？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284769391095809"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284770259316738",
+      "position": 190,
+      "title": "当对话历史超出上下文窗口时，有哪些上下文压缩策略？各自的优缺点是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284770259316738"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284770817159170",
+      "position": 191,
+      "title": "MCP 协议和 A2A 协议如何协同工作？请设计一个同时使用两者的多 Agent 系统架构",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284770817159170"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284771488247809",
+      "position": 192,
+      "title": "在生产环境中，如何保证 Agent 系统的安全性？需要防范哪些风险？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284771488247809"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284772146753537",
+      "position": 193,
+      "title": "如果让你从零设计一个 Agent 框架，你会优先实现哪些核心模块？为什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284772146753537"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284772746539009",
+      "position": 194,
+      "title": "多 Agent 协作有哪些常见的编排模式？各自适合什么场景？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284772746539009"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284773392461825",
+      "position": 195,
+      "title": "Agent 系统中的 Function Calling 和 MCP 有什么区别？各自的优缺点是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284773392461825"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284774025801729",
+      "position": 196,
+      "title": "什么是 Agent 的上下文窗口？为什么它是 Agent 工程中最核心的约束？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284774025801729"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284774613004289",
+      "position": 197,
+      "title": "AI Agent 的记忆机制有哪些类型？短期记忆和长期记忆分别怎么实现？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284774613004289"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284775367979010",
+      "position": 198,
+      "title": "什么是 AI Agent 中的工具调用（Tool Calling）？它的基本流程是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284775367979010"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284775955181570",
+      "position": 199,
+      "title": "如何设计 AI Agent 的工具权限控制？不同场景下的工具应该有什么样的权限差异？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284775955181570"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284776634658817",
+      "position": 200,
+      "title": "子 Agent（Subagent）模式有什么优势和挑战？父 Agent 调用子 Agent 时需要考虑哪些边界问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284776634658817"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284824680411138",
+      "position": 201,
+      "title": "什么是 AI 幻觉（Hallucination）？大模型为什么会产生幻觉？有哪些缓解方法？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284824680411138"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284825154367490",
+      "position": 202,
+      "title": "什么是 Agentic Engineering？它和 Vibe Coding 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284825154367490"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284825611546625",
+      "position": 203,
+      "title": "什么是 ACP 协议？它有哪两个不同的含义？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284825611546625"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284826072920065",
+      "position": 204,
+      "title": "什么是深度思考（Deep Thinking）和自适应思考（Adaptive Thinking）？它们在 AI 编程中有什么应用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284826072920065"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284826525904898",
+      "position": 205,
+      "title": "什么是大模型的涌现能力（Emergent Abilities）？它对 AI 应用开发有什么启示？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284826525904898"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284827104718849",
+      "position": 206,
+      "title": "大模型的 Token 是什么？输入 Token 和输出 Token 在计费上有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284827104718849"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284827616423937",
+      "position": 207,
+      "title": "什么是 Background Agent（后台 Agent）？它改变了 AI 编程的什么工作方式？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284827616423937"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284828061020162",
+      "position": 208,
+      "title": "什么是 Token 缓存机制？它如何帮助降低 AI 应用的成本？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284828061020162"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284828564336641",
+      "position": 209,
+      "title": "什么是模型蒸馏（Knowledge Distillation）？它和模型量化有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284828564336641"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284829025710081",
+      "position": 210,
+      "title": "什么是大模型的上下文窗口（Context Window）？不同模型的窗口大小差异对应用开发有什么影响？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284829025710081"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284829482889217",
+      "position": 211,
+      "title": "AI 应用中的内容审核应该怎么做？有哪些技术方案和最佳实践？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284829482889217"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284829961039873",
+      "position": 212,
+      "title": "什么是上下文压缩（Context Compaction）？有哪些常见的压缩策略？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284829961039873"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284830443384833",
+      "position": 213,
+      "title": "什么是红队测试（Red Teaming）？如何对大模型应用进行安全测试？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284830443384833"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284830934118401",
+      "position": 214,
+      "title": "什么是上下文工程（Context Engineering）？为什么说它是 2026 年最重要的 AI 工程技能？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284830934118401"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284831454212097",
+      "position": 215,
+      "title": "开源大模型和闭源大模型各有什么优劣？2026 年主流的开源和闭源大模型有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284831454212097"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284831865253890",
+      "position": 216,
+      "title": "什么是 Prompt 注入攻击？有哪些常见的攻击方式和防范方法？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284831865253890"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284832318238721",
+      "position": 217,
+      "title": "什么是 LLM-as-Judge？用大模型评估大模型靠谱吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284832318238721"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284832804777986",
+      "position": 218,
+      "title": "如何对 AI 应用进行 A／B 测试？和传统软件的 A／B 测试有什么不同？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284832804777986"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284833341648898",
+      "position": 219,
+      "title": "什么是 AI 编程中的自动修复循环（Auto-fix Loop）？它的工作流程和退出策略怎么设计？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284833341648898"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284833895297026",
+      "position": 220,
+      "title": "如何评估大模型的能力？主流的 Benchmark 有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284833895297026"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284834415390722",
+      "position": 221,
+      "title": "大模型的训练和推理分别是什么？它们在计算资源需求上有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284834415390722"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284834864181249",
+      "position": 222,
+      "title": "什么是 AI 护栏（Guardrails）技术？它在生产环境中如何保障 AI 应用的安全？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284834864181249"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284835325554690",
+      "position": 223,
+      "title": "如何设计一个安全可控的 AI 系统？从模型层到应用层需要考虑哪些安全维度？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284835325554690"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "2052284835795316737",
+      "position": 224,
+      "title": "什么是大模型的参数量？参数量和模型能力之间是什么关系？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/2052284835795316737"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834695759925249",
+      "position": 225,
+      "title": "讲一下你对 Transformer 的 Encoder 模块的理解。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834695759925249"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834694384193537",
+      "position": 226,
+      "title": "K 和 Q 可以使用同一个值通过对自身进行点乘得到吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834694384193537"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834695491489793",
+      "position": 227,
+      "title": "在进行多头注意力的时候需要对每个 head 进行降维吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834695491489793"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834697638973442",
+      "position": 228,
+      "title": "Transformer 中的\"残差连接\"可以缓解梯度消失问题吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834697638973442"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834696833667074",
+      "position": 229,
+      "title": "Transformer 中的注意力遮蔽（Attention Masking）的工作原理是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834696833667074"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796947043786753",
+      "position": 230,
+      "title": "如何设计提示词来减少 AI 的幻觉问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796947043786753"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796945399619585",
+      "position": 231,
+      "title": "什么是 Few-shot Learning？Zero-shot、One-shot、Few-shot 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796945399619585"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796955499503618",
+      "position": 232,
+      "title": "如何在 LangChain 中自定义 Tool 工具？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796955499503618"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796955029741570",
+      "position": 233,
+      "title": "LangChain 的 Memory 组件有什么作用？常见的 Memory 类型有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796955029741570"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796961639964673",
+      "position": 234,
+      "title": "LangChain 中如何实现多轮对话的上下文管理？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796961639964673"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796745444564994",
+      "position": 235,
+      "title": "如何减少 RAG 系统的幻觉问题？有哪些实用方法？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796745444564994"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796743498407937",
+      "position": 236,
+      "title": "RAG 系统如何标注信息来源和提供引用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796743498407937"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834674037624834",
+      "position": 237,
+      "title": "请解释 LSTM 和 GRU 网络在处理序列数据中的应用。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834674037624834"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796737861263362",
+      "position": 238,
+      "title": "什么是 RAG 检索增强生成？它解决了大模型的哪些问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796737861263362"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834677762166785",
+      "position": 239,
+      "title": "简述 Word Embedding 可以怎样运用于文本分类任务？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834677762166785"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834678903017474",
+      "position": 240,
+      "title": "LLaMA 有哪些实际应用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834678903017474"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834699513827329",
+      "position": 241,
+      "title": "了解 ViT（Vision Transformer） 吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834699513827329"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834700050698241",
+      "position": 242,
+      "title": "ViLT 模型是如何将 Transformer 应用于图像识别任务的",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834700050698241"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834694916870145",
+      "position": 243,
+      "title": "为什么 Transformer 采用多头注意力机制？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834694916870145"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834694111563778",
+      "position": 244,
+      "title": "self attention 中的 K 和 Q 是用来做什么的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834694111563778"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834697366343682",
+      "position": 245,
+      "title": "Transformer 中如何实现序列到序列的映射？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834697366343682"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834697936769026",
+      "position": 246,
+      "title": "Transformer 中，如何处理大型数据集？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834697936769026"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796951032569858",
+      "position": 247,
+      "title": "如何结合 RAG 和 Fine-tuning 来提升提示词效果？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796951032569858"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796948415324161",
+      "position": 248,
+      "title": "如何优化过长的提示词？提示词压缩有哪些技巧？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796948415324161"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796954488676354",
+      "position": 249,
+      "title": "LangChain 中的 Chain 是什么？有哪些常见类型？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796954488676354"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796956300615681",
+      "position": 250,
+      "title": "LangChain 支持哪些向量数据库？如何选择？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796956300615681"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796949623283714",
+      "position": 251,
+      "title": "如何系统地评估和优化提示词的效果？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796949623283714"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796740113604609",
+      "position": 252,
+      "title": "RAG 系统中为什么要进行文档切割？有哪些切割策略？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796740113604609"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796742797959169",
+      "position": 253,
+      "title": "RAG 中如何设计 Prompt 来有效利用检索到的文档？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796742797959169"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796740650475521",
+      "position": 254,
+      "title": "如何为 RAG 系统选择合适的 Embedding 模型？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796740650475521"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834673773383682",
+      "position": 255,
+      "title": "LSTM 和 GRU 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834673773383682"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834671391019010",
+      "position": 256,
+      "title": "说说 LSTM 的基本原理。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834671391019010"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834676289966082",
+      "position": 257,
+      "title": "如何比较文本的相似度？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834676289966082"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834700398825474",
+      "position": 258,
+      "title": "chatGLM 和 GPT 在结构上有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834700398825474"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796947891036161",
+      "position": 259,
+      "title": "如何使用提示词实现任务分解？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796947891036161"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796947287056385",
+      "position": 260,
+      "title": "temperature 和 top_p 参数有什么作用？如何选择合适的值？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796947287056385"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796947622600705",
+      "position": 261,
+      "title": "什么是提示词模板？如何设计可复用的提示词模板？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796947622600705"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796945911324673",
+      "position": 262,
+      "title": "什么是 CoT 思维链？它的工作原理是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796945911324673"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796958360018946",
+      "position": 263,
+      "title": "LangChain 中如何处理多模态数据？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796958360018946"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796950474727425",
+      "position": 264,
+      "title": "如何处理提示词优化中的常见问题？比如输出不准确、不完整、格式错误",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796950474727425"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796959769305089",
+      "position": 265,
+      "title": "如何在 LangChain 中实现函数调用 Function Calling？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796959769305089"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796961883234305",
+      "position": 266,
+      "title": "LangChain 有哪些常见的性能瓶颈？如何优化？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796961883234305"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834673223929858",
+      "position": 267,
+      "title": "解释一个 LSTM 单元（LSTM cell）的基本组成，以及它们各自的作用。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834673223929858"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796738742067202",
+      "position": 268,
+      "title": "RAG 为什么需要向量数据库？它和传统数据库有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796738742067202"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834678357757954",
+      "position": 269,
+      "title": "LLaMA 模型中，输入句子的长度理论上是否可以无限长？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834678357757954"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834678626193410",
+      "position": 270,
+      "title": "了解 LLaMA 中的旋转位置编码吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834678626193410"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834696267436033",
+      "position": 271,
+      "title": "了解 Transformer 模型训练中的梯度裁剪（Gradient Clipping）吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834696267436033"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834695227248642",
+      "position": 272,
+      "title": "在不考虑计算量的情况下，head 能否无限增多？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834695227248642"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834696569425922",
+      "position": 273,
+      "title": "Transformer 为什么采用 Layer Normalization 而不是 Batch Normalization",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834696569425922"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796950168543233",
+      "position": 274,
+      "title": "在实际项目中如何进行提示词的 AB 测试和迭代？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796950168543233"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796944665616385",
+      "position": 275,
+      "title": "提示词中的分隔符有什么作用？如何使用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796944665616385"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796957315637250",
+      "position": 276,
+      "title": "LangChain 和 LlamaIndex 有什么区别？各自适合什么场景？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796957315637250"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796957584072706",
+      "position": 277,
+      "title": "LangChain 中的 DocumentLoader 有哪些类型？如何选择？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796957584072706"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796943356993538",
+      "position": 278,
+      "title": "Prompt 提示词的基本结构包括哪些部分？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796943356993538"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796944900497410",
+      "position": 279,
+      "title": "如何在提示词中设置约束条件和输出要求？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796944900497410"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796942987894786",
+      "position": 280,
+      "title": "什么是 Prompt Engineering 提示词工程？它的核心价值是什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796942987894786"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796954765500417",
+      "position": 281,
+      "title": "什么是 LangChain 中的 Agent？它和 Chain 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796954765500417"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796959194685441",
+      "position": 282,
+      "title": "LangChain 中如何实现对话历史的管理和持久化？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796959194685441"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796959496675330",
+      "position": 283,
+      "title": "LangChain 中的 Callback 回调机制是什么？有什么用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796959496675330"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796742504357889",
+      "position": 284,
+      "title": "RAG 系统如何利用元数据过滤提升检索精度？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796742504357889"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796744282742785",
+      "position": 285,
+      "title": "如何为 RAG 项目选择向量数据库？Milvus、Pinecone、Chroma 怎么选？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796744282742785"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834673496559618",
+      "position": 286,
+      "title": "LSTM 中，隐藏状态（hidden state）和单元状态（cell state）有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834673496559618"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834674301865985",
+      "position": 287,
+      "title": "什么是注意力机制？它是如何改善 NLP 模型性能的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834674301865985"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796741598388226",
+      "position": 288,
+      "title": "如何构建和使用向量索引？HNSW 和 IVF 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796741598388226"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834677187547137",
+      "position": 289,
+      "title": "在文本分类任务中，如何处理样本（类别）不平衡的问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834677187547137"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834675946033154",
+      "position": 290,
+      "title": "说说你是怎样有效地优化和微调 BERT，以应对你做过的一些特定的 NLP 任务的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834675946033154"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834678093516802",
+      "position": 291,
+      "title": "简述 LLaMA（Large Language Model Meta AI）的基本原理。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834678093516802"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834694635851777",
+      "position": 292,
+      "title": "如果让 K 和 Q 变成同一个矩阵，你觉得对模型性能会带来怎样的影响？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834694635851777"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834692723249153",
+      "position": 293,
+      "title": "聊一聊 Transformer 的架构和基本原理。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834692723249153"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834692991684610",
+      "position": 294,
+      "title": "使用 Transformer 解决了 RNN 面临的一些什么问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834692991684610"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796946188148737",
+      "position": 295,
+      "title": "零样本 CoT 和少样本 CoT 有什么区别？各自适合什么场景？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796946188148737"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796948738285569",
+      "position": 296,
+      "title": "什么是提示词链接？如何实现？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796948738285569"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796948167860225",
+      "position": 297,
+      "title": "什么是负面提示词？在什么场景下使用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796948167860225"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796944443318273",
+      "position": 298,
+      "title": "什么是角色扮演 Role Playing？如何在提示词中使用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796944443318273"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796957865091074",
+      "position": 299,
+      "title": "LangChain 中的 TextSplitter 文档切分策略有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796957865091074"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796943671566338",
+      "position": 300,
+      "title": "Token 是什么？如何计算和控制 Token 数量？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796943671566338"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796958603288577",
+      "position": 301,
+      "title": "在生产环境中使用 LangChain 需要注意哪些问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796958603288577"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796961388306433",
+      "position": 302,
+      "title": "如何处理 LangChain 应用中的错误和异常？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796961388306433"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796960247455745",
+      "position": 303,
+      "title": "LangChain 中的 LCEL 表达式语言是什么？有什么优势？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796960247455745"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796960616554497",
+      "position": 304,
+      "title": "LangChain 中如何实现条件分支和动态路由？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796960616554497"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796962126503937",
+      "position": 305,
+      "title": "如何保证 LangChain 应用的输出质量和一致性？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796962126503937"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796961153425410",
+      "position": 306,
+      "title": "LangChain 中的 Retriever 检索器有哪些类型？各有什么特点？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796961153425410"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796744790253570",
+      "position": 307,
+      "title": "RAG 为什么需要重排序 Reranking？如何实现？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796744790253570"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834670296305666",
+      "position": 308,
+      "title": "CBOW 和 Skip-gram 分别更适合哪些应用场景？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834670296305666"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796739656425473",
+      "position": 309,
+      "title": "RAG 中如何计算文本相似度？常见算法有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796739656425473"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834671101612034",
+      "position": 310,
+      "title": "聊一聊 ELMo 技术，它有哪些优缺点？可以做到一词多义吗？为什么？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834671101612034"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796738448465922",
+      "position": 311,
+      "title": "RAG 中的 Embedding 向量化是什么？如何工作的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796738448465922"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796745729777665",
+      "position": 312,
+      "title": "RAG 系统在生产环境中如何优化性能和降低成本？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796745729777665"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834669457444865",
+      "position": 313,
+      "title": "Word2Vec 如何获取词向量？如何评估该训练得到的词向量的好坏？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834669457444865"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834676906528770",
+      "position": 314,
+      "title": "在文本分类任务中，如何处理高维和稀疏数据？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834676906528770"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834675128143874",
+      "position": 315,
+      "title": "Word2Vec 到 BERT 有怎样的改进？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834675128143874"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796944137134081",
+      "position": 316,
+      "title": "如何让 AI 输出指定格式的内容，比如 JSON、表格、Markdown？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796944137134081"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796956015403010",
+      "position": 317,
+      "title": "LangChain 中的 Prompt 模板有什么作用？如何使用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796956015403010"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796956988481538",
+      "position": 318,
+      "title": "如何优化 LangChain 应用的性能和成本？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796956988481538"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796945177321474",
+      "position": 319,
+      "title": "什么是系统提示词 System Prompt？它和用户提示词有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796945177321474"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796955780521985",
+      "position": 320,
+      "title": "什么是 RAG？在 LangChain 中如何实现 RAG 应用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796955780521985"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796946787934210",
+      "position": 321,
+      "title": "什么是自洽性？如何应用？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796946787934210"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796950747357185",
+      "position": 322,
+      "title": "什么是思维树 Tree of Thoughts？它相比 CoT 有什么优势？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796950747357185"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796960914350081",
+      "position": 323,
+      "title": "LangChain 如何与其他 AI 框架或工具集成？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796960914350081"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796962424299522",
+      "position": 324,
+      "title": "LangChain 的未来发展趋势如何？有哪些值得关注的方向？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796962424299522"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796740365262849",
+      "position": 325,
+      "title": "RAG 检索中的 Top-K 是什么意思？K 值如何确定？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796740365262849"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796744526012418",
+      "position": 326,
+      "title": "RAG 中的查询重写 Query Rewriting 是什么？如何优化检索效果？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796744526012418"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796743116726273",
+      "position": 327,
+      "title": "如何处理 RAG 检索不到相关文档的情况？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796743116726273"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796743821369345",
+      "position": 328,
+      "title": "RAG 中如何实现向量数据库的增量更新？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796743821369345"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834674561912834",
+      "position": 329,
+      "title": "请描述 BERT 模型的架构和应用场景。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834674561912834"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834675400773634",
+      "position": 330,
+      "title": "BERT 怎样进行 mask 相比 CBOW 有什么区别？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834675400773634"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834699778068481",
+      "position": 331,
+      "title": "了解 ViLT（Vision-and-Language Transformer） 吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834699778068481"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834699207643137",
+      "position": 332,
+      "title": "Transformer 和 LLM 有哪些区别",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834699207643137"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834697093713922",
+      "position": 333,
+      "title": "什么是自回归属性（autoregressive property）？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834697093713922"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796958846558210",
+      "position": 334,
+      "title": "LangChain 的 OutputParser 有什么作用？有哪些常见类型？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796958846558210"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796943881281538",
+      "position": 335,
+      "title": "什么是上下文窗口 Context Window？它有什么限制？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796943881281538"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796949317099522",
+      "position": 336,
+      "title": "如何让 AI 进行自我反思和迭代优化？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796949317099522"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796946464972802",
+      "position": 337,
+      "title": "如何让 AI 一步步思考来提升推理能力？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796946464972802"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834670556352514",
+      "position": 338,
+      "title": "说说 GloVE 技术，怎样进行训练？有哪些应用场景？相比 Word2Vec 有哪些优缺点？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834670556352514"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796739195052033",
+      "position": 339,
+      "title": "RAG 和模型微调 Fine-tuning 有什么区别？如何选择？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796739195052033"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834671663648770",
+      "position": 340,
+      "title": "与循环神经网络（RNN）相比，LSTM 是如何解决梯度消失问题的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834671663648770"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834674817765378",
+      "position": 341,
+      "title": "BERT 是如何处理自然语言文本中不常见词或者罕见词的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834674817765378"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796738154864642",
+      "position": 342,
+      "title": "RAG 的完整工作流程是怎样的？核心步骤有哪些？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796738154864642"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834670824787969",
+      "position": 343,
+      "title": "说说 FastText 技术，是否比 Word2Vec 更优越？哪些情况下更适合使用 FastText",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834670824787969"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796740939882498",
+      "position": 344,
+      "title": "RAG 系统如何处理 PDF、Word、Markdown 等不同格式文档？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796740939882498"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796742248505346",
+      "position": 345,
+      "title": "RAG 检索时相似度阈值如何设置？设置不当有什么影响？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796742248505346"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834669751046145",
+      "position": 346,
+      "title": "解释 hierarchical softmax 的流程，以及它有什么优点？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834669751046145"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834677502119938",
+      "position": 347,
+      "title": "现有文本分类算法在处理多语种文本数据时可能遭遇哪些挑战？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834677502119938"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834698599469057",
+      "position": 348,
+      "title": "Transformer 模型的性能瓶颈在哪？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834698599469057"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834698230370305",
+      "position": 349,
+      "title": "Transformer 模型训练完成后，如何评估其性能和效果？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834698230370305"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834693230759937",
+      "position": 350,
+      "title": "Transformer 的哪个部分最占用显存？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834693230759937"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834693532749826",
+      "position": 351,
+      "title": "Transformer 的位置编码是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834693532749826"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834693834739714",
+      "position": 352,
+      "title": "Transformer 在计算 attention 的时候使用的是点乘还是加法？请说明理由。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834693834739714"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834696015777794",
+      "position": 353,
+      "title": "Transformer 中，Decoder 阶段的多头自注意力和 Encoder 阶段的多头自注意力是相同的吗？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834696015777794"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834698867904514",
+      "position": 354,
+      "title": "你觉得可以怎样缓解这个性能瓶颈？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834698867904514"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796945655472129",
+      "position": 355,
+      "title": "如何选择和设计 Few-shot 示例以提升效果？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796945655472129"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796955252039682",
+      "position": 356,
+      "title": "在 LangChain 中如何实现流式输出？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796955252039682"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796956661325825",
+      "position": 357,
+      "title": "LangChain 的 Agent 执行流程是怎样的？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796956661325825"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796958070611969",
+      "position": 358,
+      "title": "如何评估 LangChain RAG 应用的效果？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796958070611969"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796949044469762",
+      "position": 359,
+      "title": "如何为不同领域设计专用提示词？比如编程、创作、数据分析",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796949044469762"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796949883330562",
+      "position": 360,
+      "title": "提示词注入攻击是什么？如何防范？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796949883330562"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796954178297857",
+      "position": 361,
+      "title": "LangChain 是什么？它主要用来解决什么问题？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796954178297857"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796745104826370",
+      "position": 362,
+      "title": "如何评估 RAG 系统的效果？检索和生成分别看哪些指标？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796745104826370"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796741313175553",
+      "position": 363,
+      "title": "RAG 中文档切割的 chunk_size 和 overlap 应该如何设置？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796741313175553"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834670023675906",
+      "position": 364,
+      "title": "说一说负采样技术在 Word2Vec 中的运用。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834670023675906"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834668647944194",
+      "position": 365,
+      "title": "什么是词嵌入（Word Embedding）？有哪些常见的词嵌入方法？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834668647944194"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834669184815106",
+      "position": 366,
+      "title": "Word2Vec 有哪些加速方法？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834669184815106"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1991796741950709762",
+      "position": 367,
+      "title": "什么是 RAG 混合检索？如何实现向量检索和关键词检索结合？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1991796741950709762"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834668916379649",
+      "position": 368,
+      "title": "是否使用 Word2Vec 训练过数据？在这个过程中，如何获取语料？如何选择超参数？语料、词表和维度大小如何确定？怎样把握训练时长？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834668916379649"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834675660820482",
+      "position": 369,
+      "title": "你有什么办法可以比较好地解决 BERT 输入长度的限制？",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834675660820482"
+    },
+    {
+      "bankId": "1906189461556076546",
+      "questionId": "1821834676600344578",
+      "position": 370,
+      "title": "支持向量机可以用于文本分类任务吗？若可以，请说明。",
+      "url": "https://www.mianshiya.com/bank/1906189461556076546/question/1821834676600344578"
+    }
+  ]
+}

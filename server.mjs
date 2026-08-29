@@ -9,6 +9,7 @@ import { launchLoginBrowser, openLoginPage, openExternalLoginPage, collectBrowse
 import { writeJsonAtomic } from "./scripts/local-json.mjs";
 import { buildSourceInsights, publicSourceRecord } from "./scripts/source-insights.mjs";
 import { addSourceCandidates, listSourceCandidates, removeSourceCandidates, useSourceCandidates } from "./scripts/source-candidates.mjs";
+import { discoverRecentInterviewSources } from "./scripts/source-discovery.mjs";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
 const publicRoot = join(root, "public");
@@ -49,6 +50,7 @@ let aiConfig = {
 let apiKeyStorage = "none";
 let lastUpdateRun = null;
 let activeUpdate = null;
+let activeDiscovery = false;
 
 await mkdir(localRoot, { recursive: true });
 const recoveredMutation = await recoverInterruptedMutation();
@@ -519,6 +521,26 @@ async function handleSourceCandidatesDelete(request, response) {
   }
 }
 
+async function handleSourceDiscoveryRefresh(request, response) {
+  if (activeDiscovery) return sendJson(response, 409, { error: "已有一项来源发现任务正在运行" });
+  activeDiscovery = true;
+  try {
+  const body = await readJsonBody(request, 100_000);
+  const sourceData = JSON.parse(await readFile(join(root, "research", "sources.json"), "utf8"));
+  const target = Math.min(400, Math.max(10, Number(body.target) || 300));
+  const discovery = await discoverRecentInterviewSources({
+    target,
+    scanLimit: Math.min(30_000, Math.max(target, Number(body.scanLimit) || Math.max(2_500, target * 45))),
+    concurrency: Math.min(8, Math.max(1, Number(body.concurrency) || 8)),
+    excludeUrls: (sourceData.sources || []).map((source) => source.url).filter(Boolean)
+  });
+  const candidates = await addSourceCandidates(discovery.sources.map((source) => source.url));
+  return sendJson(response, 200, { ...candidates, discovery: discovery.stats });
+  } finally {
+    activeDiscovery = false;
+  }
+}
+
 async function handleUpdateRun(request, response) {
   if (!aiConfig.baseUrl || !aiConfig.model) {
     return sendJson(response, 400, { error: "请先在 AI 模型设置中配置 Base URL 和模型名称；更新题库需要 AI 参与分析。" });
@@ -582,15 +604,15 @@ async function handleUpdateRun(request, response) {
     const manualUrls = (Array.isArray(body.manualUrls) ? body.manualUrls : [])
       .map((value) => String(value).trim())
       .filter(Boolean)
-      .slice(0, 10);
+      .slice(0, 100);
     const result = await runAnalysis({
       autoFetch: body.autoFetch !== false,
       maxAutoSources: body.maxAutoSources,
-      manualUrls: [...new Set([...candidateUrls, ...manualUrls])].slice(0, 20),
+      manualUrls: [...new Set([...candidateUrls, ...manualUrls])].slice(0, 500),
       manualTexts: (Array.isArray(body.manualTexts) ? body.manualTexts : []).map((item) => ({ label: cleanText(item?.label, 120), text: cleanText(item?.text, 60_000) })).filter((item) => item.text).slice(0, 10),
       perSourceTimeoutMs: Math.min(900_000, Math.max(30_000, Number(body.perSourceTimeoutMs) || 300_000)),
       budgetMs: Number(body.budgetMs) > 0 ? Math.min(4 * 3600_000, Number(body.budgetMs)) : 0,
-      analysisMode: ["compatible", "balanced", "quality"].includes(body.analysisMode) ? body.analysisMode : "compatible",
+      analysisMode: ["scale", "compatible", "balanced", "quality"].includes(body.analysisMode) ? body.analysisMode : "scale",
       aiChat: (messages, options) => upstreamChat(messages, options),
       onEvent: streamEvent,
       signal: controller.signal,
@@ -698,7 +720,9 @@ const server = createServer(async (request, response) => {
       return sendJson(response, 200, buildSourceInsights({
         questions: questionData.questions,
         sources: sourceData.sources,
-        snapshotDate: sourceData.snapshotDate
+        snapshotDate: sourceData.snapshotDate,
+        sampleAudit: sourceData.sampleAudit || null,
+        publicQuestionSignals: questionData.publicQuestionSignals || null
       }));
     }
     if (request.method === "GET" && url.pathname === "/api/config") {
@@ -762,6 +786,9 @@ const server = createServer(async (request, response) => {
     }
     if (request.method === "DELETE" && url.pathname === "/api/discovery/candidates") {
       return await handleSourceCandidatesDelete(request, response);
+    }
+    if (request.method === "POST" && url.pathname === "/api/discovery/refresh") {
+      return await handleSourceDiscoveryRefresh(request, response);
     }
     if (request.method === "POST" && url.pathname === "/api/update/run") {
       return await handleUpdateRun(request, response);

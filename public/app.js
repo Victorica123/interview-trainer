@@ -374,6 +374,7 @@ function bindEvents() {
 
   $("#updateRunButton").addEventListener("click", runUpdate);
   $("#sourceCandidateAddButton").addEventListener("click", addSourceCandidates);
+  $("#sourceDiscoveryButton").addEventListener("click", discoverSourceCandidates);
   $("#sourceCandidateDeleteButton").addEventListener("click", deleteSourceCandidates);
   $("#sourceCandidateList").addEventListener("change", (event) => {
     if (!event.target.classList.contains("source-candidate-check")) return;
@@ -651,12 +652,33 @@ function selectQuestion(id) {
   if (innerWidth < 1050) $("#questionDetail").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function renderPublicQuestionAttention(attention) {
+  if (!attention?.available) {
+    return '<div class="detail-section"><h3>公开题库关注度</h3><p class="company-attribution">当前公开热门题库标题未匹配到这个知识点；这不会影响真实面经频次统计。</p></div>';
+  }
+  const banks = (attention.banks || []).map((bank) =>
+    '<a href="' + escapeHtml(bank.url) + '" target="_blank" rel="noreferrer">' +
+      escapeHtml(bank.title) + ' · 榜单 #' + bank.rank + ' · 题目最高位置 #' + bank.bestPosition + ' ↗</a>'
+  ).join("");
+  const examples = (attention.examples || []).map((item) =>
+    '<a href="' + escapeHtml(item.url) + '" target="_blank" rel="noreferrer"><span>公开标题</span><div><b>' +
+      escapeHtml(item.title) + '</b><small>列表位置 #' + item.position + ' · 仅核对标题</small></div><i>↗</i></a>'
+  ).join("");
+  return '<div class="detail-section"><h3>公开题库关注度</h3><p class="company-attribution">在 ' +
+    attention.bankCount + ' 个公开热门题库中匹配到 ' + attention.publicTitleSamples +
+    ' 个标题；当前只有一次快照，按低置信信号最多影响 2 分。标题只用于识别知识点，不访问 VIP 答案，也不计入真实面经频次。</p>' +
+    (banks ? '<div class="source-links">' + banks + '</div>' : '') +
+    (examples ? '<div class="learning-resources">' + examples + '</div>' : '') +
+    '</div>';
+}
+
 function renderQuestionDetail(question) {
   if (!question) return;
   const progress = getProgress(question.id);
   const sourceLinks = (question.evidence?.sourceIds || []).map((id) => state.sourceMap.get(id)).filter(Boolean);
   const learningLinks = (question.learningSourceIds || []).map((id) => state.sourceMap.get(id)).filter(Boolean);
   const reviewLinks = (question.contentReview?.sourceIds || []).map((id) => state.sourceMap.get(id)).filter(Boolean);
+  const publicAttention = question.evidence?.publicQuestionAttention;
   const companies = questionCompanies(question);
   const evidenceText = { strong: "近期面经强信号", medium: "多来源支持", foundation: "基础必要性" }[question.evidence?.level] || "待核查";
   $("#questionDetail").className = "question-detail";
@@ -707,6 +729,8 @@ function renderQuestionDetail(question) {
       <p class="company-attribution">${companies.length ? `该知识点关联 ${escapeHtml(companies.join("、"))} 的可审计面经；这表示知识点出现过，不声称当前问法是公司原题。` : "当前没有公司明确且可审计的直接面经关联，不代表该知识点从未被问过。"}</p>
       <div class="evidence-strip"><div><b>${question.importance}</b><small>综合重要度</small></div><div><b>${sourceLinks.length}</b><small>关联公开来源</small></div><div><b>${escapeHtml(question.evidence?.lastObserved || "—")}</b><small>最近观察</small></div></div>
     </div>
+
+    ${renderPublicQuestionAttention(publicAttention)}
 
     <div class="detail-section">
       <h3>你的熟悉程度</h3>
@@ -1296,13 +1320,19 @@ function coveragePlatformCounts(coverage) {
 }
 
 function coverageCards(coverage) {
+  const publicSignals = coverage?.publicQuestionSignals;
   const range = coverage?.earliest && coverage?.latest ? `${coverage.earliest} 至 ${coverage.latest}` : "暂无可核验日期";
   return `<div class="coverage-stat-grid">
-    <article><span>面经来源</span><b>${coverage?.interviewSources ?? 0}</b><small>已登记样本</small></article>
-    <article><span>参与趋势</span><b>${coverage?.frequencyEligibleSources ?? 0}</b><small>链接、日期、直接性均可核验</small></article>
-    <article><span>排除样本</span><b>${coverage?.excludedSources ?? 0}</b><small>不提升近期频次</small></article>
+    <article><span>登记来源</span><b>${coverage?.registeredSources ?? coverage?.interviewSources ?? 0}</b><small>面经、岗位与学习资料</small></article>
+    <article><span>面经样本</span><b>${coverage?.interviewSources ?? 0}</b><small>识别为面试经历或问题材料</small></article>
+    <article><span>趋势有效</span><b>${coverage?.frequencyEligibleSources ?? 0}</b><small>链接、日期、直接性均可核验</small></article>
+    <article><span>独立直接经历</span><b>${coverage?.independentInterviewSamples ?? 0}</b><small>转载去重并排除聚合帖</small></article>
+    <article><span>已映射知识点</span><b>${coverage?.mappedInterviewSources ?? 0}</b><small>能影响题目证据与趋势</small></article>
+    <article><span>最近 90 天</span><b>${coverage?.recent90Sources ?? 0}</b><small>独立直接样本</small></article>
+    <article><span>公开热门标题</span><b>${publicSignals ? `${publicSignals.matchedInScopeTitles}/${publicSignals.inScopeTitles}` : "—"}</b><small>标题映射覆盖，不计面经频次</small></article>
+    <article><span>去重 / 聚合</span><b>${(coverage?.duplicateExcluded ?? 0) + (coverage?.aggregateSources ?? 0)}</b><small>不重复放大热度</small></article>
     <article><span>时间范围</span><b class="coverage-date">${escapeHtml(range)}</b><small>以公开发布日期为准</small></article>
-  </div><div class="coverage-platforms">${coveragePlatformCounts(coverage).map((platform) => `<span><b>${escapeHtml(platform.name)}</b> ${platform.count} 篇</span>`).join("")}<span><b>互动数据</b> ${coverage?.engagementSources ?? 0} 篇可用</span></div>`;
+  </div><div class="coverage-platforms">${coveragePlatformCounts(coverage).map((platform) => `<span><b>${escapeHtml(platform.name)}</b> ${platform.count} 篇</span>`).join("")}${coverage?.sampleAudit?.scanned ? `<span><b>Sitemap 已筛查</b> ${coverage.sampleAudit.scanned} 个页面</span>` : ""}<span><b>排除频次</b> ${coverage?.excludedSources ?? 0} 篇</span><span><b>互动数据</b> ${coverage?.engagementSources ?? 0} 篇可用</span></div>`;
 }
 
 function trendAttentionText(attention) {
@@ -1614,6 +1644,7 @@ function renderSourceCandidates() {
   $("#sourceCandidateCount").textContent = `${state.sourceCandidates.length} 条 · ${pending} 待分析 · ${registered} 已登记`;
   $("#sourceCandidateDeleteButton").disabled = state.updateRunning || state.selectedCandidateIds.size === 0;
   $("#sourceCandidateAddButton").disabled = state.updateRunning;
+  $("#sourceDiscoveryButton").disabled = state.updateRunning;
   if (!state.sourceCandidates.length) {
     list.innerHTML = '<div class="source-candidate-empty">还没有候选链接。搜索到新的面经后，可以先粘贴到这里排队。</div>';
     return;
@@ -1660,6 +1691,32 @@ async function addSourceCandidates() {
     showToast(`保存候选失败：${error.message}`);
   } finally {
     $("#sourceCandidateAddButton").disabled = state.updateRunning;
+  }
+}
+
+async function discoverSourceCandidates() {
+  const button = $("#sourceDiscoveryButton");
+  button.disabled = true;
+  button.textContent = "正在扫描公开 Sitemap…";
+  $("#sourceCandidateStatus").textContent = "正在拉取近期候选并用本地规则筛选；首次运行可能需要几分钟，之后会命中缓存";
+  try {
+    const payload = await fetchJson("/api/discovery/refresh", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ target: 300, scanLimit: 13500, concurrency: 8 })
+    });
+    state.sourceCandidates = payload.candidates || [];
+    for (const id of payload.addedIds || []) state.selectedCandidateIds.add(id);
+    renderSourceCandidates();
+    const stats = payload.discovery || {};
+    $("#sourceCandidateStatus").textContent = `扫描 ${stats.scanned || 0} 个公开页面，识别 ${stats.accepted || 0} 篇有效面经；新增候选 ${payload.added || 0}，缓存命中 ${stats.cacheHits || 0}`;
+    showToast(payload.added ? "近期面经候选已加入并勾选" : "没有新的可用候选");
+  } catch (error) {
+    $("#sourceCandidateStatus").textContent = `自动发现失败：${error.message}`;
+    showToast(`自动发现失败：${error.message}`);
+  } finally {
+    button.disabled = state.updateRunning;
+    button.textContent = "发现近期面经候选";
   }
 }
 
@@ -1852,7 +1909,7 @@ function renderUpdateHistory() {
     box.innerHTML = `<p>最近操作：<b>已撤销更新</b>（${new Date(info.rolledBackAt).toLocaleString()}），题库恢复为 ${info.counts?.total ?? "—"} 题。</p>`;
     return;
   }
-  box.innerHTML = `<p>最近更新：<b>${new Date(info.appliedAt).toLocaleString()}</b> · 新增来源 ${info.addedSources ?? "—"} · 既有来源补证据 ${info.patchedSources ?? 0} · 新增概念 ${info.addedConcepts ?? "—"} · 题库现 ${info.counts?.total ?? "—"} 题。</p><button id="updateRollbackButton" class="secondary-button">撤销最近一次更新</button>`;
+  box.innerHTML = `<p>最近更新：<b>${new Date(info.appliedAt).toLocaleString()}</b> · 新增来源 ${info.addedSources ?? "—"} · 既有来源补证据 ${info.patchedSources ?? 0} · 新增概念 ${info.addedConcepts ?? "—"} · 当次应用后 ${info.counts?.total ?? "—"} 题 · 当前版本 ${state.questions.length} 题。</p><button id="updateRollbackButton" class="secondary-button">撤销最近一次更新</button>`;
   $("#updateRollbackButton")?.addEventListener("click", rollbackUpdate);
 }
 
@@ -1886,6 +1943,7 @@ async function runUpdate() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         autoFetch,
+        maxAutoSources: Number($("#updateMaxAutoSources").value),
         analysisMode: $("#updateAnalysisMode").value,
         candidateIds: [...state.selectedCandidateIds],
         manualUrls,
@@ -1972,7 +2030,18 @@ function handleUpdateEvent(event) {
       state.updateTotal = event.plan.auto.length + event.plan.manualUrls + event.plan.manualTexts;
       state.updateDone = 0;
       $("#updateProgressCount").textContent = "0/" + state.updateTotal;
-      appendUpdateLog(`计划：自动来源 ${event.plan.auto.length} 篇、手动链接 ${event.plan.manualUrls} 个、手动文本 ${event.plan.manualTexts} 份；模式 ${event.plan.analysisMode === "compatible" ? "兼容慢模型" : event.plan.analysisMode === "quality" ? "高质量" : "均衡"}，分析并发 ${event.plan.analysisConcurrency}。`, "info");
+      appendUpdateLog(`计划：自动来源 ${event.plan.auto.length} 篇、候选/手动链接 ${event.plan.manualUrls} 个、手动文本 ${event.plan.manualTexts} 份；模式 ${event.plan.analysisMode === "scale" ? "大样本增量" : event.plan.analysisMode === "compatible" ? "兼容慢模型" : event.plan.analysisMode === "quality" ? "高质量" : "均衡"}，处理并发 ${event.plan.analysisConcurrency}，AI 批次约 ${event.plan.aiBatchSize || 1} 篇。`, "info");
+      break;
+    case "batch":
+      if (event.status === "circuit-open") {
+        appendUpdateLog(`⚠ 弱模型保护已触发：连续 ${event.failures || 3} 个批次不可用，剩余来源自动改用单篇分析。`, "info");
+      } else if (event.status === "circuit-bypass") {
+        // 熔断后的来源会在单篇分析阶段逐一显示，不重复刷屏。
+      } else if (event.status === "pending") appendUpdateLog(`⏳ 批量 AI 分析：${event.sources} 个低置信来源…`, "pending", event.id);
+      else {
+        clearPendingAnalyze(event.id);
+        appendUpdateLog(event.status === "ok" ? `✓ 批量 AI 完成：${event.usable}/${event.sources} 个结果可用（${Math.round((event.durationMs || 0) / 1000)}s）` : `⚠ 批量结果不可用，将只对缺失来源降级单篇分析：${event.error || "返回格式异常"}`, event.status === "ok" ? "ok" : "info");
+      }
       break;
     case "fetch":
       if (event.status === "ok") appendUpdateLog(`✓ 抓取 ${event.label}（${event.chars} 字符）`, "ok");
@@ -1987,7 +2056,8 @@ function handleUpdateEvent(event) {
         if (Number(event.conceptCount) > 0) state.updateSucceeded += 1;
         if (state.updateSucceeded > 0 && !state.updateFinalizing) $("#updateFinalizeButton").hidden = false;
         $("#updateProgressCount").textContent = state.updateDone + "/" + state.updateTotal;
-        appendUpdateLog(`✓ 分析 ${event.label}：提取 ${event.conceptCount} 个概念${event.cached ? "（缓存命中）" : event.durationMs ? "（耗时 " + Math.round(event.durationMs / 1000) + "s）" : ""}`, "ok");
+        const method = event.analysisMethod === "deterministic" ? "本地预筛" : event.analysisMethod === "batch-ai" ? "批量 AI" : event.cached ? "缓存命中" : "单篇 AI";
+        appendUpdateLog(`✓ 分析 ${event.label}：映射 ${event.conceptCount} 个概念（${method}${event.durationMs ? " · " + Math.round(event.durationMs / 1000) + "s" : ""}）`, "ok");
       } else if (event.status === "skipped-budget") {
         clearPendingAnalyze(event.label);
         state.updateDone += 1;
@@ -2074,7 +2144,13 @@ function renderUpdateReport(draft) {
   } else {
     emptyBanner.hidden = true;
   }
-  $("#updateReportSummary").textContent = `新来源 ${draft.newSources.length} · 复查既有来源 ${draft.sourceRefreshes?.length ?? 0} · 既有来源补证据 ${draft.existingSourcePatches?.length ?? 0} · 新概念 ${draft.newConcepts.length}（+${draft.newConcepts.length * 5} 题）· 旧题分数变化 ${draft.rescorePreview.changed}（升 ${draft.rescorePreview.upgraded} / 降 ${draft.rescorePreview.downgraded}）· AI 复核 ${draft.evaluation?.reviewed ?? 0} 题（调整 ${draft.evaluation?.adjusted ?? 0}）· 学习位置 ${draft.learningHintConcepts ?? 0} 个概念`;
+  const performance = draft.performance || {};
+  const capacity = draft.capacityPolicy || {};
+  const evidenceSummary = performance.evidenceAccepted != null
+    ? ` · 证据校验 ${performance.evidenceAccepted} 通过/${performance.evidenceRejected || 0} 拦截${performance.semanticRechecks ? `（定向复核 ${performance.semanticRechecks}）` : ""}`
+    : "";
+  const circuitSummary = performance.batchCircuitTrips ? ` · 已触发弱模型熔断，${performance.batchBypassedSources || 0} 个来源改走单篇` : "";
+  $("#updateReportSummary").textContent = `样本 ${performance.inputSources ?? draft.sourceResults?.length ?? 0} · AI 调用 ${performance.calls ?? "—"}（节省 ${performance.aiCallsSaved ?? "—"}）${evidenceSummary}${circuitSummary} · 新来源 ${draft.newSources.length} · 新概念晋级 ${draft.newConcepts.length}（+${draft.newConcepts.length * 5} 题）· 观察池 ${draft.conceptWatchlist?.length ?? 0} · 容量 ${capacity.beforeQuestions ?? "—"}/${capacity.targetQuestions ?? 1000} · 旧题分数变化 ${draft.rescorePreview.changed}`;
   $("#updateNewSources").innerHTML = draft.newSources.length
     ? draft.newSources.map((source) => `<label class="check-card"><input type="checkbox" class="update-source-check" value="${escapeHtml(source.id)}" checked /><span><b>${escapeHtml(source.shortTitle || source.title)}</b><small>${escapeHtml(source.title)} · ${SOURCE_TYPE_LABELS[source.type] || "公开资料"}${source.publishedAt ? ` · ${escapeHtml(source.publishedAt)}` : ""}${source.company ? ` · ${escapeHtml(source.company)}` : ""} · ${source.collection?.frequencyEligible ? "参与趋势" : "不计近期频次"}</small>${source.notes ? `<small class="muted">${escapeHtml(source.notes)}</small>` : ""}${(source.qualityWarnings || []).length ? `<ul class="source-warning-list">${source.qualityWarnings.map((warning) => `<li>${escapeHtml(warning)}</li>`).join("")}</ul>` : ""}</span></label>`).join("")
     : '<p class="muted">本次没有新增来源。</p>';
@@ -2096,6 +2172,8 @@ function renderUpdateReport(draft) {
         return `<label class="check-card concept-card"><input type="checkbox" class="update-concept-check" value="${escapeHtml(concept.name)}" checked /><span><b>${escapeHtml(concept.name)}</b><small>${escapeHtml(concept.category)}${concept.topicGroup ? ` · ${escapeHtml(concept.topicGroup)}` : ""} · ${concept.track === "agent" ? "AI / Agent" : "Java 后端"} · 优先级 ${concept.priority}/5 · 来源：${escapeHtml(concept.originSource || "")}</small>${(concept.learningHints || []).length ? `<small>学习位置：${concept.learningHints.map((hint) => hint.site + " · " + hint.title).join("；")}</small>` : ""}<ol>${questions.map((question) => `<li><em>${tierLabelOf(question.tier)}</em>${escapeHtml(question.title)}${question.adjusted ? `<i class="ai-badge" title="${escapeHtml(question.note)}">AI ${question.importance}</i>` : ""}</li>`).join("")}</ol></span></label>`;
       }).join("")
     : '<p class="muted">本次没有新增概念。</p>';
+  const watchlist = draft.conceptWatchlist || [];
+  $("#updateConceptWatchlist").innerHTML = watchlist.length ? watchlist.slice(0, 80).map((concept) => `<article class="source-refresh-card"><div><b>${escapeHtml(concept.name)}</b><small>${escapeHtml(concept.category || "待分类")} · ${concept.promotion?.recentSources ?? 0} 个近期独立样本 · ${concept.promotion?.companyCount ?? 0} 家明确公司 · ${concept.promotion?.platformCount ?? 0} 个平台</small></div><span class="quality-ok">${escapeHtml(concept.promotion?.reason || "继续观察，不生成题目")}</span></article>`).join("") : '<p class="muted">当前没有待观察的新概念。</p>';
   const rows = draft.rescorePreview.affected || [];
   $("#updateRescore").innerHTML = rows.length
     ? `<table class="rescore-table"><thead><tr><th>题目</th><th>重要度</th><th>层级</th><th>证据</th><th>加权支持</th><th>AI 复核</th></tr></thead><tbody>${rows.map((row) => {

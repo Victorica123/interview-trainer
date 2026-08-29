@@ -11,16 +11,21 @@ import { validatePayload, expectedCounts } from "./validate-data.mjs";
 import { writeFileAtomic, writeJsonAtomic } from "./local-json.mjs";
 import { detectPlatform, extractExplicitEngagement } from "./source-insights.mjs";
 import { BACKEND_TAXONOMY, migrateLegacyBackendCategory } from "./taxonomy.mjs";
+import { assessInterviewPost, extractNowcoderMainPost, matchKnownConcepts } from "./source-discovery.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const localRoot = join(root, ".local");
 const historyPath = join(localRoot, "update-history.json");
 const mutationPath = join(localRoot, "content-mutation.json");
 const newConceptsPath = join(root, "research", "new-concepts.json");
+const conceptCandidatesPath = join(root, "research", "concept-candidates.json");
 const aiScoresPath = join(root, "research", "ai-scores.json");
 const learningHintsPath = join(root, "research", "learning-hints.json");
-const ANALYSIS_CACHE_SCHEMA = 2;
-const EXTRACTION_PROMPT_VERSION = "2026-08-28-5";
+const ANALYSIS_CACHE_SCHEMA = 4;
+const EXTRACTION_PROMPT_VERSION = "2026-08-29-7";
+const QUESTION_BANK_TARGET = 1_000;
+const MAX_NEW_CONCEPTS_PER_RUN = 3;
+const BATCH_CIRCUIT_FAILURES = 3;
 
 export const ALL_CATEGORIES = [...new Set([...backendConcepts, ...agentConcepts].map((concept) => concept.category))];
 export const EXISTING_CONCEPT_NAMES = [...backendConcepts, ...agentConcepts].map((concept) => concept.name);
@@ -29,10 +34,28 @@ const AGENT_CATEGORIES = new Set(agentConcepts.map((concept) => concept.category
 const BACKEND_TOPIC_GROUPS = new Map(BACKEND_TAXONOMY.map((category) => [category.name, category.groups.map((group) => group.name)]));
 const SOURCE_TYPES = ["interview", "job", "guide", "official", "research"];
 
+async function loadConceptCandidates() {
+  try {
+    const payload = JSON.parse(await readFile(conceptCandidatesPath, "utf8"));
+    return Array.isArray(payload.candidates) ? payload.candidates.filter((candidate) => candidate && typeof candidate.name === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
 // ---------------- text / fetch helpers ----------------
 
 function cleanText(value, maxLength) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
+}
+
+function todayInChina() {
+  return new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
 }
 
 function ensureConceptText(value, maxLength, fallback) {
@@ -42,13 +65,14 @@ function ensureConceptText(value, maxLength, fallback) {
 }
 
 const ANALYSIS_PROFILES = {
-  compatible: { name: "compatible", concurrency: 1, inputChars: 3200, extractionTokens: 1600, candidateLimit: 32, maxConcepts: 6, aiEvaluation: false },
-  balanced: { name: "balanced", concurrency: 2, inputChars: 7000, extractionTokens: 2800, candidateLimit: 80, maxConcepts: 12, aiEvaluation: true },
-  quality: { name: "quality", concurrency: 2, inputChars: 10000, extractionTokens: 4000, candidateLimit: Infinity, maxConcepts: 20, aiEvaluation: true }
+  scale: { name: "scale", concurrency: 6, inputChars: 2400, extractionTokens: 6000, candidateLimit: 40, maxConcepts: 8, aiEvaluation: false, batchSize: 8, batchConcurrency: 3, deterministic: true },
+  compatible: { name: "compatible", concurrency: 1, inputChars: 3200, extractionTokens: 1600, candidateLimit: 32, maxConcepts: 6, aiEvaluation: false, batchSize: 1, batchConcurrency: 1, deterministic: true },
+  balanced: { name: "balanced", concurrency: 4, inputChars: 5600, extractionTokens: 6500, candidateLimit: 72, maxConcepts: 10, aiEvaluation: true, batchSize: 6, batchConcurrency: 2, deterministic: true },
+  quality: { name: "quality", concurrency: 3, inputChars: 8000, extractionTokens: 7000, candidateLimit: Infinity, maxConcepts: 16, aiEvaluation: true, batchSize: 5, batchConcurrency: 2, deterministic: false }
 };
 
 function analysisProfile(mode) {
-  return ANALYSIS_PROFILES[mode] || ANALYSIS_PROFILES.compatible;
+  return ANALYSIS_PROFILES[mode] || ANALYSIS_PROFILES.scale;
 }
 
 function normalizedSearchText(value) {
@@ -95,6 +119,63 @@ function selectRelevantText(value, maxLength) {
     if (size >= maxLength) break;
   }
   return selected.join("\n").slice(0, maxLength);
+}
+
+function evidenceTerms(concept) {
+  const namedTerms = [concept?.name].flatMap((value) => {
+    const text = String(value || "").trim();
+    return [text, ...text.split(/[、，,\/与和及或()（）]+/u)].map(normalizedSearchText);
+  }).filter((term) => term.length >= 2);
+  const tagTerms = (Array.isArray(concept?.tags) ? concept.tags : [])
+    .map(normalizedSearchText)
+    .filter((term) => term.length >= 3 || (term.length >= 2 && /[a-z0-9]/i.test(term)));
+  return [...new Set([...namedTerms, ...tagTerms])].sort((a, b) => b.length - a.length);
+}
+
+function groundAiExtraction(parsed, input, knownConceptByName) {
+  const concepts = Array.isArray(parsed?.concepts) ? parsed.concepts : [];
+  const sourceText = normalizedSearchText(input.promptText);
+  const accepted = [];
+  const rejected = [];
+  for (const concept of concepts) {
+    if (!concept || typeof concept.name !== "string" || !concept.name.trim()) {
+      rejected.push({ name: "未命名概念", reason: "概念名称缺失" });
+      continue;
+    }
+    const name = concept.name.trim();
+    const quote = cleanText(concept.evidenceQuote, 240);
+    const normalizedQuote = normalizedSearchText(quote);
+    if (normalizedQuote.length < 4) {
+      rejected.push({ name, reason: "缺少足够长的正文证据句" });
+      continue;
+    }
+    if (!sourceText.includes(normalizedQuote)) {
+      rejected.push({ name, reason: "证据句不是正文中的连续原文" });
+      continue;
+    }
+    const mappedName = typeof concept.mapsToExisting === "string" && knownConceptByName.has(concept.mapsToExisting)
+      ? concept.mapsToExisting
+      : knownConceptByName.has(name) ? name : null;
+    const evidenceConcept = mappedName ? knownConceptByName.get(mappedName) : concept;
+    if (!evidenceTerms(evidenceConcept).some((term) => normalizedQuote.includes(term))) {
+      rejected.push({ name: mappedName || name, reason: "证据句与目标知识点没有可验证的名称或同义标签" });
+      continue;
+    }
+    accepted.push({ ...concept, name, evidenceQuote: quote });
+  }
+  return {
+    parsed: { ...parsed, concepts: accepted },
+    accepted: accepted.length,
+    rejected,
+    suspicious: concepts.length > 0 && accepted.length === 0
+  };
+}
+
+function groundingError(grounded) {
+  const detail = grounded.rejected.slice(0, 3).map((entry) => `${entry.name}：${entry.reason}`).join("；");
+  const error = new Error(`模型知识点缺少可核对的正文证据${detail ? `（${detail}）` : ""}`);
+  error.code = "EVIDENCE_GROUNDING";
+  return error;
 }
 
 function combineSignals(...signals) {
@@ -193,6 +274,10 @@ export async function fetchSourceText(url, { signal } = {}) {
     if (buffer.length > 1_500_000) throw new Error("页面过大（超过 1.5MB）");
     const type = response.headers.get("content-type") || "";
     const text = buffer.toString("utf8");
+    if (type.includes("html") && /(^|\.)nowcoder\.com$/.test(parsed.hostname)) {
+      const post = extractNowcoderMainPost(text, { url });
+      if (post.title && post.content) return `标题：${post.title}\n发布日期：${post.publishedAt || "未知"}\n${post.content}`.slice(0, 14000);
+    }
     return (type.includes("html") ? htmlToText(text) : text).slice(0, 14000);
   } catch (error) {
     if (signal?.aborted) throw abortError();
@@ -209,8 +294,8 @@ function extractionSystemPrompt() {
 
 ## 背景
 题库服务于 Java 后端与 AI / Agent 应用开发的实习、校招和 0-1 年经验求职者。重要度公式（本地计算，你不用算分）：
-importance = min(98, 38 + 概念优先级×7 + 角度奖励 + 多来源加权支持(≤13) + 来源多样性(≤4))
-来源类型系数：面经1.0 > 岗位0.6 > 维护指南0.35 > 研究0.3 > 官方0.25；2026年前来源×0.55；非直接问题证据×0.8。
+importance = min(98, 46 + 概念优先级×4 + 角度奖励 + 饱和面经频次(≤16) + 来源多样性(≤5) + 交叉验证(≤2) + 公开题库关注度(≤2))
+面经先按正文指纹簇去重并随时间衰减，聚合帖只按0.32倍计入；频次使用指数饱和曲线。岗位/指南/官方资料只作交叉验证，不虚增面经频次。公开题库关注度由本地公开标题快照确定，单快照保持低置信且最多加2分，AI不得把它改写成真实面经频次。
 
 ## 规则
 1. 只输出 JSON，不要输出任何其他文字。
@@ -225,6 +310,7 @@ importance = min(98, 38 + 概念优先级×7 + 角度奖励 + 多来源加权支
 10. 只要提取的概念与现有列表中的某个概念是同一知识点，即使名称不完全一致（如「RPC」对应「REST、RPC、WebSocket与SSE」），也必须把 mapsToExisting 设为列表中的精确名称，不要当作新概念。
 11. 为每个概念给出它在主流八股文网站中的对应学习章节 learningHints：site 取 JavaGuide / 面试鸭 / 小林coding / 牛客题库 / 官方文档 / 其他之一；title 写该站内的具体章节或知识点名；url 写章节直达链接（以 https:// 开头），不确定就填空字符串。禁止编造不存在的章节或链接；完全不确定就把 learningHints 设为空数组。学习位置是辅助参考，不参与「高频」分数计算。
 12. position 和 candidateLevel 只能按正文明确内容填写；未明确岗位或候选人类型时分别填 null 和 unknown，禁止根据公司或题目难度猜测。
+13. 每个概念必须给出 evidenceQuote：从本次正文原样复制的一段连续证据句（建议 12-180 字），必须能直接看出该知识点确实被问到或讨论。禁止改写、概括或拼接不连续片段；没有直接证据就不要输出该概念。
 
 ## 分类列表
 ${categories}
@@ -260,14 +346,15 @@ ${backendGroups}
       "tradeoff": "如何比较和选型",
       "priority": 3,
       "tags": ["标签1"],
+      "evidenceQuote": "从正文逐字复制的连续证据句",
       "learningHints": [{"site": "JavaGuide", "title": "对应章节名", "url": "章节直达链接或空字符串"}]
     }
   ]
 }`;
 }
 
-function extractionUserPrompt(ref, text, existingConceptNames = EXISTING_CONCEPT_NAMES, maxConcepts = 12, compatible = false) {
-  return `本地检索得到的候选现有概念（同义时 mapsToExisting 必须使用其中的精确名称）：\n${existingConceptNames.join("、")}\n\n本次最多提取 ${maxConcepts} 个最有面试价值的概念。${compatible ? "优先保证 JSON 完整；不确定的 learningHints 直接给空数组。" : ""}\n来源 URL：${ref.url || "无（手动粘贴文本）"}\n来源线索：${cleanText(ref.shortTitle || ref.title || ref.label || "", 200)}\n\n本地筛选后的相关正文：\n${text}`;
+function extractionUserPrompt(ref, text, existingConceptNames = EXISTING_CONCEPT_NAMES, maxConcepts = 12, compatible = false, correction = "") {
+  return `本地检索得到的候选现有概念（同义时 mapsToExisting 必须使用其中的精确名称）：\n${existingConceptNames.join("、")}\n\n本次最多提取 ${maxConcepts} 个最有面试价值的概念。${compatible ? "优先保证 JSON 完整；不确定的 learningHints 直接给空数组。" : ""}${correction ? `\n上一次结果未通过本地证据检查：${correction}。请删除无证据概念并重新从正文逐字复制 evidenceQuote。` : ""}\n来源 URL：${ref.url || "无（手动粘贴文本）"}\n来源线索：${cleanText(ref.shortTitle || ref.title || ref.label || "", 200)}\n\n本地筛选后的相关正文：\n${text}`;
 }
 
 export function parseExtraction(raw) {
@@ -279,6 +366,63 @@ export function parseExtraction(raw) {
   const parsed = JSON.parse(candidate.slice(start, end + 1));
   if (!parsed || typeof parsed !== "object" || !Array.isArray(parsed.concepts)) throw new Error("JSON 缺少 concepts 数组");
   return parsed;
+}
+
+function batchExtractionSystemPrompt() {
+  return `${extractionSystemPrompt()}\n\n## 批量输入补充规则\n本次 user 消息包含多个来源。请返回 {"items":[...]}，每个输入 key 必须原样返回一次；每个 items 元素结构为 {"key":"...","source":同上,"concepts":同上}。不同来源不得互相复制公司、日期或 evidenceQuote；每条 evidenceQuote 只能来自该 key 自己的 text。`;
+}
+
+function batchExtractionUserPrompt(entries, maxConcepts, compatible = false) {
+  return `请一次分析下面 ${entries.length} 个相互独立的来源。每个来源最多保留 ${maxConcepts} 个最有价值概念。${compatible ? "优先保证 JSON 可完整解析。" : "已有概念的同义问法必须映射，不要重复发明新概念。"}\n${JSON.stringify({
+    sources: entries.map((entry) => ({
+      key: entry.key,
+      url: entry.item.ref.url || null,
+      label: cleanText(entry.item.ref.shortTitle || entry.item.ref.title || entry.item.ref.label || entry.item.ref.url, 160),
+      existingCandidates: entry.candidateNames,
+      text: entry.promptText
+    }))
+  })}`;
+}
+
+export function parseBatchExtraction(raw) {
+  const fenced = String(raw || "").match(/\`\`\`(?:json)?\s*([\s\S]*?)\`\`\`/i);
+  const candidate = fenced ? fenced[1] : String(raw || "");
+  const start = candidate.indexOf("{");
+  const end = candidate.lastIndexOf("}");
+  if (start === -1 || end <= start) throw new Error("批量模型输出中没有 JSON 对象");
+  const parsed = JSON.parse(candidate.slice(start, end + 1));
+  if (!parsed || !Array.isArray(parsed.items)) throw new Error("批量模型输出缺少 items 数组");
+  return parsed.items;
+}
+
+const EXPLICIT_COMPANIES = ["阿里巴巴", "阿里", "蚂蚁", "字节跳动", "字节", "腾讯", "美团", "拼多多", "京东", "百度", "快手", "滴滴", "小米", "网易", "华为", "携程", "小红书", "得物", "虾皮", "Shopee", "微软", "亚马逊"];
+
+function deterministicExtraction(item, promptText, knownConcepts) {
+  if (!item.ref.url || detectPlatform(item.ref.url).id !== "nowcoder") return null;
+  const title = promptText.match(/^标题：(.+)$/m)?.[1]?.trim() || cleanText(item.ref.title || item.ref.shortTitle, 180);
+  const publishedAt = promptText.match(/^发布日期：(\d{4}-\d{2}-\d{2})$/m)?.[1] || null;
+  const content = promptText.replace(/^标题：.*$/m, "").replace(/^发布日期：.*$/m, "").trim();
+  const assessment = assessInterviewPost({ title, content, publishedAt, url: item.ref.url }, knownConcepts);
+  if (!assessment.accepted || !assessment.directQuestionEvidence) return null;
+  const names = matchKnownConcepts(content, knownConcepts, 14);
+  if (!names.length) return null;
+  const company = EXPLICIT_COMPANIES.find((name) => title.toLowerCase().includes(name.toLowerCase())) || null;
+  const candidateLevel = /实习|暑期|日常实习/.test(title) ? "intern" : /校招|秋招|春招|应届|2[6-9]届/.test(title) ? "campus" : /社招|[1-9]\d*年经验/.test(title) ? "experienced" : "unknown";
+  const position = /agent|智能体|大模型|llm|rag|ai开发|ai应用/i.test(title) ? "AI / Agent 相关岗位" : /java|后端|服务端/i.test(title) ? "Java / 后端相关岗位" : null;
+  return {
+    source: {
+      title,
+      type: "interview",
+      company,
+      publishedAt,
+      position,
+      candidateLevel,
+      directQuestionEvidence: true,
+      weight: assessment.promotional ? 0.55 : assessment.aggregate ? 0.62 : 0.92,
+      notes: `本地高置信预筛：${assessment.evidence.total} 个问题信号；${assessment.aggregate ? "聚合内容已降权" : "直接面经"}`
+    },
+    concepts: names.map((name) => ({ name, mapsToExisting: name, learningHints: [] }))
+  };
 }
 const MAX_AI_EVAL = 40;
 const AI_SCORE_DELTA = 6;
@@ -296,8 +440,8 @@ function evaluationSystemPrompt() {
 3. 只输出 JSON 数组，不要输出任何其他文字。
 
 ## 评分 skill（本地公式规则，作为你的判断基线）
-importance = min(98, 38 + 概念优先级×7 + 角度奖励(2~5) + 多来源加权支持(≤13) + 来源多样性(≤4))
-来源类型系数：真实面经1.0 > 岗位0.6 > 维护指南0.35 > 研究0.3 > 官方0.25；2026年前来源×0.55；非直接问题证据×0.8。
+importance = min(98, 46 + 概念优先级×4 + 角度奖励(2~5) + 饱和面经频次(≤16) + 来源多样性(≤5) + 交叉验证(≤2) + 公开题库关注度(≤2))
+面经证据按转载簇去重、时间衰减、聚合帖降权后进入指数饱和曲线；岗位、指南和官方资料不作为面经出现次数。公开题库标题只提供单独的低置信关注度，不能被当作面经样本或高置信趋势。
 层级：≥88 核心必会，≥74 高频主线，其余扩展。
 
 ## 何时上调（+1~+6）
@@ -375,6 +519,21 @@ function sourceCollection(item, sourceMeta, capturedAt) {
   };
 }
 
+function sourceDiscoveryAudit(item, sourceMeta) {
+  const normalized = normalizedSearchText(item.text).slice(0, 20_000);
+  const contentHash = createHash("sha256").update(normalized).digest("hex").slice(0, 24);
+  const questionSignals = (String(item.text).match(/[?？]|为什么|如何|怎么|区别|原理|机制|排查|实现/g) || []).length;
+  const aggregate = /多公司|汇总|合集|盘点|题库|八股文|推广|内推/.test(`${sourceMeta.company || ""} ${sourceMeta.title || ""} ${sourceMeta.notes || ""}`);
+  return {
+    analysisVersion: EXTRACTION_PROMPT_VERSION,
+    sitemapLastModified: null,
+    contentHash,
+    duplicateClusterId: `cluster-${createHash("sha256").update(normalized.slice(0, 4_000)).digest("hex").slice(0, 20)}`,
+    sourceKind: aggregate ? "aggregate" : "direct-experience",
+    questionSignals
+  };
+}
+
 function sourceQualityWarnings({ item, sourceMeta, textLength, collection, engagement }) {
   const warnings = [];
   if (!item.ref.url) warnings.push("没有原始网页链接，只能作为待核验材料，不能进入趋势频次统计");
@@ -385,6 +544,44 @@ function sourceQualityWarnings({ item, sourceMeta, textLength, collection, engag
   if (!collection.frequencyEligible && sourceMeta.type === "interview") warnings.push("该来源不会提升近期面经热度，补齐链接、日期和直接性后再参与统计");
   if (!engagement) warnings.push("页面未出现可明确识别的浏览、点赞、收藏或评论数字，关注度保持未知");
   return [...new Set(warnings)];
+}
+
+function conceptPromotionStats(concept, sources, asOf = new Date()) {
+  const sourceMap = new Map(sources.map((source) => [source.id, source]));
+  const uniqueByCluster = new Map();
+  for (const sourceId of concept.sourceIds || []) {
+    const source = sourceMap.get(sourceId);
+    if (!source) continue;
+    const cluster = source.discovery?.duplicateClusterId || source.id;
+    const current = uniqueByCluster.get(cluster);
+    if (!current || Number(source.weight || 0) > Number(current.weight || 0)) uniqueByCluster.set(cluster, source);
+  }
+  const independent = [...uniqueByCluster.values()];
+  const eligible = independent.filter((source) => source.type === "interview" && source.directQuestionEvidence && source.collection?.frequencyEligible !== false && source.discovery?.sourceKind !== "aggregate");
+  const recent = eligible.filter((source) => {
+    const time = new Date(`${source.publishedAt || ""}T00:00:00Z`).getTime();
+    return Number.isFinite(time) && asOf.getTime() - time <= 180 * 86_400_000;
+  });
+  const companies = new Set(eligible.map((source) => source.company).filter((company) => company && !/多公司|汇总|等|[\/、]/.test(company)));
+  const platforms = new Set(eligible.map((source) => detectPlatform(source.url).id).filter((platform) => platform && platform !== "manual"));
+  const qualified = eligible.length >= 3 && recent.length >= 3 && (companies.size >= 2 || platforms.size >= 2 || eligible.length >= 5);
+  return {
+    independentSources: independent.length,
+    eligibleSources: eligible.length,
+    recentSources: recent.length,
+    companyCount: companies.size,
+    platformCount: platforms.size,
+    qualified,
+    reason: qualified ? "达到独立来源、近期重复与来源多样性门槛" : `观察中：需 ≥3 个近期独立直接面经，且覆盖 ≥2 家公司/平台（当前 ${recent.length} 个近期、${companies.size} 家公司、${platforms.size} 个平台）`
+  };
+}
+
+function mergeConceptObservation(previous, current) {
+  const merged = { ...(previous || {}), ...(current || {}) };
+  merged.name = current?.name || previous?.name;
+  merged.sourceIds = [...new Set([...(previous?.sourceIds || []), ...(current?.sourceIds || [])])];
+  delete merged.originSource;
+  return merged;
 }
 
 function sourceIdAllocator(sources) {
@@ -417,9 +614,9 @@ async function loadAnalysisCache() {
 
 async function saveAnalysisCache(entries) {
   const keys = Object.keys(entries);
-  if (keys.length > 300) {
+  if (keys.length > 5_000) {
     const sorted = keys.sort((a, b) => (entries[b].analyzedAt || "").localeCompare(entries[a].analyzedAt || ""));
-    for (const key of sorted.slice(300)) delete entries[key];
+    for (const key of sorted.slice(5_000)) delete entries[key];
   }
   try {
     await mkdir(localRoot, { recursive: true });
@@ -427,18 +624,20 @@ async function saveAnalysisCache(entries) {
   } catch {}
 }
 
-export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manualUrls = [], manualTexts = [], aiChat, onEvent = () => {}, perSourceTimeoutMs = 300_000, budgetMs = 30 * 60_000, analysisMode = "compatible", signal, finalizeSignal } = {}) {
+export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manualUrls = [], manualTexts = [], aiChat, onEvent = () => {}, perSourceTimeoutMs = 300_000, budgetMs = 30 * 60_000, analysisMode = "scale", signal, finalizeSignal } = {}) {
   if (typeof aiChat !== "function") throw new Error("缺少 aiChat 函数");
   throwIfAborted(signal);
   const deadline = budgetMs > 0 ? Date.now() + budgetMs : 0;
   const profile = analysisProfile(analysisMode);
   const sourcesPayload = await loadSources();
   const existingDynamicConcepts = await loadNewConcepts();
+  const existingConceptCandidates = await loadConceptCandidates();
   const contentReviewsPayload = await loadContentReviews();
   const contentReviews = contentReviewsPayload.questions || {};
   const knownConcepts = [...backendConcepts, ...agentConcepts, ...existingDynamicConcepts];
   const knownConceptNames = [...new Set(knownConcepts.map((concept) => concept.name).filter(Boolean))];
   const knownConceptSet = new Set(knownConceptNames);
+  const knownConceptByName = new Map(knownConcepts.map((concept) => [concept.name, concept]));
   const conceptTrack = new Map([
     ...backendConcepts.map((concept) => [concept.name, "backend"]),
     ...agentConcepts.map((concept) => [concept.name, "agent"]),
@@ -466,9 +665,12 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
   }
   const autoSources = autoFetch
     ? sourcesPayload.sources
-        .filter((source) => source.type === "interview")
-        .sort((a, b) => String(b.publishedAt || "").localeCompare(String(a.publishedAt || "")))
-        .slice(0, Math.min(20, Math.max(1, Number(maxAutoSources) || 12)))
+        .filter((source) => source.type === "interview" && source.url)
+        .sort((a, b) => {
+          const stale = String(a.collection?.capturedAt || "").localeCompare(String(b.collection?.capturedAt || ""));
+          return stale || String(b.publishedAt || "").localeCompare(String(a.publishedAt || ""));
+        })
+        .slice(0, Math.min(200, Math.max(1, Number(maxAutoSources) || 80)))
     : [];
   onEvent({
     phase: "start",
@@ -480,6 +682,8 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
       categories: ALL_CATEGORIES.length,
       analysisMode: profile.name,
       analysisConcurrency: profile.concurrency,
+      aiBatchSize: profile.batchSize,
+      aiBatchConcurrency: profile.batchConcurrency,
       aiEvaluation: profile.aiEvaluation
     }
   });
@@ -526,6 +730,130 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
     await cacheSaveChain;
   };
 
+  const analysisInputs = new Map();
+  const preparedAnalyses = new Map();
+  const aiPerformance = {
+    calls: 0,
+    batchCalls: 0,
+    singleCalls: 0,
+    singleRetries: 0,
+    cacheHits: 0,
+    deterministicSources: 0,
+    batchSources: 0,
+    fallbackSingleSources: 0,
+    evidenceAccepted: 0,
+    evidenceRejected: 0,
+    semanticRechecks: 0,
+    batchCircuitTrips: 0,
+    batchBypassedSources: 0
+  };
+  const unresolved = [];
+  items.forEach((item, index) => {
+    const promptText = selectRelevantText(item.text, profile.inputChars);
+    const candidateNames = selectCandidateConceptNames(promptText, knownConcepts, profile.candidateLimit);
+    const cacheKey = textHash(item.kind, promptText, `${profile.name}\0${candidateNames.join("\0")}`);
+    const input = { key: `source-${index + 1}`, item, promptText, candidateNames, cacheKey };
+    analysisInputs.set(item, input);
+    const cached = analysisCache[cacheKey];
+    if (cached && Array.isArray(cached.concepts) && cached.source && typeof cached.source === "object") {
+      preparedAnalyses.set(item, { parsed: { source: cached.source, concepts: cached.concepts }, method: "cache" });
+      aiPerformance.cacheHits += 1;
+      return;
+    }
+    const deterministic = profile.deterministic ? deterministicExtraction(item, promptText, knownConcepts) : null;
+    if (deterministic) {
+      preparedAnalyses.set(item, { parsed: deterministic, method: "deterministic" });
+      analysisCache[cacheKey] = { analyzedAt: new Date().toISOString(), source: deterministic.source, concepts: deterministic.concepts, method: "deterministic" };
+      cacheDirty = true;
+      aiPerformance.deterministicSources += 1;
+      return;
+    }
+    unresolved.push(input);
+  });
+
+  let consecutiveBatchFailures = 0;
+  let batchCircuitOpen = false;
+  if (profile.batchSize > 1 && unresolved.length) {
+    const batches = [];
+    for (let index = 0; index < unresolved.length; index += profile.batchSize) batches.push(unresolved.slice(index, index + profile.batchSize));
+    await runPool(batches, profile.batchConcurrency, async (batch) => {
+      if (deadline && Date.now() > deadline) return;
+      const batchId = `batch-${batches.indexOf(batch) + 1}`;
+      if (batchCircuitOpen) {
+        aiPerformance.batchBypassedSources += batch.length;
+        onEvent({ phase: "batch", id: batchId, status: "circuit-bypass", sources: batch.length });
+        return;
+      }
+      onEvent({ phase: "batch", id: batchId, status: "pending", sources: batch.length });
+      const startedAt = Date.now();
+      const storeBatchResult = (raw) => {
+        const parsedItems = parseBatchExtraction(raw);
+        const byKey = new Map(parsedItems.filter((entry) => entry && typeof entry.key === "string").map((entry) => [entry.key, entry]));
+        let usable = 0;
+        for (const input of batch) {
+          const entry = byKey.get(input.key);
+          if (!entry || !Array.isArray(entry.concepts) || !entry.source || typeof entry.source !== "object") continue;
+          const grounded = groundAiExtraction({ source: entry.source, concepts: entry.concepts }, input, knownConceptByName);
+          aiPerformance.evidenceAccepted += grounded.accepted;
+          aiPerformance.evidenceRejected += grounded.rejected.length;
+          if (grounded.suspicious) {
+            aiPerformance.semanticRechecks += 1;
+            continue;
+          }
+          const parsed = grounded.parsed;
+          preparedAnalyses.set(input.item, { parsed, method: "batch-ai" });
+          analysisCache[input.cacheKey] = { analyzedAt: new Date().toISOString(), source: parsed.source, concepts: parsed.concepts, method: "batch-ai" };
+          cacheDirty = true;
+          usable += 1;
+        }
+        if (!usable) throw new Error("批量结果没有可用来源");
+        aiPerformance.batchSources += usable;
+        return usable;
+      };
+      try {
+        aiPerformance.calls += 1;
+        aiPerformance.batchCalls += 1;
+        const raw = await aiChat(
+          [
+            { role: "system", content: batchExtractionSystemPrompt() },
+            { role: "user", content: batchExtractionUserPrompt(batch, profile.maxConcepts, profile.name === "compatible") }
+          ],
+          { maxTokens: profile.extractionTokens, temperature: 0.15, timeoutMs: perSourceTimeoutMs, signal: combineSignals(signal, finalizeSignal) }
+        );
+        const usable = storeBatchResult(raw);
+        consecutiveBatchFailures = 0;
+        onEvent({ phase: "batch", id: batchId, status: "ok", sources: batch.length, usable, durationMs: Date.now() - startedAt });
+      } catch (error) {
+        if (signal?.aborted) throw abortError();
+        try {
+          const compactBatch = batch.map((input) => ({ ...input, promptText: selectRelevantText(input.promptText, 1_200) }));
+          aiPerformance.calls += 1;
+          aiPerformance.batchCalls += 1;
+          const retryRaw = await aiChat(
+            [
+              { role: "system", content: batchExtractionSystemPrompt() },
+              { role: "user", content: batchExtractionUserPrompt(compactBatch, Math.min(6, profile.maxConcepts), true) }
+            ],
+            { maxTokens: Math.min(4_500, profile.extractionTokens), temperature: 0.1, timeoutMs: perSourceTimeoutMs, signal: combineSignals(signal, finalizeSignal) }
+          );
+          const usable = storeBatchResult(retryRaw);
+          consecutiveBatchFailures = 0;
+          onEvent({ phase: "batch", id: batchId, status: "ok", sources: batch.length, usable, retry: true, durationMs: Date.now() - startedAt });
+        } catch (retryError) {
+          if (signal?.aborted) throw abortError();
+          consecutiveBatchFailures += 1;
+          if (!batchCircuitOpen && consecutiveBatchFailures >= BATCH_CIRCUIT_FAILURES) {
+            batchCircuitOpen = true;
+            aiPerformance.batchCircuitTrips += 1;
+            onEvent({ phase: "batch", id: "batch-circuit", status: "circuit-open", failures: consecutiveBatchFailures });
+          }
+          onEvent({ phase: "batch", id: batchId, status: "fallback", sources: batch.length, error: String(retryError.message || error).slice(0, 160), durationMs: Date.now() - startedAt });
+        }
+      }
+    }, signal, finalizeSignal);
+    if (cacheDirty) await persistCache();
+  }
+
   await runPool(items, profile.concurrency, async (item) => {
     const label = cleanText(item.ref.shortTitle || item.ref.title || item.ref.label || item.ref.url, 160) || "未命名来源";
     const startedAt = Date.now();
@@ -536,42 +864,55 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
     }
     onEvent({ phase: "analyze", label, status: "pending" });
     try {
-      const promptText = selectRelevantText(item.text, profile.inputChars);
-      const candidateNames = selectCandidateConceptNames(promptText, knownConcepts, profile.candidateLimit);
-      const cacheKey = textHash(item.kind, promptText, `${profile.name}\0${candidateNames.join("\0")}`);
-      const cached = analysisCache[cacheKey];
+      const analysisInput = analysisInputs.get(item);
+      const { promptText, candidateNames, cacheKey } = analysisInput;
+      const prepared = preparedAnalyses.get(item);
       let parsed;
-      let fromCache = false;
-      if (cached && Array.isArray(cached.concepts) && cached.source && typeof cached.source === "object") {
-        parsed = { source: cached.source, concepts: cached.concepts };
-        fromCache = true;
+      let analysisMethod = prepared?.method || "single-ai";
+      if (prepared) {
+        parsed = prepared.parsed;
       } else {
-        let raw;
         const workSignal = combineSignals(signal, finalizeSignal);
         const chatOptions = { maxTokens: profile.extractionTokens, temperature: 0.2, timeoutMs: perSourceTimeoutMs };
+        const parseGrounded = (raw) => {
+          const grounded = groundAiExtraction(parseExtraction(raw), analysisInput, knownConceptByName);
+          aiPerformance.evidenceAccepted += grounded.accepted;
+          aiPerformance.evidenceRejected += grounded.rejected.length;
+          if (grounded.suspicious) throw groundingError(grounded);
+          return grounded.parsed;
+        };
         try {
-          raw = await aiChat(
+          aiPerformance.calls += 1;
+          aiPerformance.singleCalls += 1;
+          const raw = await aiChat(
             [
               { role: "system", content: extractionSystemPrompt() },
               { role: "user", content: extractionUserPrompt(item.ref, promptText, candidateNames, profile.maxConcepts, profile.name === "compatible") }
             ],
             { ...chatOptions, signal: workSignal }
           );
+          parsed = parseGrounded(raw);
         } catch (firstError) {
           if (finalizeSignal?.aborted) throw firstError;
-          if (!/timeout|aborted/i.test(firstError.message || "")) throw firstError;
+          if (signal?.aborted) throw abortError();
           if (deadline && Date.now() > deadline) throw firstError;
+          if (firstError.code === "EVIDENCE_GROUNDING") aiPerformance.semanticRechecks += 1;
+          aiPerformance.singleRetries += 1;
           onEvent({ phase: "analyze", label, status: "pending", retry: true });
-          raw = await aiChat(
+          aiPerformance.calls += 1;
+          aiPerformance.singleCalls += 1;
+          const compactText = selectRelevantText(promptText, Math.max(1200, Math.floor(profile.inputChars / 2)));
+          const retryRaw = await aiChat(
             [
               { role: "system", content: extractionSystemPrompt() },
-              { role: "user", content: extractionUserPrompt(item.ref, selectRelevantText(promptText, Math.max(1200, Math.floor(profile.inputChars / 2))), candidateNames, profile.maxConcepts, profile.name === "compatible") }
+              { role: "user", content: extractionUserPrompt(item.ref, compactText, candidateNames, profile.maxConcepts, true, cleanText(firstError.message, 180)) }
             ],
             { ...chatOptions, maxTokens: Math.max(800, Math.floor(profile.extractionTokens * 0.75)), signal: workSignal }
           );
+          parsed = parseGrounded(retryRaw);
         }
-        parsed = parseExtraction(raw);
-        analysisCache[cacheKey] = { analyzedAt: new Date().toISOString(), source: parsed.source, concepts: parsed.concepts };
+        aiPerformance.fallbackSingleSources += 1;
+        analysisCache[cacheKey] = { analyzedAt: new Date().toISOString(), source: parsed.source, concepts: parsed.concepts, method: analysisMethod };
         cacheDirty = true;
         await persistCache();
       }
@@ -580,15 +921,15 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
       const existingSource = sourceById.get(item.ref.id) || sourceByUrl.get(normalizedSourceUrl(item.ref.url));
       const sourceId = existingSource?.id || allocateSourceId();
       const capturedAt = new Date().toISOString();
+      const extractedPublishedAt = /^\d{4}-\d{2}-\d{2}$/.test(sourceMeta.publishedAt || "") ? sourceMeta.publishedAt : null;
       const auditedMeta = {
         ...(existingSource || {}),
         ...sourceMeta,
-        publishedAt: sourceMeta.publishedAt ?? existingSource?.publishedAt,
-        directQuestionEvidence: typeof sourceMeta.directQuestionEvidence === "boolean"
-          ? sourceMeta.directQuestionEvidence
-          : existingSource?.directQuestionEvidence
+        publishedAt: existingSource?.publishedAt || extractedPublishedAt,
+        directQuestionEvidence: Boolean(existingSource?.directQuestionEvidence || sourceMeta.directQuestionEvidence)
       };
       const collection = sourceCollection(item, auditedMeta, capturedAt);
+      const discovery = sourceDiscoveryAudit(item, auditedMeta);
       const engagement = extractExplicitEngagement(item.text, capturedAt);
       const qualityWarnings = sourceQualityWarnings({ item, sourceMeta: auditedMeta, textLength: item.text.length, collection, engagement });
       const mappedNames = [];
@@ -688,6 +1029,7 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
           directQuestionEvidence: Boolean(sourceMeta.directQuestionEvidence),
           notes: cleanText(sourceMeta.notes, 300),
           collection,
+          discovery,
           ...(engagement ? { engagement } : {}),
           qualityWarnings
         };
@@ -696,14 +1038,17 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
         sourceRefreshes.push({
           sourceId,
           collection: { ...(existingSource.collection || {}), ...collection },
+          discovery,
           ...(engagement ? { engagement } : {}),
           qualityWarnings,
           ...(cleanText(sourceMeta.position, 80) ? { position: cleanText(sourceMeta.position, 80) } : {}),
-          ...(["intern", "campus", "experienced"].includes(sourceMeta.candidateLevel) ? { candidateLevel: sourceMeta.candidateLevel } : {})
+          ...(["intern", "campus", "experienced"].includes(sourceMeta.candidateLevel) ? { candidateLevel: sourceMeta.candidateLevel } : {}),
+          ...(auditedMeta.directQuestionEvidence && !existingSource.directQuestionEvidence ? { directQuestionEvidence: true } : {}),
+          ...(auditedMeta.publishedAt && !existingSource.publishedAt ? { publishedAt: auditedMeta.publishedAt } : {})
         });
       }
       sourceResults.push({ id: sourceId, label, status: "ok", conceptCount });
-      onEvent({ phase: "analyze", id: sourceId, label, status: "ok", conceptCount, durationMs: Date.now() - startedAt, ...(fromCache ? { cached: true } : {}) });
+      onEvent({ phase: "analyze", id: sourceId, label, status: "ok", conceptCount, durationMs: Date.now() - startedAt, analysisMethod, ...(analysisMethod === "cache" ? { cached: true } : {}) });
     } catch (error) {
       if (signal?.aborted) throw abortError();
       if (finalizeSignal?.aborted) {
@@ -740,7 +1085,24 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
   ];
 
   const beforePayload = JSON.parse(await readFile(join(root, "content", "questions.json"), "utf8"));
-  const cleanConcepts = newConcepts.map(({ originSource, ...rest }) => rest);
+  const observationsByName = new Map(existingConceptCandidates
+    .filter((candidate) => !knownConceptSet.has(candidate.name))
+    .map((candidate) => [candidate.name, candidate]));
+  for (const concept of newConcepts) observationsByName.set(concept.name, mergeConceptObservation(observationsByName.get(concept.name), concept));
+  const observedConcepts = [...observationsByName.values()].map((concept) => ({
+    ...concept,
+    promotion: conceptPromotionStats(concept, mergedSources)
+  }));
+  const availableConceptSlots = Math.max(0, Math.floor((QUESTION_BANK_TARGET - beforePayload.questions.length) / 5));
+  const promotionBudget = Math.min(MAX_NEW_CONCEPTS_PER_RUN, availableConceptSlots);
+  const promotedNames = new Set(observedConcepts
+    .filter((concept) => concept.promotion.qualified)
+    .sort((a, b) => b.promotion.eligibleSources - a.promotion.eligibleSources || b.promotion.companyCount - a.promotion.companyCount || b.priority - a.priority || a.name.localeCompare(b.name, "zh-CN"))
+    .slice(0, promotionBudget)
+    .map((concept) => concept.name));
+  const promotedConcepts = observedConcepts.filter((concept) => promotedNames.has(concept.name));
+  const conceptWatchlist = observedConcepts.filter((concept) => !promotedNames.has(concept.name)).slice(0, 300);
+  const cleanConcepts = promotedConcepts.map(({ originSource, promotion, ...rest }) => rest);
   const { backend, agent } = allCatalogConcepts([...existingDynamicConcepts, ...cleanConcepts]);
   const afterQuestions = [
     ...buildQuestions(backend, "backend", "be", mergedSources, sourcesPayload.snapshotDate, null, contentReviews),
@@ -879,7 +1241,16 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
   const draft = {
     generatedAt: new Date().toISOString(),
     newSources,
-    newConcepts,
+    newConcepts: promotedConcepts,
+    conceptWatchlist: conceptWatchlist.map((concept) => ({ name: concept.name, track: concept.track, category: concept.category, topicGroup: concept.topicGroup, priority: concept.priority, sourceIds: concept.sourceIds, promotion: concept.promotion })),
+    capacityPolicy: {
+      targetQuestions: QUESTION_BANK_TARGET,
+      beforeQuestions: beforePayload.questions.length,
+      availableConceptSlots,
+      promotionBudget,
+      promoted: promotedConcepts.length,
+      observed: observedConcepts.length
+    },
     sourceResults,
     newConceptQuestions,
     existingSourcePatches: Object.entries(linkNames).filter(([sourceId]) => sourceById.has(sourceId)).map(([sourceId, conceptNames]) => ({
@@ -887,7 +1258,15 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
       conceptNames: [...new Set(conceptNames)],
       qualityWarnings: refreshById.get(sourceId)?.qualityWarnings || []
     })),
-    sourceRefreshes: sourceRefreshes.map(({ sourceId, collection, engagement, qualityWarnings }) => ({ sourceId, collection, engagement: engagement || null, qualityWarnings })),
+    sourceRefreshes: sourceRefreshes.map(({ sourceId, collection, discovery, engagement, qualityWarnings, directQuestionEvidence, publishedAt }) => ({
+      sourceId,
+      collection,
+      discovery,
+      engagement: engagement || null,
+      qualityWarnings,
+      ...(directQuestionEvidence ? { directQuestionEvidence: true } : {}),
+      ...(publishedAt ? { publishedAt } : {})
+    })),
     evaluation,
     rescorePreview: {
       affected: rescore.slice(0, 200),
@@ -899,6 +1278,18 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
     },
     duplicatesSkipped: skipped,
     learningHintConcepts: new Set(hintEntries.map((entry) => entry.conceptName)).size,
+    performance: {
+      inputSources: items.length,
+      ...aiPerformance,
+      aiCallsSaved: Math.max(0, items.length - aiPerformance.calls),
+      cacheHitRate: items.length ? Number((aiPerformance.cacheHits / items.length).toFixed(3)) : 0,
+      deterministicRate: items.length ? Number((aiPerformance.deterministicSources / items.length).toFixed(3)) : 0,
+      evidenceAcceptanceRate: aiPerformance.evidenceAccepted + aiPerformance.evidenceRejected
+        ? Number((aiPerformance.evidenceAccepted / (aiPerformance.evidenceAccepted + aiPerformance.evidenceRejected)).toFixed(3))
+        : null,
+      batchSize: profile.batchSize,
+      batchConcurrency: profile.batchConcurrency
+    },
     expectedCounts: draftExpectedCounts,
     analysisMode: profile.name,
     partial: partialFinalized ? {
@@ -908,7 +1299,7 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 16, manua
       skippedSources: Math.max(0, items.length - sourceResults.filter((item) => item.status === "ok").length)
     } : null
   };
-  return { draft, newSources, newConcepts, links, aiScores, hintEntries, sourceRefreshes };
+  return { draft, newSources, newConcepts: promotedConcepts, conceptWatchlist, links, aiScores, hintEntries, sourceRefreshes };
 }
 
 // ---------------- apply / rollback ----------------
@@ -920,6 +1311,11 @@ async function restoreBackup(backupDir) {
     await writeFileAtomic(newConceptsPath, await readFile(join(backupDir, "new-concepts.json")));
   } else {
     await rm(newConceptsPath, { force: true });
+  }
+  if (existsSync(join(backupDir, "concept-candidates.json"))) {
+    await writeFileAtomic(conceptCandidatesPath, await readFile(join(backupDir, "concept-candidates.json")));
+  } else {
+    await rm(conceptCandidatesPath, { force: true });
   }
   if (existsSync(join(backupDir, "ai-scores.json"))) {
     await writeFileAtomic(aiScoresPath, await readFile(join(backupDir, "ai-scores.json")));
@@ -989,8 +1385,12 @@ export async function applyUpdate({ selectedSourceIds = null, selectedConceptNam
   const allowedSourceIds = new Set([...existingSourceIdSet, ...selectedSourceIdSet]);
   const newConcepts = lastRun.newConcepts
     .filter((concept) => !wantedConcepts || wantedConcepts.has(concept.name))
-    .map(({ originSource, ...rest }) => ({ ...rest, sourceIds: rest.sourceIds.filter((id) => allowedSourceIds.has(id)) }))
+    .map(({ originSource, promotion, ...rest }) => ({ ...rest, sourceIds: rest.sourceIds.filter((id) => allowedSourceIds.has(id)) }))
     .filter((concept) => concept.sourceIds.length);
+  const selectedConceptNameSet = new Set(newConcepts.map((concept) => concept.name));
+  const conceptWatchlist = [...(lastRun.conceptWatchlist || []), ...(lastRun.newConcepts || []).filter((concept) => !selectedConceptNameSet.has(concept.name))]
+    .map(({ originSource, promotion, ...concept }) => ({ ...concept, sourceIds: (concept.sourceIds || []).filter((id) => allowedSourceIds.has(id)) }))
+    .filter((concept) => concept.name && concept.sourceIds.length);
   const links = lastRun.links.filter((link) => allowedSourceIds.has(link.sourceId));
   const selectedHintEntries = (lastRun.hintEntries || []).filter((entry) => allowedSourceIds.has(entry.sourceId));
   const sourceRefreshes = (lastRun.sourceRefreshes || []).filter((refresh) => existingSourceIdSet.has(refresh.sourceId));
@@ -1004,6 +1404,7 @@ export async function applyUpdate({ selectedSourceIds = null, selectedConceptNam
   await copyFile(join(root, "content", "questions.json"), join(backupDir, "questions.json"));
   await copyFile(join(root, "research", "sources.json"), join(backupDir, "sources.json"));
   if (existsSync(newConceptsPath)) await copyFile(newConceptsPath, join(backupDir, "new-concepts.json"));
+  if (existsSync(conceptCandidatesPath)) await copyFile(conceptCandidatesPath, join(backupDir, "concept-candidates.json"));
   if (existsSync(aiScoresPath)) await copyFile(aiScoresPath, join(backupDir, "ai-scores.json"));
   if (existsSync(learningHintsPath)) await copyFile(learningHintsPath, join(backupDir, "learning-hints.json"));
   await writeJsonAtomic(mutationPath, { schemaVersion: 1, operation: "apply", startedAt: new Date().toISOString(), backupDir });
@@ -1022,7 +1423,7 @@ export async function applyUpdate({ selectedSourceIds = null, selectedConceptNam
       };
     });
     sourcesPayload.sources.push(...newSources.map((source) => ({ ...source, supportsConcepts: [...new Set(linkNames[source.id] || [])] })));
-    sourcesPayload.snapshotDate = new Date().toISOString().slice(0, 10);
+    sourcesPayload.snapshotDate = todayInChina();
     await writeJsonAtomic(join(root, "research", "sources.json"), sourcesPayload);
 
     const existingNew = await loadNewConcepts();
@@ -1033,6 +1434,19 @@ export async function applyUpdate({ selectedSourceIds = null, selectedConceptNam
     } else {
       await rm(newConceptsPath, { force: true });
     }
+
+    const knownAfterPromotion = new Set([...backendConcepts, ...agentConcepts, ...mergedConcepts].map((concept) => concept.name));
+    const watchlistByName = new Map();
+    for (const concept of conceptWatchlist) {
+      if (knownAfterPromotion.has(concept.name)) continue;
+      watchlistByName.set(concept.name, mergeConceptObservation(watchlistByName.get(concept.name), concept));
+    }
+    await writeJsonAtomic(conceptCandidatesPath, {
+      schemaVersion: 1,
+      updatedAt: new Date().toISOString(),
+      policy: { targetQuestions: QUESTION_BANK_TARGET, minimumRecentIndependentSources: 3, maximumPromotionsPerRun: MAX_NEW_CONCEPTS_PER_RUN },
+      candidates: [...watchlistByName.values()].slice(0, 300)
+    });
 
     const { buildPayload, buildQuestions, allCatalogConcepts, loadAiScores, loadContentReviews } = await import("./generate-questions.mjs");
     const sourcesAfterWrite = await loadSources();
@@ -1085,7 +1499,7 @@ export async function applyUpdate({ selectedSourceIds = null, selectedConceptNam
     }
 
     const patchedSources = Object.keys(linkNames).filter((sourceId) => existingSourceIdSet.has(sourceId)).length;
-    const history = { appliedAt: new Date().toISOString(), backupDir, addedSources: newSources.length, patchedSources, refreshedSources: sourceRefreshes.length, addedConcepts: newConcepts.length, aiScoreAdjustments, learningHintConcepts, counts: generated.counts };
+    const history = { appliedAt: new Date().toISOString(), backupDir, addedSources: newSources.length, patchedSources, refreshedSources: sourceRefreshes.length, addedConcepts: newConcepts.length, observedConcepts: watchlistByName.size, aiScoreAdjustments, learningHintConcepts, performance: lastRun.draft.performance || null, counts: generated.counts };
     await writeJsonAtomic(historyPath, history);
     await rm(mutationPath, { force: true });
     return { applied: true, counts: generated.counts, backupDir, history };

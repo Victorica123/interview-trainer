@@ -267,13 +267,14 @@
           <div class="simple-view-card research-view">
             <span class="section-kicker">EVIDENCE & METHOD</span>
             <h2>题目为什么会出现在这里？</h2>
-            <p>排序优先采用近期真实面经，再结合岗位要求、多个维护中题库的共识和基础必要性。转载会回溯并按同一来源去重。</p>
+            <p>排序优先采用近期真实面经，再结合岗位/资料交叉验证和独立的公开题库关注度。转载按正文指纹簇去重，聚合帖降权，频次采用饱和曲线。</p>
             <div class="method-grid">
-              <article><b>1.0</b><span>近期真实面经来源系数</span></article>
-              <article><b>×0.55</b><span>2026 年前来源时效衰减</span></article>
-              <article><b>≤13</b><span>多来源加权支持奖励</span></article>
-              <article><b>≤4</b><span>不同公司/主体多样性</span></article>
-              <article><b>1–5</b><span>岗位概念优先级</span></article>
+              <article><b>1 簇</b><span>同一转载内容最多计一次</span></article>
+              <article><b>×0.32</b><span>聚合/题库型帖子降权</span></article>
+              <article><b>≤16</b><span>指数饱和面经频次奖励</span></article>
+              <article><b>≤5</b><span>公司/平台/阶段多样性</span></article>
+              <article><b>≤2</b><span>公开题库标题关注度</span></article>
+              <article><b>×4</b><span>岗位概念优先级权重</span></article>
               <article><b>2–5</b><span>五类考查角度奖励</span></article>
             </div>
             <div id="researchCoverage" class="research-coverage"></div>
@@ -286,7 +287,7 @@
           <div class="simple-view-card update-view">
             <span class="section-kicker">QUESTION BANK UPDATER</span>
             <h2>让题库跟上最新面经</h2>
-            <p>AI 可以复查已登记的面经，也可以分析你新粘贴的链接或正文；系统会提取概念、生成新题草案并重算旧题重要度，你审阅后才写入题库。它不会自动发现全站新帖。</p>
+            <p>系统可以从公开 Sitemap 增量发现近期候选，也可以分析你粘贴的链接或正文；本地预筛、批量 AI、去重和容量门槛完成后，你审阅草案才会写入题库。</p>
 
             <div id="updateConfigBanner" class="update-config-banner">
               <div><span id="updateConfigDot" class="config-dot"></span><span class="update-config-copy"><strong id="updateConfigTitle">检查 AI 配置中…</strong><small id="updateConfigSub">更新题库需要 AI 模型参与分析。</small></span></div>
@@ -295,19 +296,21 @@
 
             <div class="update-method-explainer">
               <h3>「高频 / 重要度」是怎么算出来的</h3>
-              <p>每个知识点先由调研给出 1–5 的岗位优先级，再按公式算每题分数：</p>
-              <p class="update-formula"><code>importance = 38 + 优先级×7 + 角度奖励(2~5) + 多来源加权支持(≤13) + 来源多样性(≤4)</code>（封顶 98）</p>
-              <p>多来源加权支持 = Σ 来源权重 × 类型系数（面经1.0 / 岗位0.6 / 维护指南0.35 / 研究0.3 / 官方0.25）× 时效系数（2026 年前 ×0.55）× 直接性（非直接问法 ×0.8）。≥88 为核心必会，≥74 为高频主线，其余为扩展。官方文档只作学习来源，不会虚增「高频」分数。</p>
-              <p>本地公式是「约束基线」：更新题库时，AI 会在 <b>±6 分</b>范围内复核每道受影响的题并给出理由（越界自动驳回），公式基线分与 AI 最终分都会展示在更新报告中。</p>
-              <p>考察口径：以近期真实面经为主，同时要求 AI 结合 <b>JavaGuide、面试鸭、小林coding</b> 等八股网站交叉验证，并为每个知识点标注对应学习章节（网站、章节名、直达链接），显示在题目详解的「八股文网站对应章节」里；标注仅作学习辅助，不参与高频分数。</p>
+              <p>基础优先级只保留较小权重，真正拉开差异的是去重后的近期直接面经：</p>
+              <p class="update-formula"><code>importance = 46 + 优先级×4 + 角度奖励 + 饱和频次(≤16) + 来源多样性(≤5) + 交叉验证(≤2) + 公开题库关注度(≤2)</code>（封顶 98）</p>
+              <p>转载簇最多计一次，聚合帖按 0.32 倍计入；频次使用指数饱和曲线，样本从几十篇增加到几百篇会提高置信度，但不会线性涨分。官方文档和八股学习章节只作交叉验证/学习位置；公开题库标题另作低置信关注信号，两者都不冒充面经频次。</p>
+              <p>本地公式是「约束基线」：默认大样本模式和兼容模式为了速度跳过逐题 AI 评分，只使用可复现公式；均衡/高质量模式才允许 AI 在 <b>±6 分</b>范围内复核受影响的题并给出理由（越界自动驳回）。更新报告会明确显示本轮是否执行了 AI 复核。</p>
+              <p>考察口径：以近期真实面经为主，同时结合 <b>JavaGuide、面试鸭、小林coding</b> 等网站核对覆盖面。面试鸭公开榜单与题目标题只提供最高 2 分的低置信关注度，不访问 VIP 答案；学习章节标注仍只作学习辅助。</p>
+              <p>语义保险：AI 提取的每个知识点必须附带正文中的连续证据句。本地会核对证据句确实来自当前来源，并能命中目标知识点名称或同义标签；可疑映射只做定向单篇复核。连续 3 个批次不可用时自动熔断，剩余来源切换为单篇分析。</p>
             </div>
 
             <div class="update-report-block source-candidate-block">
               <div class="list-heading"><strong>新来源候选池</strong><span id="sourceCandidateCount">0 条</span></div>
-              <p class="muted">把你从牛客、小红书或其他网站搜索到的面经链接先保存在本机；候选池不会自动搜索全站，也不会在你审阅前写入题库。勾选的候选会随下一次更新分析一起处理。</p>
+              <p class="muted">可从牛客公开 Sitemap 发现并本地预筛近期面经，也可手动加入小红书等链接。小红书 Sitemap 没有标题/日期，未通过登录浏览器或明确链接核验的笔记不会被算作有效样本。</p>
               <textarea id="sourceCandidateInput" class="update-textarea" rows="3" placeholder="每行一个 http/https 链接；重复链接和 # 页面片段会自动合并"></textarea>
               <div class="update-actions source-candidate-actions">
                 <button id="sourceCandidateAddButton" class="primary-button">加入候选池</button>
+                <button id="sourceDiscoveryButton" class="secondary-button">发现近期面经候选</button>
                 <button id="sourceCandidateDeleteButton" class="secondary-button" disabled>删除所选</button>
                 <span id="sourceCandidateStatus" class="update-hint">候选只保存在当前项目的 .local 目录</span>
               </div>
@@ -316,12 +319,13 @@
 
             <div class="update-controls">
               <div class="update-limit-row">
-                <label>分析模式<select id="updateAnalysisMode"><option value="compatible" selected>兼容慢模型（推荐）</option><option value="balanced">均衡模式</option><option value="quality">高质量模式</option></select></label>
+                <label>分析模式<select id="updateAnalysisMode"><option value="scale" selected>大样本增量（推荐）</option><option value="compatible">兼容慢模型</option><option value="balanced">均衡模式</option><option value="quality">高质量模式</option></select></label>
+                <label>复查已登记来源<select id="updateMaxAutoSources"><option value="40">40 篇</option><option value="80" selected>80 篇</option><option value="120">120 篇</option><option value="200">200 篇</option></select></label>
                 <label>单篇分析上限<select id="updatePerSourceTimeout"><option value="120">2 分钟</option><option value="180">3 分钟</option><option value="300" selected>5 分钟</option><option value="600">10 分钟</option></select></label>
                 <label>整次总时长上限<select id="updateBudget"><option value="10">10 分钟</option><option value="20">20 分钟</option><option value="30" selected>30 分钟</option><option value="60">60 分钟</option><option value="0">不限时</option></select></label>
-                <span class="update-hint">兼容模式会本地筛选正文、单路调用、缩短输出并跳过 AI 评分复核。每个完成来源立即缓存；等待过久时可用已完成内容提前生成草案。</span>
+                <span class="update-hint">大样本模式先本地匹配已有知识点，再将低置信来源按约 8 篇一批送给 AI；知识点必须通过正文证据句校验后才会写入缓存，弱模型连续失败会自动降级。新概念先进入观察池，题库目标维持约 1000 题。</span>
               </div>
-              <label class="checkbox-row"><input type="checkbox" id="updateAutoFetch" checked />复查已登记的最近 16 篇面经（不会自动发现全站新帖）</label>
+              <label class="checkbox-row"><input type="checkbox" id="updateAutoFetch" checked />按“最久未复查优先、近期优先”轮换复查已登记面经</label>
               <textarea id="updateManualUrls" class="update-textarea" rows="3" placeholder="可选：仅本次分析的临时链接，每行一个（http/https）。想留待以后处理的链接请放入上方候选池"></textarea>
               <textarea id="updateManualText" class="update-textarea" rows="5" placeholder="可选：直接粘贴面经正文、题目列表或笔记，AI 会一并分析"></textarea>
               <div class="update-actions">
@@ -384,6 +388,10 @@
               <div class="update-report-block">
                 <h4>新增概念（每个概念生成 5 道题）</h4>
                 <div id="updateNewConcepts" class="update-check-list"></div>
+              </div>
+              <div class="update-report-block">
+                <h4>新概念观察池（未达到晋级门槛，不增题）</h4>
+                <div id="updateConceptWatchlist" class="update-check-list"></div>
               </div>
               <div class="update-report-block">
                 <h4>旧题分数重算</h4>

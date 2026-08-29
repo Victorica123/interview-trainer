@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-29T00:00:00.000Z",
+  "policy": {
+    "targetQuestions": 1000,
+    "minimumRecentIndependentSources": 3,
+    "maximumPromotionsPerRun": 3
+  },
+  "candidates": []
+}

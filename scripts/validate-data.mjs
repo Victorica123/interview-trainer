@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { backendConcepts } from "./catalog-backend.mjs";
 import { agentConcepts } from "./catalog-agent.mjs";
-import { loadContentReviews, loadNewConcepts } from "./generate-questions.mjs";
+import { loadContentReviews, loadNewConcepts, loadSources } from "./generate-questions.mjs";
 import { BACKEND_CATEGORY_NAMES, QUESTION_ANGLES, backendTaxonomyEntry } from "./taxonomy.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
@@ -19,7 +19,7 @@ export function validatePayload(questionsPayload, sourcesPayload, expected = nul
   const sources = sourcesPayload.sources || [];
   const sourceIds = new Set(sources.map((source) => source.id));
   const errors = [];
-  const collectionMethods = new Set(["curated-snapshot", "auto-fetch", "manual-url", "manual-text"]);
+  const collectionMethods = new Set(["curated-snapshot", "sitemap-snapshot", "auto-fetch", "manual-url", "manual-text"]);
   const candidateLevels = new Set(["intern", "campus", "experienced", "unknown"]);
   const contentStatuses = new Set(["outline", "reviewed"]);
   const angles = new Set(QUESTION_ANGLES.map((angle) => angle.id));
@@ -38,6 +38,24 @@ export function validatePayload(questionsPayload, sourcesPayload, expected = nul
     const values = questions.map((question) => question[field]);
     const duplicates = values.filter((value, index) => values.indexOf(value) !== index);
     if (duplicates.length) errors.push(`${field}存在重复：${[...new Set(duplicates)].slice(0, 5).join("、")}`);
+  }
+
+  const publicSignals = questionsPayload.publicQuestionSignals;
+  if (publicSignals !== undefined) {
+    if (!publicSignals || typeof publicSignals !== "object" || Array.isArray(publicSignals)) {
+      errors.push("publicQuestionSignals 必须是对象");
+    } else {
+      if (publicSignals.access !== "title-only") errors.push("publicQuestionSignals.access 必须是 title-only");
+      for (const field of ["totalTitles", "inScopeTitles", "matchedInScopeTitles", "excludedTitles", "mappedConcepts"]) {
+        if (!Number.isInteger(publicSignals[field]) || publicSignals[field] < 0) errors.push("publicQuestionSignals." + field + " 必须是非负整数");
+      }
+      if (Number(publicSignals.matchedInScopeTitles) > Number(publicSignals.inScopeTitles) || Number(publicSignals.inScopeTitles) > Number(publicSignals.totalTitles)) {
+        errors.push("publicQuestionSignals 的覆盖计数顺序非法");
+      }
+      if (typeof publicSignals.inScopeCoverage !== "number" || publicSignals.inScopeCoverage < 0 || publicSignals.inScopeCoverage > 1) {
+        errors.push("publicQuestionSignals.inScopeCoverage 必须在 0 到 1 之间");
+      }
+    }
   }
 
   for (const question of questions) {
@@ -84,6 +102,27 @@ export function validatePayload(questionsPayload, sourcesPayload, expected = nul
       if (!Number.isInteger(base) || base < 0 || base > 98) errors.push(`${question.id} scoreBase 非法`);
       if (!Number.isInteger(importance) || Math.abs(importance - base) > 6) errors.push(`${question.id} AI 调整超出 ±6 边界`);
       if (typeof question.scoreNote !== "string") errors.push(`${question.id} 缺少 scoreNote`);
+    }
+    const publicAttention = question.evidence?.publicQuestionAttention;
+    if (publicAttention !== undefined) {
+      if (!publicAttention || typeof publicAttention !== "object" || Array.isArray(publicAttention)) {
+        errors.push(question.id + " 的 publicQuestionAttention 必须是对象");
+      } else {
+        if (publicAttention.access !== "title-only") errors.push(question.id + " 的公开题库关注度必须标记为 title-only");
+        if (!Number.isInteger(publicAttention.attentionBoost) || publicAttention.attentionBoost < 0 || publicAttention.attentionBoost > 2) {
+          errors.push(question.id + " 的公开题库关注度加分必须是 0 到 2 的整数");
+        }
+        if (!Number.isInteger(publicAttention.publicTitleSamples) || publicAttention.publicTitleSamples < 0) errors.push(question.id + " 的公开标题数非法");
+        if (!Number.isInteger(publicAttention.bankCount) || publicAttention.bankCount < 0) errors.push(question.id + " 的公开题库数非法");
+        if (publicAttention.available && publicAttention.confidence !== "low") errors.push(question.id + " 的单快照公开题库关注度只能是低置信");
+        if (publicAttention.available !== (publicAttention.publicTitleSamples > 0 && publicAttention.bankCount > 0)) errors.push(question.id + " 的公开题库关注度可用状态与计数不一致");
+        if (!Array.isArray(publicAttention.banks) || !Array.isArray(publicAttention.examples)) {
+          errors.push(question.id + " 的公开题库关注度缺少题库或标题数组");
+        } else {
+          for (const bank of publicAttention.banks) if (!/^https:\/\//.test(bank?.url || "")) errors.push(question.id + " 的公开题库链接非法");
+          for (const example of publicAttention.examples) if (!/^https:\/\//.test(example?.url || "")) errors.push(question.id + " 的公开标题链接非法");
+        }
+      }
     }
     for (const sourceId of question.evidence?.sourceIds || []) {
       if (!sourceIds.has(sourceId)) errors.push(`${question.id} 引用了不存在的来源 ${sourceId}`);
@@ -174,6 +213,16 @@ export function validatePayload(questionsPayload, sourcesPayload, expected = nul
     if (source.qualityWarnings !== undefined && (!Array.isArray(source.qualityWarnings) || source.qualityWarnings.some((warning) => typeof warning !== "string"))) {
       errors.push(`${label} 的 qualityWarnings 必须是字符串数组`);
     }
+    if (source.discovery !== undefined) {
+      if (!source.discovery || Array.isArray(source.discovery) || typeof source.discovery !== "object") {
+        errors.push(`${label} 的 discovery 必须是对象`);
+      } else {
+        if (typeof source.discovery.analysisVersion !== "string" || !source.discovery.analysisVersion) errors.push(`${label} 的 discovery.analysisVersion 非法`);
+        if (!/^cluster-[a-f0-9]{20}$/.test(source.discovery.duplicateClusterId || "")) errors.push(`${label} 的 discovery.duplicateClusterId 非法`);
+        if (!["direct-experience", "aggregate"].includes(source.discovery.sourceKind)) errors.push(`${label} 的 discovery.sourceKind 非法`);
+        if (!Number.isInteger(source.discovery.questionSignals) || source.discovery.questionSignals < 0) errors.push(`${label} 的 discovery.questionSignals 非法`);
+      }
+    }
   }
 
   const groupedCategories = questions.reduce((groups, question) => {
@@ -205,7 +254,7 @@ export function validatePayload(questionsPayload, sourcesPayload, expected = nul
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const questionsPayload = JSON.parse(await readFile(join(root, "content", "questions.json"), "utf8"));
-  const sourcesPayload = JSON.parse(await readFile(join(root, "research", "sources.json"), "utf8"));
+  const sourcesPayload = await loadSources();
   const newConcepts = await loadNewConcepts();
   const contentReviews = await loadContentReviews();
   const result = validatePayload(questionsPayload, sourcesPayload, expectedCounts(newConcepts), contentReviews);

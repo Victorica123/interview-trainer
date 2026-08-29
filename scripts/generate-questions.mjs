@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { backendConcepts } from "./catalog-backend.mjs";
 import { agentConcepts } from "./catalog-agent.mjs";
 import { BACKEND_CATEGORY_NAMES, QUESTION_ANGLES, classifyBackendConcept } from "./taxonomy.mjs";
+import { buildPublicQuestionAttention, loadPublicQuestionSignals } from "./public-question-signals.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 
@@ -76,6 +77,7 @@ export function applyAiScores(questions, scores) {
     const base = Math.round(Number(score.base));
     const final = Math.round(Number(score.importance));
     if (!Number.isInteger(base) || !Number.isInteger(final) || base < 0 || base > 98 || final < 0 || final > 98) continue;
+    if (question.importance !== base) continue;
     if (Math.abs(final - base) > 6) continue;
     question.scoreBase = base;
     question.scoreNote = typeof score.note === "string" ? score.note.slice(0, 200) : "";
@@ -181,8 +183,46 @@ export function effectiveSourceIds(concept, sourcesArray) {
   return [...new Set([...direct, ...viaSupport])];
 }
 
-export function buildQuestions(concepts, track, prefix, sourcesArray, snapshotDate, hintsMap = null, contentReviews = {}) {
+function frequencyEligibleSource(source) {
+  const inferred = source.type === "interview" && source.directQuestionEvidence && /^https?:\/\//.test(source.url || "") && /^\d{4}-\d{2}-\d{2}$/.test(source.publishedAt || "");
+  return Boolean((source.collection?.frequencyEligible ?? inferred) && inferred);
+}
+
+function sourcePlatform(source) {
+  try {
+    const host = new URL(source.url).hostname.toLowerCase();
+    if (host.endsWith("nowcoder.com")) return "nowcoder";
+    if (host.endsWith("xiaohongshu.com") || host.endsWith("xhslink.com")) return "xiaohongshu";
+    return host;
+  } catch {
+    return "unknown";
+  }
+}
+
+function aggregateSource(source) {
+  return source.discovery?.sourceKind === "aggregate" || /多公司|汇总|合集|盘点|题库|八股文/.test(`${source.company || ""} ${source.title || ""} ${source.notes || ""}`);
+}
+
+function uniqueClusterSources(sources) {
+  const byCluster = new Map();
+  for (const source of sources) {
+    const cluster = source.discovery?.duplicateClusterId || source.id;
+    const current = byCluster.get(cluster);
+    if (!current || Number(source.weight || 0) > Number(current.weight || 0)) byCluster.set(cluster, source);
+  }
+  return [...byCluster.values()];
+}
+
+function ageDays(date, asOf) {
+  const time = new Date(`${date || ""}T00:00:00Z`).getTime();
+  return Number.isFinite(time) ? Math.max(0, Math.floor((asOf.getTime() - time) / 86_400_000)) : 10_000;
+}
+
+export function buildQuestions(concepts, track, prefix, sourcesArray, snapshotDate, hintsMap = null, contentReviews = {}, publicAttentionMap = new Map()) {
   const sourceMap = new Map(sourcesArray.map((source) => [source.id, source]));
+  const asOf = /^\d{4}-\d{2}-\d{2}$/.test(snapshotDate || "") ? new Date(`${snapshotDate}T00:00:00Z`) : new Date();
+  const globalInterviewSamples = uniqueClusterSources(sourcesArray.filter(frequencyEligibleSource)).filter((source) => !aggregateSource(source)).length;
+  const globalConfidence = Math.min(1, Math.log1p(globalInterviewSamples) / Math.log1p(120));
   return concepts.flatMap((concept, conceptIndex) => angles.map((angle, angleIndex) => {
     const questionId = `${prefix}-${String(conceptIndex + 1).padStart(3, "0")}-${angleIndex + 1}`;
     const contentReview = contentReviews?.[questionId]?.status === "reviewed" ? contentReviews[questionId] : null;
@@ -191,20 +231,29 @@ export function buildQuestions(concepts, track, prefix, sourcesArray, snapshotDa
       ...(concept.learningHints || [])
     ]);
     const sources = effectiveSourceIds(concept, sourcesArray).map((id) => sourceMap.get(id)).filter(Boolean);
-    const scoredSources = sources.filter((source) => source.type !== "interview" || source.collection?.frequencyEligible !== false);
-    const recentInterviewSources = scoredSources.filter((source) => source.type === "interview" && source.publishedAt >= "2026-01-01");
-    const typeFactor = { interview: 1, job: 0.6, guide: 0.35, official: 0.25, research: 0.3 };
-    const weightedSupport = scoredSources.reduce((sum, source) => {
-      const recencyFactor = source.publishedAt >= "2026-01-01" ? 1 : 0.55;
-      const directFactor = source.directQuestionEvidence ? 1 : 0.8;
-      return sum + (source.weight || 0) * (typeFactor[source.type] || 0.25) * recencyFactor * directFactor;
+    const independentSources = uniqueClusterSources(sources);
+    const interviewSources = independentSources.filter(frequencyEligibleSource);
+    const directInterviewSources = interviewSources.filter((source) => !aggregateSource(source));
+    const recentInterviewSources = directInterviewSources.filter((source) => ageDays(source.publishedAt, asOf) <= 90);
+    const weightedSupport = interviewSources.reduce((sum, source) => {
+      const recency = Math.exp(-ageDays(source.publishedAt, asOf) / 240);
+      const aggregateFactor = aggregateSource(source) ? 0.32 : 1;
+      return sum + Number(source.weight || 0.5) * recency * aggregateFactor;
     }, 0);
-    const frequencyBoost = Math.min(13, Math.round(weightedSupport * 4));
-    const sourceDiversityBoost = Math.min(4, Math.max(0, new Set(scoredSources.map((source) => source.company || source.url)).size - 1));
-    const importance = Math.min(98, 38 + concept.priority * 7 + angle.bonus + frequencyBoost + sourceDiversityBoost);
-    const evidenceLevel = recentInterviewSources.length >= 3 && weightedSupport >= 2 && concept.priority >= 4
+    const validationSupport = independentSources.filter((source) => source.type !== "interview").reduce((sum, source) => sum + Number(source.weight || 0) * ({ job: 0.5, guide: 0.2, official: 0.15, research: 0.18 }[source.type] || 0), 0);
+    const saturatedFrequency = 16 * (1 - Math.exp(-weightedSupport / 6));
+    const frequencyBoost = Math.min(16, Math.round(saturatedFrequency * (0.78 + globalConfidence * 0.22)));
+    const companyCount = new Set(directInterviewSources.map((source) => source.company).filter((company) => company && !/多公司|汇总|等|[\/、]/.test(company))).size;
+    const platformCount = new Set(directInterviewSources.map(sourcePlatform).filter((platform) => platform !== "unknown")).size;
+    const levelCount = new Set(directInterviewSources.map((source) => source.candidateLevel).filter((level) => level && level !== "unknown")).size;
+    const sourceDiversityBoost = Math.min(5, Math.min(3, Math.max(0, companyCount - 1)) + Math.min(1, Math.max(0, platformCount - 1)) + Math.min(1, Math.max(0, levelCount - 1)));
+    const validationBoost = Math.min(2, Math.round(2 * (1 - Math.exp(-validationSupport / 1.5))));
+    const publicAttention = publicAttentionMap.get(concept.name);
+    const publicAttentionBoost = Math.min(2, Math.max(0, Number(publicAttention?.attentionBoost || 0)));
+    const importance = Math.min(98, 46 + concept.priority * 4 + angle.bonus + frequencyBoost + sourceDiversityBoost + validationBoost + publicAttentionBoost);
+    const evidenceLevel = globalInterviewSamples >= 80 && recentInterviewSources.length >= 4 && directInterviewSources.length >= 8 && (companyCount >= 3 || platformCount >= 2)
       ? "strong"
-      : sources.some((source) => ["interview", "job"].includes(source.type))
+      : directInterviewSources.length >= 2 || sources.some((source) => source.type === "job")
         ? "medium"
         : "foundation";
     const tier = importance >= 88 ? "core" : importance >= 74 ? "high" : "extended";
@@ -253,9 +302,46 @@ export function buildQuestions(concepts, track, prefix, sourcesArray, snapshotDa
         sourceIds: sources.map((source) => source.id),
         recentInterviewSamples: recentInterviewSources.length,
         weightedSupport: Number(weightedSupport.toFixed(2)),
+        independentInterviewSamples: directInterviewSources.length,
+        globalInterviewSamples,
+        sampleConfidence: Number(globalConfidence.toFixed(3)),
+        frequencyBoost,
+        companyCount,
+        platformCount,
+        publicQuestionAttention: publicAttention?.available ? {
+          available: true,
+          attentionBoost: publicAttentionBoost,
+          publicTitleSamples: publicAttention.publicTitleSamples,
+          bankCount: publicAttention.bankCount,
+          bestBankRank: publicAttention.bestBankRank,
+          signal: publicAttention.signal,
+          confidence: publicAttention.confidence,
+          capturedAt: publicAttention.capturedAt,
+          access: publicAttention.access,
+          banks: publicAttention.banks.map((bank) => ({
+            title: bank.title,
+            url: bank.url,
+            rank: bank.rank,
+            heat: bank.heat,
+            bestPosition: bank.bestPosition,
+            questionCount: bank.questionCount
+          })),
+          examples: publicAttention.titles.slice(0, 3)
+        } : {
+          available: false,
+          attentionBoost: 0,
+          publicTitleSamples: 0,
+          bankCount: 0,
+          signal: "none",
+          confidence: "none",
+          capturedAt: publicAttention?.capturedAt || null,
+          access: "title-only",
+          banks: [],
+          examples: []
+        },
         lastObserved,
         note: evidenceLevel === "strong"
-          ? "当前公开样本中存在2026年直接面经支持；数量是已收录样本，不代表全市场概率。"
+          ? "达到大样本、近期重复和来源多样性门槛；分数采用饱和曲线，样本继续增加不会线性涨分。"
           : evidenceLevel === "medium"
             ? "由面经、岗位要求或多个维护资料共同支持。"
             : "属于岗位前置基础；公开面经常默认掌握，直接出现样本较少。"
@@ -310,15 +396,31 @@ export async function buildPayload() {
   const hintsMap = new Map(Object.entries(await loadLearningHints()));
   const contentReviews = (await loadContentReviews()).questions || {};
   const { backend, agent } = allCatalogConcepts(newConcepts);
+  const publicSignalPayload = await loadPublicQuestionSignals();
+  const publicSignalResult = buildPublicQuestionAttention(publicSignalPayload, [
+    ...backend.map((concept) => ({ ...concept, track: "backend" })),
+    ...agent.map((concept) => ({ ...concept, track: "agent" }))
+  ]);
   const questions = applyAiScores([
-    ...buildQuestions(backend, "backend", "be", sourcePayload.sources, sourcePayload.snapshotDate, hintsMap, contentReviews),
-    ...buildQuestions(agent, "agent", "ai", sourcePayload.sources, sourcePayload.snapshotDate, hintsMap, contentReviews)
+    ...buildQuestions(backend, "backend", "be", sourcePayload.sources, sourcePayload.snapshotDate, hintsMap, contentReviews, publicSignalResult.attention),
+    ...buildQuestions(agent, "agent", "ai", sourcePayload.sources, sourcePayload.snapshotDate, hintsMap, contentReviews, publicSignalResult.attention)
   ], await loadAiScores());
   return {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
     researchSnapshot: sourcePayload.snapshotDate,
     disclaimer: "重要度是基于当前收录公开样本的可解释排序，不是全市场精确命中率。提纲版答案用于主动回忆起点，变化快或有争议的内容仍应核对官方文档。",
+    publicQuestionSignals: {
+      source: publicSignalPayload.site || null,
+      capturedAt: publicSignalPayload.capturedAt || null,
+      access: publicSignalPayload.access || "title-only",
+      totalTitles: publicSignalResult.audit.totalTitles,
+      inScopeTitles: publicSignalResult.audit.inScopeTitles,
+      matchedInScopeTitles: publicSignalResult.audit.matchedInScopeTitles,
+      inScopeCoverage: publicSignalResult.audit.inScopeCoverage,
+      excludedTitles: publicSignalResult.audit.excludedTitles,
+      mappedConcepts: publicSignalResult.audit.mappedConcepts
+    },
     taxonomy: buildTaxonomy(questions),
     counts: {
       total: questions.length,

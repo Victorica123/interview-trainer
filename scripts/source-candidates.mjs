@@ -7,7 +7,7 @@ import { writeJsonAtomic } from "./local-json.mjs";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const candidatesPath = join(root, ".local", "source-candidates.json");
 const sourcesPath = join(root, "research", "sources.json");
-const MAX_CANDIDATES = 300;
+const MAX_CANDIDATES = 600;
 const MAX_URL_LENGTH = 2_000;
 
 const PLATFORM_NAMES = {
@@ -147,12 +147,12 @@ export async function addSourceCandidates(values) {
   const addedIds = [];
   let duplicates = 0;
   const addedAt = new Date().toISOString();
-  for (const url of requested.slice(0, 50)) {
+  for (const url of requested.slice(0, 500)) {
     if (byUrl.has(url)) {
       duplicates += 1;
       continue;
     }
-    if (byUrl.size >= MAX_CANDIDATES) throw new Error(`候选池最多保存 ${MAX_CANDIDATES} 条链接`);
+    if (byUrl.size >= MAX_CANDIDATES) break;
     const candidate = { id: candidateId(url), url, platform: detectCandidatePlatform(url), addedAt, lastUsedAt: null };
     byUrl.set(url, candidate);
     addedIds.push(candidate.id);
@@ -164,7 +164,7 @@ export async function addSourceCandidates(values) {
 
 function validateCandidateIds(values) {
   if (!Array.isArray(values)) throw new Error("ids 必须是数组");
-  const ids = [...new Set(values.map((value) => String(value || "")))].slice(0, 50);
+  const ids = [...new Set(values.map((value) => String(value || "")))].slice(0, 500);
   if (ids.some((id) => !/^candidate-[a-f0-9]{20}$/.test(id))) throw new Error("候选 ID 格式不正确");
   return ids;
 }

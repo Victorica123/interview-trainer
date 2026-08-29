@@ -22,6 +22,7 @@ All endpoints are local and JSON unless noted.
 | `GET /api/discovery/candidates` | — | 本机候选链接、平台、待分析/已登记状态和最近使用时间 |
 | `POST /api/discovery/candidates` | `{urls: string[]}` | URL 规范化、去重后的候选池；只接受无凭据的 http/https |
 | `DELETE /api/discovery/candidates` | `{ids: string[]}` | 按不透明候选 ID 删除；ID 不会被解释成路径或程序名 |
+| `POST /api/discovery/refresh` | `{target?, scanLimit?, concurrency?}` | 通过公开 Sitemap 增量发现牛客近期面经候选；默认目标 300、最多筛查 13500 页、8 路抓取，正文预筛结果进入本机候选池，用户审阅前不写业务文件 |
 | `GET /api/update/status` | — | Config, live progress, and `draftAvailable` |
 | `POST /api/update/run` | Update options below | NDJSON progress events; ends with `done` or `error` |
 | `POST /api/update/cancel` | — | Requests cancellation of the active analysis |
@@ -46,7 +47,8 @@ All endpoints are local and JSON unless noted.
 ```json
 {
   "autoFetch": true,
-  "maxAutoSources": 16,
+  "maxAutoSources": 80,
+  "analysisMode": "scale",
   "candidateIds": ["candidate-…"],
   "manualUrls": ["https://…"],
   "manualTexts": [{"label": "…", "text": "…"}],
@@ -55,7 +57,9 @@ All endpoints are local and JSON unless noted.
 }
 ```
 
-`autoFetch: true` means “refresh the most recent already-registered interview URLs”; it does not discover new posts across a platform. User-found search results can be persisted in `.local/source-candidates.json` and selected through `candidateIds`; one-off discovery still enters through `manualUrls` or `manualTexts`. The server resolves candidate IDs against its stored queue and never trusts a browser-supplied URL hidden behind an ID.
+`autoFetch: true` 按“最久未复查优先、发布日期较新优先”轮换已登记面经，单轮最多 200 篇。平台新帖发现由独立的 `/api/discovery/refresh` 完成；它只走公开 Sitemap，不抓取牛客禁止的搜索页。发现缓存最多保存 30000 条版本化筛查结果，每 1000 页原子检查点；规则版本变化会失效旧结果。小红书 Sitemap 缺少标题/日期，仍需用户明确链接或登录浏览器核验。候选池最多 600 条，一次更新最多解析 500 个服务端已核验候选 ID/URL。
+
+`analysisMode: scale` 是大样本默认模式：先用确定性规则映射已有概念，再将低置信来源按 8 篇一批、最多 3 个并发批次提交给 AI。缓存最多保存 5000 个 Prompt/正文哈希结果。草稿的 `performance` 报告 AI 调用、批次、缓存命中和节省调用；`capacityPolicy` 报告约 1000 题容量、新概念晋级预算和观察池数量。
 
 Update NDJSON phases: `start`, `fetch`, `analyze`, `partial`, `evaluate`, `draft`, `cancelled`, `done`, `error`. Each work event includes a status such as `pending`, `ok`, `fail`, `empty`, `skipped-budget`, `skipped-partial`, `fallback`, or `budget-skip` as applicable. Only one analysis may run at a time, duplicate manual URLs/texts are collapsed within a run, and a pending review draft must be applied or discarded before another run can start. Rollback is rejected while analysis is active. A `draft` is emitted only after its generated questions pass the release validator; short model fields are normalized before preview. Completed source analyses are cached immediately. A valid review draft is atomically persisted to `.local/pending-update.json` and loaded on the next server start until apply or discard clears it. Drafts may include `sourceRefreshes`; apply persists their collection audit, explicit engagement and quality warnings, and history records `refreshedSources`.
 
@@ -69,8 +73,9 @@ Update NDJSON phases: `start`, `fetch`, `analyze`, `partial`, `evaluate`, `draft
 
 ## Repository data contracts
 
-- `research/sources.json`: snapshot metadata and source records; source IDs must be globally unique. Optional audited fields are `position`, `candidateLevel`, `collection`, `engagement`, and `qualityWarnings`.
+- `research/sources.json`: snapshot metadata and source records; source IDs must be globally unique. Optional audited fields include `position`, `candidateLevel`, `collection`, `discovery`, `engagement`, and `qualityWarnings`.
 - `research/new-concepts.json`: append-only user-approved dynamic concepts with stable order and source IDs.
+- `research/concept-candidates.json`: non-question observation pool for proposed concepts; promotion requires recent independent evidence, diversity and remaining capacity.
 - `research/ai-scores.json`: question-ID map; final integer score must be 0–98 and within ±6 of current formula base.
 - `research/learning-hints.json`: concept-name map to sanitized `{site,title,url}` arrays; does not affect importance.
 - `research/content-reviews.json`: explicit question-ID review registry with `status`, `reviewedAt`, `note`, and registered `sourceIds`; priority alone never produces `reviewed`.

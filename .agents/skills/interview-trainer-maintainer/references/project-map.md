@@ -30,11 +30,12 @@ There are no npm runtime dependencies. Chrome is optional and only needed for th
 - `scripts/taxonomy.mjs`: stable Java-backend peer topics, secondary knowledge groups, five question-angle labels, and legacy-category compatibility.
 - `scripts/generate-questions.mjs`: scoring/evidence merge, detailed-answer generation, optional updater sidecars.
 - `scripts/source-insights.mjs`: public source-field whitelist, platform/collection normalization, company/role lists, and concept-level sample trends.
-- `scripts/source-candidates.mjs`: private user-supplied discovery queue, canonical URL de-duplication, registered-source status, and candidate-ID resolution.
+- `scripts/source-candidates.mjs`: private 600-link discovery queue, canonical URL de-duplication, registered-source status, and candidate-ID resolution.
+- `scripts/source-discovery.mjs`: public-Sitemap discovery, Nowcoder main-post extraction, direct-interview screening, content fingerprints, duplicate clusters, and deterministic known-concept matching.
 - `scripts/validate-data.mjs`: count, ID, content, source, score-delta, and hint validation.
 - `scripts/test-coverage.mjs`: 12-topic mainstream Java-backend coverage regression and evidence/learning-source separation checks.
 - `scripts/package-release.mjs`: zero-dependency ZIP builder using an explicit public allowlist and forbidden sensitive-path scan.
-- `scripts/updater.mjs`: fetch → extract/cache → merge → constrained evaluation → draft → apply/rollback.
+- `scripts/updater.mjs`: fetch → deterministic prefilter → batched AI/cache → observation/promotion gate → saturated rescore → draft → apply/rollback.
 - `scripts/browser-login.mjs`: optional Chrome launch, cookie collection, and authenticated page text extraction.
 
 ## Runtime flows
@@ -49,7 +50,7 @@ Catalogs + sources + explicit content reviews + optional new concepts/AI score d
 
 ### AI-assisted update
 
-Select registered-source refreshes, saved candidate IDs, or manual additions → resolve candidates inside the server → fetch text (browser session or Node fallback) → atomically persist each completed content-hash result → AI extraction with existing-concept mapping plus auditable collection/quality metadata → optionally finalize completed results early → local formula rescore → AI adjustment limited to ±6 → validate and atomically persist the review draft across restarts → user selects items → backup + mutation journal → atomically replace sidecars/sources/questions → regenerate and validate → clear the journal and keep update history; startup recovery or rollback restores and validates the allowlisted backup.
+Public Sitemap discovery or manual additions → up to 13500 recent pages collapse to a 300-source target through a 30000-entry versioned/checkpointed discovery cache → URL/content fingerprint de-duplication → fetch main-post text → deterministic direct-interview and known-concept pass → unresolved sources enter 8-source AI batches → per-concept source-quote and synonym grounding before the 5000-entry versioned analysis cache → suspicious sources receive targeted single-source review; three consecutively unusable batches open a circuit breaker → new concepts accumulate in an observation pool → only recent independent/diverse evidence within the 1000-question capacity promotes at most three concepts → saturated local rescore → optional AI adjustment limited to ±6 → validated persistent review draft → user selection → backup + mutation journal → atomic sidecar/source/question regeneration; startup recovery or rollback restores the allowlisted backup byte-for-byte.
 
 ## Trust boundaries
 

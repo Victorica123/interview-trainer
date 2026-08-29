@@ -19,6 +19,7 @@ const trackedFiles = [
   ["content", "questions.json"],
   ["research", "sources.json"],
   ["research", "new-concepts.json"],
+  ["research", "concept-candidates.json"],
   ["research", "ai-scores.json"],
   ["research", "learning-hints.json"]
 ];
@@ -47,6 +48,7 @@ function extractionPayload(name = conceptName) {
       tradeoff: "短选型",
       priority: 3,
       tags: ["更新测试"],
+      evidenceQuote: `${name} 是什么？`,
       learningHints: []
     }]
   });
@@ -188,6 +190,11 @@ try {
   });
 
   upstream = createServer(async (request, response) => {
+    if (request.url?.startsWith("/concept-source")) {
+      response.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+      response.end(`<html><title>新增概念来源测试</title><body>${conceptName} 是什么？请说明机制、项目应用与常见排查方法。${request.url}</body></html>`);
+      return;
+    }
     if (request.url?.startsWith("/source")) {
       response.writeHead(200, { "content-type": "text/html; charset=utf-8" });
       response.end(`<html><title>自动来源测试</title><body>${autoConceptName} 是什么？请说明机制和项目应用。</body></html>`);
@@ -229,7 +236,35 @@ try {
   newestInterview.shortTitle = "隔离自动来源";
   newestInterview.localPath = "C:\\private\\raw-source.html";
   newestInterview.apiKey = "source-secret-must-not-leak";
+  delete newestInterview.collection;
+  const seedSources = ["a", "b"].map((suffix, index) => ({
+    id: `test-promotion-seed-${suffix}`,
+    title: `本地晋级门槛种子 ${suffix}`,
+    shortTitle: `晋级种子 ${suffix}`,
+    url: `http://127.0.0.1:${upstreamPort}/seed-${suffix}`,
+    type: "interview",
+    track: ["backend"],
+    publishedAt: "2026-08-20",
+    company: `本地种子公司${index + 1}`,
+    weight: 1,
+    directQuestionEvidence: true,
+    notes: "只用于隔离的晋级门槛测试",
+    supportsConcepts: [],
+    collection: { method: "manual-url", capturedAt: "2026-08-28T00:00:00.000Z", platform: "other", frequencyEligible: true }
+  }));
+  sourcePayload.sources.push(...seedSources);
   await writeFile(sourcesPath, `${JSON.stringify(sourcePayload, null, 2)}\n`, "utf8");
+  const candidateTemplate = JSON.parse(extractionPayload(conceptName)).concepts[0];
+  const autoCandidateTemplate = JSON.parse(extractionPayload(autoConceptName)).concepts[0];
+  await writeFile(join(sandbox, "research", "concept-candidates.json"), `${JSON.stringify({
+    schemaVersion: 1,
+    updatedAt: "2026-08-28T00:00:00.000Z",
+    policy: { targetQuestions: 1000, minimumRecentIndependentSources: 3, maximumPromotionsPerRun: 3 },
+    candidates: [
+      { ...candidateTemplate, sourceIds: seedSources.map((source) => source.id) },
+      { ...autoCandidateTemplate, sourceIds: seedSources.map((source) => source.id) }
+    ]
+  }, null, 2)}\n`, "utf8");
 
   await mkdir(join(sandbox, ".local"), { recursive: true });
   await writeFile(join(sandbox, ".local", "ai-config.json"), JSON.stringify({
@@ -269,6 +304,10 @@ try {
   assert.ok(Array.isArray(insights.trends), "insights should expose concept-level trends");
   assert.ok(Array.isArray(insights.companies), "insights should expose auditable company lists");
   assert.ok(Array.isArray(insights.roles), "insights should expose role-specific lists");
+  assert.equal(insights.coverage?.publicQuestionSignals?.totalTitles, 620, "insights should expose the complete public-title snapshot size");
+  assert.equal(insights.coverage?.publicQuestionSignals?.inScopeTitles, 559, "insights should expose the in-scope public-title count");
+  assert.equal(insights.coverage?.publicQuestionSignals?.matchedInScopeTitles, 559, "insights should expose the mapped public-title count");
+  assert.equal(insights.coverage?.publicQuestionSignals?.access, "title-only", "insights must describe the public snapshot as title-only evidence");
   assert.equal(JSON.stringify(insights).includes("source-secret-must-not-leak"), false, "insights must not expose arbitrary private source fields");
 
   const publicConfig = await (await fetch(`${base}/api/config`)).json();
@@ -458,7 +497,8 @@ try {
   const partialEvents = await readRemaining(partialStream);
   const partialDraft = partialEvents.find((event) => event.phase === "draft")?.draft;
   assert.equal(partialDraft?.partial?.finalized, true, "partial finalize should emit a marked review draft");
-  assert.equal(partialDraft.newConcepts.length, 1, "completed source content should survive partial finalize");
+  assert.equal(partialDraft.newConcepts.length, 0, "untraceable pasted text must not bypass the promotion gate");
+  assert.ok(partialDraft.conceptWatchlist.some((concept) => concept.name === conceptName), "completed pasted content should survive in the observation pool");
   assert.ok(partialDraft.partial.skippedSources >= 1, "unfinished sources should be reported as skipped");
   assert.equal(partialDraft.evaluation.status, "partial-skip", "partial finalize should skip slow AI score review");
   const savedDraft = await (await fetch(`${base}/api/update/draft`)).json();
@@ -483,7 +523,7 @@ try {
     body: JSON.stringify({
       autoFetch: false,
       analysisMode: "balanced",
-      manualTexts: [{ label: "add-one", text: `${conceptName} 是什么？实际项目里怎么使用？` }],
+      manualUrls: [`http://127.0.0.1:${upstreamPort}/concept-source?full-apply=1`],
       budgetMs: 60_000
     })
   });
