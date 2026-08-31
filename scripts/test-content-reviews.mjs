@@ -20,9 +20,31 @@ const generatedReviewedIds = questionsPayload.questions
 
 const declaredReviewCount = (reviewsPayload.reviewBatches || []).reduce((sum, batch) => sum + Number(batch.questionCount || 0), 0);
 assert.equal(registeredReviewedIds.length, declaredReviewCount, "explicit review entries should match the declared batch counts");
-assert.equal(registeredReviewedIds.length, 80, "the first two explicit content-review batches should contain 80 questions");
+assert.equal(registeredReviewedIds.length, 567, "the current explicit content-review registry should contain every core and high question");
 assert.deepEqual(generatedReviewedIds, registeredReviewedIds, "generated reviewed status must come only from the explicit registry");
-assert.equal(questionsPayload.questions.find((question) => question.id === "be-001-1")?.contentStatus, "outline", "priority alone must not automatically claim human review");
+assert.equal(questionsPayload.questions.find((question) => question.tier === "extended")?.contentStatus, "outline", "priority alone must not automatically claim content review");
+
+const coreQuestionIds = questionsPayload.questions
+  .filter((question) => question.tier === "core")
+  .map((question) => question.id)
+  .sort();
+const reviewedCoreQuestionIds = questionsPayload.questions
+  .filter((question) => question.tier === "core" && question.contentStatus === "reviewed")
+  .map((question) => question.id)
+  .sort();
+assert.equal(coreQuestionIds.length, 144, "the current research snapshot should retain 144 core questions");
+assert.deepEqual(reviewedCoreQuestionIds, coreQuestionIds, "every current core question must have an explicit content review");
+
+const highQuestionIds = questionsPayload.questions
+  .filter((question) => question.tier === "high")
+  .map((question) => question.id)
+  .sort();
+const reviewedHighQuestionIds = questionsPayload.questions
+  .filter((question) => question.tier === "high" && question.contentStatus === "reviewed")
+  .map((question) => question.id)
+  .sort();
+assert.equal(highQuestionIds.length, 423, "the current research snapshot should retain 423 high questions");
+assert.deepEqual(reviewedHighQuestionIds, highQuestionIds, "every current high question must have an explicit content review");
 
 const valid = validatePayload(questionsPayload, sourcesPayload, expectedCounts(newConcepts), reviewsPayload);
 assert.equal(valid.ok, true, valid.errors.join("\n"));

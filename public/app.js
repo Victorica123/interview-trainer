@@ -1,3 +1,13 @@
+import {
+  FAILURE_REASONS,
+  buildWeakFocusQueue,
+  buildWeaknessReport,
+  defaultProgress,
+  recordProgressRating,
+  sanitizeProgress,
+  sanitizeReasonCodes
+} from "./learning-progress.js";
+
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
@@ -219,29 +229,6 @@ function saveCustomSessions() {
   return saveBrowserState(CUSTOM_SESSIONS_KEY, state.customSessions, "自定义题单");
 }
 
-function sanitizeProgress(input) {
-  if (!input || Array.isArray(input) || typeof input !== "object") return {};
-  const clean = {};
-  for (const [id, value] of Object.entries(input)) {
-    if (!/^(be|ai)-\d{3}-[1-5]$/.test(id) || !value || Array.isArray(value) || typeof value !== "object") continue;
-    const level = Math.min(4, Math.max(0, Math.round(Number(value.level) || 0)));
-    const attempts = Math.min(100_000, Math.max(0, Math.round(Number(value.attempts) || 0)));
-    const validDate = (date) => typeof date === "string" && Number.isFinite(new Date(date).getTime()) ? date : null;
-    clean[id] = {
-      level,
-      attempts,
-      answer: typeof value.answer === "string" ? value.answer.slice(0, 20_000) : "",
-      note: typeof value.note === "string" ? value.note.slice(0, 10_000) : "",
-      favorite: Boolean(value.favorite),
-      inMistakeBook: typeof value.inMistakeBook === "boolean" ? value.inMistakeBook : attempts > 0 && level <= 1,
-      mistakeCount: Math.min(100_000, Math.max(0, Math.round(Number(value.mistakeCount) || 0))),
-      dueAt: validDate(value.dueAt),
-      updatedAt: validDate(value.updatedAt)
-    };
-  }
-  return clean;
-}
-
 function saveProgress() {
   return saveBrowserState(STORAGE_KEY, state.progress, "学习进度");
 }
@@ -353,6 +340,7 @@ function bindEvents() {
     state.currentMistakeFilter = button.dataset.mistakeFilter;
     renderMistakes();
   }));
+  $$('[data-start-weak-focus]').forEach((button) => button.addEventListener("click", startWeakFocusTraining));
   $("#insightTrackSelect").addEventListener("change", (event) => {
     state.insightTrack = event.target.value;
     state.insightCompany = "all";
@@ -450,7 +438,7 @@ function switchView(view) {
 }
 
 function getProgress(questionId) {
-  return state.progress[questionId] || { level: 0, attempts: 0, dueAt: null, answer: "", note: "", favorite: false, inMistakeBook: false, mistakeCount: 0 };
+  return state.progress[questionId] || defaultProgress();
 }
 
 function isDue(progress) {
@@ -672,6 +660,47 @@ function renderPublicQuestionAttention(attention) {
     '</div>';
 }
 
+function renderWorkedExample(example) {
+  if (!example) return "";
+  const references = (example.sourceIds || []).map((id) => state.sourceMap.get(id)).filter(Boolean);
+  const code = example.code?.content
+    ? `<div class="worked-code"><div><b>${escapeHtml(example.code.title || "参考片段")}</b><span>${escapeHtml(example.code.language || "text")}</span></div><pre><code>${escapeHtml(example.code.content)}</code></pre></div>`
+    : "";
+  const sources = references.length
+    ? `<div class="worked-sources"><b>示例核查来源</b>${references.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.shortTitle || source.title)} ↗</a>`).join("")}</div>`
+    : "";
+  return `<section class="worked-example"><div class="worked-example-heading"><span>动手验证</span><h3>${escapeHtml(example.title || "最小演练")}</h3></div><p>${escapeHtml(example.scenario || "")}</p><ol>${(example.steps || []).map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>${code}<div class="worked-expected"><b>做到什么算掌握</b><span>${escapeHtml(example.expected || "")}</span></div>${sources}</section>`;
+}
+
+function renderInterviewFollowUps(followUps) {
+  if (!Array.isArray(followUps) || !followUps.length) return "";
+  return `<section class="interview-followups"><div><span>INTERVIEW FOLLOW-UPS</span><h3>面试官可能继续追问</h3></div><ol>${followUps.map((followUp) => `<li>${escapeHtml(followUp)}</li>`).join("")}</ol></section>`;
+}
+
+function failureReasonLabel(reasonId, short = false) {
+  const reason = FAILURE_REASONS.find((item) => item.id === reasonId);
+  return short ? reason?.shortLabel : reason?.label;
+}
+
+function renderFailureReasonPicker(progress) {
+  const selected = new Set(progress.reasonCodes || []);
+  return `<div class="failure-reason-panel">
+    <div class="section-heading-inline"><h3>这次卡在哪里（可多选）</h3><small>先选原因，再评 0～2；评为 3～4 会清空当前弱项</small></div>
+    <div class="failure-reason-options">${FAILURE_REASONS.map((reason) => `<button type="button" class="${selected.has(reason.id) ? "active" : ""}" data-failure-reason="${escapeHtml(reason.id)}" aria-pressed="${selected.has(reason.id)}">${escapeHtml(reason.label)}</button>`).join("")}</div>
+  </div>`;
+}
+
+function renderAttemptHistory(progress) {
+  const entries = (progress.history || []).slice(-5).reverse();
+  if (!entries.length) return '<div class="attempt-history-empty">完成一次熟悉度评价后，这里会保留最近的回答记录。</div>';
+  return `<details class="attempt-history"><summary>最近作答记录（${progress.history.length}）</summary><div>${entries.map((entry) => {
+    const date = new Date(entry.at);
+    const time = Number.isFinite(date.getTime()) ? date.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }) : "时间未知";
+    const reasons = (entry.reasonCodes || []).map((reason) => failureReasonLabel(reason, true)).filter(Boolean);
+    return `<article><div><b>${entry.level}/4 · ${escapeHtml(ratingLabel(entry.level))}</b><time>${escapeHtml(time)}</time></div><p>${reasons.length ? escapeHtml(reasons.join(" · ")) : "本次未记录弱项原因"}</p>${entry.answerPreview ? `<blockquote>${escapeHtml(entry.answerPreview)}</blockquote>` : ""}</article>`;
+  }).join("")}</div></details>`;
+}
+
 function renderQuestionDetail(question) {
   if (!question) return;
   const progress = getProgress(question.id);
@@ -689,7 +718,7 @@ function renderQuestionDetail(question) {
       <span class="tag">${escapeHtml(question.track === "backend" ? "Java 后端" : "AI / Agent")}</span>
     </div>
     <h2>${escapeHtml(question.title)}</h2>
-    <div class="detail-meta"><span>专题：${escapeHtml(question.category)}</span><span>知识组：${escapeHtml(question.topicGroup)}</span><span>知识点：${escapeHtml(question.concept)}</span><span>题型：${escapeHtml(angleLabel(question.angle))}</span><span>难度：${difficultyLabel(question.difficulty)}</span><span>内容状态：${question.contentStatus === "reviewed" ? `已人工复核（${escapeHtml(question.contentReview?.reviewedAt || "日期未知")}）` : "待逐题复核"}</span></div>
+    <div class="detail-meta"><span>专题：${escapeHtml(question.category)}</span><span>知识组：${escapeHtml(question.topicGroup)}</span><span>知识点：${escapeHtml(question.concept)}</span><span>题型：${escapeHtml(angleLabel(question.angle))}</span><span>难度：${difficultyLabel(question.difficulty)}</span><span>内容状态：${question.contentStatus === "reviewed" ? `已内容复核（${escapeHtml(question.contentReview?.reviewedAt || "日期未知")}）` : "待逐题复核"}</span></div>
 
     <div class="personal-actions" aria-label="个人题目操作">
       <button id="favoriteButton" class="${progress.favorite ? "active" : ""}"><span>${progress.favorite ? "★" : "☆"}</span>${progress.favorite ? "已收藏" : "收藏题目"}</button>
@@ -715,6 +744,8 @@ function renderQuestionDetail(question) {
       <h3>面试时怎么组织</h3>
       <ol class="answer-framework">${(question.answerFramework || []).map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
       <div class="deep-answer-grid">${(question.detailedAnswer || []).map((section, index) => `<section class="deep-answer-section"><span>${String(index + 1).padStart(2, "0")}</span><div><h4>${escapeHtml(section.title)}</h4><p>${escapeHtml(section.content)}</p></div></section>`).join("")}</div>
+      ${renderWorkedExample(question.workedExample)}
+      ${renderInterviewFollowUps(question.interviewFollowUps)}
       <h3>相关知识点</h3>
       <div class="knowledge-chips">${(question.relatedKnowledge || []).map((topic) => `<button type="button" data-related-topic="${escapeHtml(topic)}">${escapeHtml(topic)}</button>`).join("")}</div>
       <h3>进一步学习来源</h3>
@@ -722,7 +753,7 @@ function renderQuestionDetail(question) {
       ${(question.learningHints || []).length ? `<h3>八股文网站对应章节</h3><div class="learning-resources">${question.learningHints.map((hint) => hint.url ? `<a href="${escapeHtml(hint.url)}" target="_blank" rel="noreferrer"><span>${escapeHtml(hint.site)}</span><div><b>${escapeHtml(hint.title)}</b><small>打开该站章节</small></div><i>↗</i></a>` : `<div class="hint-no-link"><span>${escapeHtml(hint.site)}</span><div><b>${escapeHtml(hint.title)}</b><small>按章节名在该站内搜索</small></div></div>`).join("")}</div>` : ""}
     </div>
 
-    ${question.contentReview ? `<div class="detail-section content-review-card"><h3>人工内容复核</h3><p>${escapeHtml(question.contentReview.note)}</p><div class="source-links">${reviewLinks.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.shortTitle || source.title)} ↗</a>`).join("")}</div></div>` : ""}
+    ${question.contentReview ? `<div class="detail-section content-review-card"><h3>显式内容复核</h3><p>${escapeHtml(question.contentReview.note)}</p><div class="source-links">${reviewLinks.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.shortTitle || source.title)} ↗</a>`).join("")}</div></div>` : ""}
 
     <div class="detail-section">
       <h3>当前样本依据</h3>
@@ -735,6 +766,8 @@ function renderQuestionDetail(question) {
     <div class="detail-section">
       <h3>你的熟悉程度</h3>
       <div class="rating-grid">${[0,1,2,3,4].map((level) => `<button class="rating-button ${progress.level === level && progress.attempts > 0 ? "active" : ""}" data-rating="${level}"><b>${level}</b>${ratingLabel(level)}</button>`).join("")}</div>
+      ${renderFailureReasonPicker(progress)}
+      ${renderAttemptHistory(progress)}
     </div>
 
     <div class="detail-section personal-note-section">
@@ -782,26 +815,32 @@ function renderQuestionDetail(question) {
     $("#chatInput").value = answer ? `这是我的回答，请评价：\n${answer}` : "我还没有形成答案，请先告诉我应该从哪些方面组织回答。";
     $("#chatInput").focus();
   });
+  $$('[data-failure-reason]', $("#questionDetail")).forEach((button) => button.addEventListener("click", () => toggleFailureReason(question, button.dataset.failureReason)));
   $$("[data-rating]", $("#questionDetail")).forEach((button) => button.addEventListener("click", () => rateQuestion(question, Number(button.dataset.rating))));
 }
 
 function rateQuestion(question, level) {
   const current = getProgress(question.id);
   const intervalDays = [0, 1, 3, 7, 21][level];
-  const dueAt = new Date(Date.now() + intervalDays * 86_400_000).toISOString();
-  state.progress[question.id] = {
-    ...current,
+  state.progress[question.id] = recordProgressRating(current, {
     level,
-    attempts: (current.attempts || 0) + 1,
-    inMistakeBook: level <= 1 ? true : current.inMistakeBook,
-    mistakeCount: (current.mistakeCount || 0) + (level <= 1 ? 1 : 0),
-    updatedAt: new Date().toISOString(),
-    dueAt
-  };
+    answer: $("#recallAnswer")?.value || current.answer,
+    reasonCodes: current.reasonCodes
+  });
   saveProgress();
   renderAll();
   renderQuestionDetail(question);
   showToast(level <= 1 ? "已加入近期复习队列和错题本" : level >= 3 ? `已记录：${ratingLabel(level)}，${intervalDays} 天后复习` : "已加入近期复习队列");
+}
+
+function toggleFailureReason(question, reasonId) {
+  const current = getProgress(question.id);
+  const selected = new Set(sanitizeReasonCodes(current.reasonCodes));
+  if (selected.has(reasonId)) selected.delete(reasonId);
+  else selected.add(reasonId);
+  state.progress[question.id] = { ...current, reasonCodes: sanitizeReasonCodes([...selected]), updatedAt: new Date().toISOString() };
+  saveProgress();
+  renderQuestionDetail(question);
 }
 
 function toggleQuestionFlag(question, field) {
@@ -1235,6 +1274,43 @@ function handleSavedSessionAction(event) {
   }
 }
 
+function renderWeaknessSummary(containerId, report) {
+  const container = $(`#${containerId}`);
+  if (!container) return;
+  if (!report.studied) {
+    container.innerHTML = '<div class="weakness-empty"><b>还没有可诊断记录</b><span>先完成几道题并评价熟悉度，系统才会判断真正的薄弱点。</span></div>';
+    return;
+  }
+  const topCategory = report.categories[0];
+  const topAngle = report.angles[0];
+  const topReason = report.topReasons[0];
+  container.innerHTML = `<div class="weakness-stat-grid">
+    <article><span>已经练过</span><b>${report.studied}</b><small>只分析有作答记录的题</small></article>
+    <article><span>当前待巩固</span><b>${report.weak}</b><small>熟悉度仍为 0～2</small></article>
+    <article><span>重复低分</span><b>${report.repeated}</b><small>低分记录至少 2 次</small></article>
+  </div><div class="weakness-finding-grid">
+    <article><span>最弱专题</span><b>${escapeHtml(topCategory?.name || "继续积累记录")}</b><small>${topCategory ? `${topCategory.weak}/${topCategory.attempted} 道仍待巩固` : "暂无明显薄弱专题"}</small></article>
+    <article><span>最弱题型</span><b>${escapeHtml(topAngle ? angleLabel(topAngle.name) : "继续积累记录")}</b><small>${topAngle ? `${topAngle.weak}/${topAngle.attempted} 道仍待巩固` : "暂无明显薄弱题型"}</small></article>
+    <article><span>最常见错因</span><b>${escapeHtml(topReason?.label || "尚未记录错因")}</b><small>${topReason ? `最近记录 ${topReason.count} 次` : "答题前可选择卡点"}</small></article>
+  </div>${report.categories.length ? `<div class="weakness-ranking"><b>优先专题</b>${report.categories.slice(0, 5).map((row) => `<span><i>${escapeHtml(row.name)}</i><small>${row.weak}/${row.attempted} 待巩固</small></span>`).join("")}</div>` : ""}`;
+}
+
+function updateWeakFocusButtons() {
+  const count = buildWeakFocusQueue(state.questions, state.progress, 20).length;
+  $$('[data-start-weak-focus]').forEach((button) => {
+    button.disabled = count === 0;
+    button.textContent = count ? `开始弱项专项（${count} 题）` : "暂无弱项可训练";
+  });
+}
+
+function startWeakFocusTraining() {
+  const queue = buildWeakFocusQueue(state.questions, state.progress, 20);
+  if (!queue.length) return showToast("先完成几道题并评价熟悉度，再生成弱项专项");
+  const report = buildWeaknessReport(state.questions, state.progress);
+  const focus = report.categories[0]?.name;
+  beginCustomTraining(focus ? `弱项专项 · ${focus}` : "弱项专项训练", queue.map((question) => question.id));
+}
+
 function personalCollections() {
   return {
     mistakes: state.questions.filter((question) => getProgress(question.id).inMistakeBook),
@@ -1254,6 +1330,9 @@ function renderPersonalCounts() {
 
 function renderMistakes() {
   const collections = renderPersonalCounts();
+  const weaknessReport = buildWeaknessReport(state.questions, state.progress);
+  renderWeaknessSummary("mistakeWeaknessSummary", weaknessReport);
+  updateWeakFocusButtons();
   const filter = state.currentMistakeFilter;
   $$('[data-mistake-filter]').forEach((button) => {
     const active = button.dataset.mistakeFilter === filter;
@@ -1274,8 +1353,9 @@ function renderMistakes() {
   $("#mistakeList").innerHTML = items.length ? items.map((question) => {
     const progress = getProgress(question.id);
     const reason = filter === "mistakes" ? (progress.mistakeCount ? `低分 ${progress.mistakeCount} 次` : progress.attempts > 0 && progress.level <= 1 ? "历史薄弱题" : "手动加入") : filter === "favorites" ? "已收藏" : "有个人笔记";
+    const weaknessReasons = (progress.reasonCodes || []).map((reasonId) => failureReasonLabel(reasonId, true)).filter(Boolean);
     const action = filter === "mistakes" ? `<button class="text-list-button" data-remove-mistake="${escapeHtml(question.id)}">移出错题本</button>` : filter === "favorites" ? `<button class="text-list-button" data-remove-favorite="${escapeHtml(question.id)}">取消收藏</button>` : "";
-    return `<article class="mistake-card"><div class="mistake-card-main"><div class="mistake-card-tags"><span>${escapeHtml(question.track === "backend" ? "Java 后端" : "AI / Agent")}</span><span>${escapeHtml(question.category)}</span><b>${reason}</b></div><h3>${escapeHtml(question.title)}</h3><p>${progress.note?.trim() ? escapeHtml(progress.note.trim().slice(0, 140)) : "暂无个人笔记；打开题目后可记录自己真正卡住的地方。"}${progress.note?.trim().length > 140 ? "…" : ""}</p><small>熟悉度 ${progress.attempts ? `${progress.level}/4 · ${ratingLabel(progress.level)}` : "未评级"} · 重要度 ${question.importance}</small></div><div class="mistake-card-actions"><button class="primary-button" data-personal-question="${escapeHtml(question.id)}">继续练习</button>${action}</div></article>`;
+    return `<article class="mistake-card"><div class="mistake-card-main"><div class="mistake-card-tags"><span>${escapeHtml(question.track === "backend" ? "Java 后端" : "AI / Agent")}</span><span>${escapeHtml(question.category)}</span><b>${reason}</b>${weaknessReasons.map((item) => `<span class="weakness-reason-tag">${escapeHtml(item)}</span>`).join("")}</div><h3>${escapeHtml(question.title)}</h3><p>${progress.note?.trim() ? escapeHtml(progress.note.trim().slice(0, 140)) : "暂无个人笔记；打开题目后可记录自己真正卡住的地方。"}${progress.note?.trim().length > 140 ? "…" : ""}</p><small>熟悉度 ${progress.attempts ? `${progress.level}/4 · ${ratingLabel(progress.level)}` : "未评级"} · 重要度 ${question.importance}</small></div><div class="mistake-card-actions"><button class="primary-button" data-personal-question="${escapeHtml(question.id)}">继续练习</button>${action}</div></article>`;
   }).join("") : `<div class="personal-empty"><span>✓</span><h3>这里暂时是空的</h3><p>${emptyCopy}</p></div>`;
   $$('[data-personal-question]', $("#mistakeList")).forEach((button) => button.addEventListener("click", () => selectQuestion(button.dataset.personalQuestion)));
   $$('[data-remove-mistake]', $("#mistakeList")).forEach((button) => button.addEventListener("click", () => removePersonalFlag(button.dataset.removeMistake, "inMistakeBook")));
@@ -1291,6 +1371,9 @@ function removePersonalFlag(questionId, field) {
 }
 
 function renderProgress() {
+  const weaknessReport = buildWeaknessReport(state.questions, state.progress);
+  renderWeaknessSummary("progressWeaknessSummary", weaknessReport);
+  updateWeakFocusButtons();
   const categories = [...new Set(state.questions.map((question) => question.category))];
   const rows = categories.map((category) => {
     const questions = state.questions.filter((question) => question.category === category);
@@ -1439,7 +1522,8 @@ function configFromForm() {
     temperature: Number(form.elements.temperature.value),
     maxTokens: Number(form.elements.maxTokens.value),
     customHeaders,
-    rememberKey: form.elements.rememberKey.checked
+    rememberKey: form.elements.rememberKey.checked,
+    telemetryEnabled: form.elements.telemetryEnabled.checked
   };
 }
 
@@ -1595,7 +1679,7 @@ function appendChat(role, content) {
 }
 
 function exportProgress() {
-  const payload = { version: 3, exportedAt: new Date().toISOString(), progress: state.progress, sessions: state.customSessions };
+  const payload = { version: 4, exportedAt: new Date().toISOString(), progress: state.progress, sessions: state.customSessions };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
@@ -2150,7 +2234,11 @@ function renderUpdateReport(draft) {
     ? ` · 证据校验 ${performance.evidenceAccepted} 通过/${performance.evidenceRejected || 0} 拦截${performance.semanticRechecks ? `（定向复核 ${performance.semanticRechecks}）` : ""}`
     : "";
   const circuitSummary = performance.batchCircuitTrips ? ` · 已触发弱模型熔断，${performance.batchBypassedSources || 0} 个来源改走单篇` : "";
-  $("#updateReportSummary").textContent = `样本 ${performance.inputSources ?? draft.sourceResults?.length ?? 0} · AI 调用 ${performance.calls ?? "—"}（节省 ${performance.aiCallsSaved ?? "—"}）${evidenceSummary}${circuitSummary} · 新来源 ${draft.newSources.length} · 新概念晋级 ${draft.newConcepts.length}（+${draft.newConcepts.length * 5} 题）· 观察池 ${draft.conceptWatchlist?.length ?? 0} · 容量 ${capacity.beforeQuestions ?? "—"}/${capacity.targetQuestions ?? 1000} · 旧题分数变化 ${draft.rescorePreview.changed}`;
+  const telemetry = performance.providerTelemetry;
+  const telemetrySummary = telemetry
+    ? ` · 本地遥测 ${telemetry.ok}/${telemetry.calls} 成功，解析失败 ${telemetry.parseErrors}，P95 ${telemetry.durationMs?.p95 ?? "—"}ms`
+    : "";
+  $("#updateReportSummary").textContent = `样本 ${performance.inputSources ?? draft.sourceResults?.length ?? 0} · AI 调用 ${performance.calls ?? "—"}（节省 ${performance.aiCallsSaved ?? "—"}）${evidenceSummary}${circuitSummary}${telemetrySummary} · 新来源 ${draft.newSources.length} · 新概念晋级 ${draft.newConcepts.length}（+${draft.newConcepts.length * 5} 题）· 观察池 ${draft.conceptWatchlist?.length ?? 0} · 容量 ${capacity.beforeQuestions ?? "—"}/${capacity.targetQuestions ?? 1000} · 旧题分数变化 ${draft.rescorePreview.changed}`;
   $("#updateNewSources").innerHTML = draft.newSources.length
     ? draft.newSources.map((source) => `<label class="check-card"><input type="checkbox" class="update-source-check" value="${escapeHtml(source.id)}" checked /><span><b>${escapeHtml(source.shortTitle || source.title)}</b><small>${escapeHtml(source.title)} · ${SOURCE_TYPE_LABELS[source.type] || "公开资料"}${source.publishedAt ? ` · ${escapeHtml(source.publishedAt)}` : ""}${source.company ? ` · ${escapeHtml(source.company)}` : ""} · ${source.collection?.frequencyEligible ? "参与趋势" : "不计近期频次"}</small>${source.notes ? `<small class="muted">${escapeHtml(source.notes)}</small>` : ""}${(source.qualityWarnings || []).length ? `<ul class="source-warning-list">${source.qualityWarnings.map((warning) => `<li>${escapeHtml(warning)}</li>`).join("")}</ul>` : ""}</span></label>`).join("")
     : '<p class="muted">本次没有新增来源。</p>';

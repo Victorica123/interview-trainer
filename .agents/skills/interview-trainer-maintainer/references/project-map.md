@@ -11,7 +11,7 @@ No account or database is required. The distributable runs from Node.js and keep
 | Layer | Technology | Role |
 | --- | --- | --- |
 | UI | Semantic HTML, modern CSS, vanilla ES modules | SPA views, responsive layout, themes, question/detail/update interactions |
-| Local state | Browser `localStorage` | Familiarity, recall answer, due date, mistakes, favorites, notes, appearance |
+| Local state | Browser `localStorage` | Familiarity, bounded attempt history, failure reasons, due date, weak-focus queues, mistakes, favorites, notes, appearance |
 | Server | Node.js 20 built-ins (`http`, `fs`, `fetch`, streams) | Static files, JSON APIs, local config, model proxy, updater orchestration |
 | AI compatibility | OpenAI Chat Completions-style `/v1/chat/completions` and `/v1/models` | Tutor, extraction, constrained score review; supports compatible relays |
 | Content build | ESM catalogs + deterministic generator/validator | Produces and checks `content/questions.json` |
@@ -28,7 +28,7 @@ There are no npm runtime dependencies. Chrome is optional and only needed for th
 - `server.mjs`: local API router, config/cookie boundaries, model proxy, updater lifecycle.
 - `scripts/catalog-{backend,agent}.mjs`: stable built-in concepts; five questions are generated per concept.
 - `scripts/taxonomy.mjs`: stable Java-backend peer topics, secondary knowledge groups, five question-angle labels, and legacy-category compatibility.
-- `scripts/generate-questions.mjs`: scoring/evidence merge, detailed-answer generation, optional updater sidecars.
+- `scripts/generate-questions.mjs`: scoring/evidence merge, five-angle answer/example/follow-up generation, optional updater sidecars.
 - `scripts/source-insights.mjs`: public source-field whitelist, platform/collection normalization, company/role lists, and concept-level sample trends.
 - `scripts/source-candidates.mjs`: private 600-link discovery queue, canonical URL de-duplication, registered-source status, and candidate-ID resolution.
 - `scripts/source-discovery.mjs`: public-Sitemap discovery, Nowcoder main-post extraction, direct-interview screening, content fingerprints, duplicate clusters, and deterministic known-concept matching.
@@ -42,11 +42,11 @@ There are no npm runtime dependencies. Chrome is optional and only needed for th
 
 ### Study
 
-`GET questions/sources/insights` → render topic/group/concept/type/company filters, recommended paths, saved custom sessions, specialty trends, and detail → save recall/rating/collections/sessions in `localStorage` → derive daily or custom queues and progress → optional `POST /api/chat` tutor stream.
+`GET questions/sources/insights` → render topic/group/concept/type/company filters, recommended paths, saved custom sessions, specialty trends, and detail → save recall/rating/failure reasons/bounded history/collections/sessions in `localStorage` → derive daily, custom, or diagnosed weak-focus queues and progress → optional `POST /api/chat` tutor stream.
 
 ### Deterministic content build
 
-Catalogs + sources + explicit content reviews + optional new concepts/AI score deltas/learning hints → generate five angles per concept → calculate explainable importance/tier/evidence and review status → validate → write `content/questions.json`.
+Catalogs + sources + explicit content reviews + curated content enhancements + optional new concepts/AI score deltas/learning hints → generate five angles per concept with distinct explanations, worked examples and follow-ups → calculate explainable importance/tier/evidence and review status → validate → write `content/questions.json`.
 
 ### AI-assisted update
 

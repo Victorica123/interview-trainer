@@ -8,7 +8,7 @@
 
 > **[前往 Releases 下载最新版](https://github.com/Victorica123/interview-trainer/releases/latest)**
 >
-> Windows 10/11 x64 推荐下载 `interview-trainer-windows-x64-v0.5.0.zip`，解压后双击即可；其他平台下载轻量版。`Source code` 是 GitHub 自动生成的源码归档，不是普通用户的正式发布包。
+> Windows 10/11 x64 推荐下载 `interview-trainer-windows-x64-v0.6.0.zip`，解压后双击即可；其他平台下载轻量版。`Source code` 是 GitHub 自动生成的源码归档，不是普通用户的正式发布包。
 
 ## 功能速览
 
@@ -17,7 +17,7 @@
 | 主流八股目录 | Java 基础、集合、并发、JVM、Spring、MySQL、Redis、网络、操作系统、MQ、分布式、系统设计 |
 | 自定义题单 | 每个专题独立选择知识点、题型、层级、题量与策略，可展开查看所有匹配题目后再保存 |
 | 学习路线 | 8 阶段 Java 后端主线、7 阶段 Agent 主线，不强制锁关 |
-| 主动回忆 | 熟悉度 0–4、到期复习、错题、收藏、个人笔记和固定题单快照 |
+| 主动回忆 | 熟悉度 0–4、错因与最近作答历史、到期复习、弱项专项、错题、收藏、个人笔记和固定题单快照 |
 | 来源审计 | 区分直接面经、岗位、八股指南、官方文档和研究资料；公司专项不冒充公司原题 |
 | 样本趋势 | 展示已收录样本的时间范围、平台、排除量和置信度，不宣称统计全网 |
 | AI 教练 | 兼容 OpenAI Chat Completions 风格接口，可提示、讲解、点评和追问 |
@@ -28,11 +28,11 @@
 
 ### Windows 10/11 x64 免安装版
 
-从 [Releases](https://github.com/Victorica123/interview-trainer/releases/latest) 下载 `interview-trainer-windows-x64-v0.5.0.zip`，完整解压后双击 `start.bat`。它内置经过官方 SHA-256 校验的 Node.js 运行时，无需安装依赖。
+从 [Releases](https://github.com/Victorica123/interview-trainer/releases/latest) 下载 `interview-trainer-windows-x64-v0.6.0.zip`，完整解压后双击 `start.bat`。它内置经过官方 SHA-256 校验的 Node.js 运行时，无需安装依赖。
 
 ### 跨平台轻量版
 
-下载 `interview-trainer-v0.5.0.zip`，并先安装 [Node.js 20 或更高版本](https://nodejs.org/)。项目没有第三方 npm 依赖，无需执行 `npm install`。
+下载 `interview-trainer-v0.6.0.zip`，并先安装 [Node.js 20 或更高版本](https://nodejs.org/)。项目没有第三方 npm 依赖，无需执行 `npm install`。
 
 Windows 双击 `start.bat`；macOS / Linux 执行：
 
@@ -54,8 +54,9 @@ npm start
 1. 第一次使用先从“学习路线”选一个阶段，建立主线知识框架。
 2. 在“题库训练”按专题、知识组、知识点、题型、层级或公司面经关联筛选。
 3. 在“自定义题单”组合自己的目标。专题卡片可展开查看粗略题干、知识点、题型和答案摘要；“收入题单/候选题”标签会说明题量限制后的最终范围。
-4. 先口述或写下答案，再打开精简答案与五段式讲解。按真实掌握程度标记 0–4，低分题会进入错题和复习队列。
-5. 定期导出进度 JSON。浏览器数据按地址隔离，切换端口、`localhost`/`127.0.0.1`、浏览器或项目目录前建议先导出。
+4. 先口述或写下答案，再打开精简答案与五段式讲解。答得不完整时先选择“关键词忘记、概念混淆、不会举例”等错因，再按真实掌握程度标记 0–4；低分题会进入错题和复习队列。
+5. 在“错题与收藏”或“学习进度”一键开始弱项专项。系统只分析已经练过的题，并根据当前熟悉度、重复低分、作答历史和错因选出最多 20 题。
+6. 定期导出进度 JSON。浏览器数据按地址隔离，切换端口、`localhost`/`127.0.0.1`、浏览器或项目目录前建议先导出。
 
 自定义题单保存的是固定题目 ID 快照，题库新增匹配题时不会静默改变训练范围；页面会提示是否由用户刷新。已有题目 ID 保持稳定，升级题库不会重编号旧进度。
 
@@ -88,7 +89,7 @@ npm start
 | 牛客等公开直接面经 | 当前登记 366 篇面试材料，其中 132 篇满足趋势资格；按转载簇去重并排除聚合帖后为 121 篇独立直接经历 |
 | 面试鸭公开榜单与标题 | 近 30 天 TOP50 元数据，以及 Java 200、AI Agent 50、大模型 370 共 620 个公开标题；559 个范围内标题已全部映射 |
 | JavaGuide、小林 coding | 对照主流八股目录、补齐知识结构，不进入面经频次 |
-| Java/JDK、Spring、MySQL、Redis 等官方资料 | 核对技术事实、接口与变化较快的内容，不进入面经频次 |
+| 规范、官方文档与原始论文 | 当前 37 项官方/规范资料和 8 篇研究资料，用于核对技术事实与变化较快的内容，不进入面经频次 |
 | 用户授权的链接或正文 | 通过“更新题库”进入抓取、证据句校验、人工审阅和应用流程；本地 Cookie 与缓存不上传 GitHub |
 
 这里的覆盖率只针对已记录的公开样本和当前 Java 后端、AI / Agent 应用范围，不代表统计了全互联网。
@@ -110,7 +111,7 @@ npm start
 - 公开题库榜单/标题只表示用户关注度，单快照不宣称趋势，也不会提升面经样本数。
 - 趋势只表示当前收录、可追溯、去重后的公开样本，不代表牛客、小红书或全市场的完整统计。
 - 当前范围是 Java 后端八股与 AI / Agent 应用开发，不把算法题、前端题或 HR 行为题算入覆盖率。
-- 985 道题都有完整提纲式讲解；其中最高优先级的 40 个核心概念共 80 道定义/机制题有显式人工复核登记，其余会显示“待逐题复核”，不会用分数冒充人工审核。
+- 985 道题都按当前题型提供独立五段讲解、最小演练、示例核查来源和 3 道面试追问；123 个概念另有已维护的代码、命令、SQL 或伪代码示例。当前全部 144 道 core 题和 423 道 high 题均有逐题、分题型的显式内容复核登记；全库共 567 道已复核、418 道 extended 提纲题，不会用分数冒充复核。
 
 ## 配置自己的 AI
 
@@ -123,6 +124,8 @@ API Key 有三种明确状态：
 - `无密钥`：未配置或已清除。
 
 从持久态切换到会话态前页面会二次确认。浏览器和公开配置接口只得到 `saved` / `session` / `none` 状态，不会读回或打印明文 Key。`.local/` 已被 `.gitignore` 排除，发布包也必须通过显式白名单构建。
+
+“本地模型耗时与解析成功率”默认关闭。主动开启后，更新草案和本地历史只记录调用阶段、成功/请求失败/解析失败数量及平均值、P50、P95、最大耗时；不记录提示词、网页正文、模型回答或密钥，也不会上传遥测。
 
 程序会自动拼接 `/v1/chat/completions`，也接受已经以 `/chat/completions` 结尾的地址。不同中转站若使用非标准字段，仍需按服务商文档调整。
 
@@ -161,13 +164,16 @@ content/questions.json        生成题库（985 道，禁止手改）
 research/sources.json         公开来源、Sitemap 样本与去重审计元数据
 research/new-concepts.json    追加式动态概念目录
 research/concept-candidates.json  未增题的新概念观察池
-research/content-reviews.json 显式人工复核登记
+research/content-reviews.json 显式内容复核登记
+research/content-enhancements.json 全部核心/高频概念的实践示例、核查来源和质量阶段
+research/extraction-eval.json 人工标注的合成抽取评测集（不含真实候选人信息）
 scripts/catalog-*.mjs         稳定内置概念
 scripts/taxonomy.mjs          12 专题、二级知识组和五类题型
 scripts/generate-questions.mjs
 scripts/test-coverage.mjs     主流八股目录覆盖回归
 scripts/test-updater-performance.mjs  300 样本批处理/缓存/题量回归
 scripts/test-updater-resilience.mjs   错误映射拦截/定向复核/弱模型熔断回归
+scripts/test-extraction-eval.mjs      证据归属、概念映射与聚合遥测回归
 scripts/source-discovery.mjs  Sitemap 发现、主帖提取和本地预筛
 scripts/updater.mjs           更新、草案、应用与回滚管线
 public/                       浏览器界面
@@ -187,7 +193,7 @@ npm run check
 npm run verify
 ```
 
-完整验证包含生成与数据校验、145 个后端知识点/五类题型/稳定 ID、主流目录覆盖、趋势去重与公开字段白名单、内容复核登记、300 样本最多 38 次首轮 AI/二次 0 次调用/题量不变的性能回归、错误知识点证据拦截与弱模型熔断，以及更新的取消、应用、恢复和字节级回滚。题目字段规范见 [docs/CONTENT_SCHEMA.md](docs/CONTENT_SCHEMA.md)。
+完整验证包含生成与数据校验、145 个后端知识点/五类题型/稳定 ID、主流目录覆盖、趋势去重与公开字段白名单、全部 core/high 题逐题复核、五类讲解去重、123 个概念的实践示例/核查来源/追问完整性、学习历史清洗/弱项诊断/专项队列、10 条人工标注抽取评测、聚合遥测隐私约束、300 样本最多 38 次首轮 AI/二次 0 次调用/题量不变的性能回归、错误知识点证据拦截与弱模型熔断，以及更新的取消、应用、恢复和字节级回滚。题目字段规范见 [docs/CONTENT_SCHEMA.md](docs/CONTENT_SCHEMA.md)。
 
 ## 隐私、安全与发布
 

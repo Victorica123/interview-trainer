@@ -15861,6 +15861,462 @@
       "qualityWarnings": [
         "已识别为面经候选，但直接问题信号不足；保留覆盖审计，不参与趋势频次"
       ]
+    },
+    {
+      "id": "rag-paper-neurips-2020",
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "shortTitle": "RAG 原始论文",
+      "url": "https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html",
+      "type": "research",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2020-05-22",
+      "company": "NeurIPS",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对检索增强生成中参数化记忆、非参数化外部记忆和知识密集任务边界；不参与面经频率。",
+      "supportsConcepts": [
+        "RAG端到端流程",
+        "文档清洗与Chunk切分",
+        "Reranker重排序",
+        "RAG评测、Badcase与知识更新",
+        "RAG与Fine-tuning选型"
+      ]
+    },
+    {
+      "id": "hnsw-paper-arxiv-2016",
+      "title": "Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs",
+      "shortTitle": "HNSW 原始论文",
+      "url": "https://arxiv.org/abs/1603.09320",
+      "type": "research",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2016-03-30",
+      "company": "arXiv",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对 HNSW 分层近邻图和近似检索的召回、延迟、内存权衡；不参与面经频率。",
+      "supportsConcepts": [
+        "向量索引与Vector DB"
+      ]
+    },
+    {
+      "id": "rrf-paper-sigir-2009",
+      "title": "Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods",
+      "shortTitle": "RRF 原始论文",
+      "url": "https://cormack.uwaterloo.ca/cormacksigir09-rrf.pdf",
+      "type": "research",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2009-07-01",
+      "company": "SIGIR",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对 Reciprocal Rank Fusion 按排名融合多路检索结果的公式和使用边界；不参与面经频率。",
+      "supportsConcepts": [
+        "混合检索与RRF融合"
+      ]
+    },
+    {
+      "id": "hyde-paper-acl-2023",
+      "title": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+      "shortTitle": "HyDE 原始论文",
+      "url": "https://aclanthology.org/2023.acl-long.99/",
+      "type": "research",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2023-07-09",
+      "company": "ACL",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对 HyDE 生成假想文档、编码后检索真实文档的流程；假想内容不能作为回答证据。",
+      "supportsConcepts": [
+        "查询改写、扩展与HyDE"
+      ]
+    },
+    {
+      "id": "langsmith-agent-evaluation-official",
+      "title": "LangSmith Docs：Application-specific Evaluation Approaches",
+      "shortTitle": "Agent 评测官方指南",
+      "url": "https://docs.langchain.com/langsmith/evaluation-approaches",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "LangChain",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对 Agent 最终结果、单步工具选择和完整轨迹三层评测；日期为本次核查日期，不参与面经频率。",
+      "supportsConcepts": [
+        "Agent评测体系"
+      ]
+    },
+    {
+      "id": "opentelemetry-genai-semconv",
+      "title": "OpenTelemetry：Generative AI Semantic Conventions",
+      "shortTitle": "GenAI 可观测语义约定",
+      "url": "https://github.com/open-telemetry/semantic-conventions/tree/main/docs/gen-ai",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "OpenTelemetry",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对模型、工具和 Agent 调用链的语义属性；规范仍在演进，日期为本次核查日期。",
+      "supportsConcepts": [
+        "可观测性与Tracing"
+      ]
+    },
+    {
+      "id": "rfc-9293-tcp",
+      "title": "RFC 9293：Transmission Control Protocol",
+      "shortTitle": "TCP现行标准",
+      "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2022-08-01",
+      "company": "IETF",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对TCP连接建立、关闭、可靠字节流、序列号、确认与重传等规范行为；拥塞控制细节需结合RFC 5681。",
+      "supportsConcepts": [
+        "TCP三次握手",
+        "TCP四次挥手",
+        "TCP可靠传输与拥塞控制"
+      ]
+    },
+    {
+      "id": "rfc-9112-http11",
+      "title": "RFC 9112：HTTP/1.1",
+      "shortTitle": "HTTP/1.1规范",
+      "url": "https://www.rfc-editor.org/rfc/rfc9112.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2022-06-01",
+      "company": "IETF",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对HTTP/1.1消息格式、连接管理和协议边界。",
+      "supportsConcepts": [
+        "HTTP/1.1、HTTP/2与HTTP/3",
+        "REST、RPC、WebSocket与SSE"
+      ]
+    },
+    {
+      "id": "rfc-9113-http2",
+      "title": "RFC 9113：HTTP/2",
+      "shortTitle": "HTTP/2规范",
+      "url": "https://www.rfc-editor.org/rfc/rfc9113.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2022-06-01",
+      "company": "IETF",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对HTTP/2帧、多路复用、流量控制和流级错误处理。",
+      "supportsConcepts": [
+        "HTTP/1.1、HTTP/2与HTTP/3"
+      ]
+    },
+    {
+      "id": "rfc-9114-http3",
+      "title": "RFC 9114：HTTP/3",
+      "shortTitle": "HTTP/3规范",
+      "url": "https://www.rfc-editor.org/rfc/rfc9114.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2022-06-01",
+      "company": "IETF",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对HTTP/3基于QUIC的流、多路复用、TLS 1.3与队头阻塞边界。",
+      "supportsConcepts": [
+        "HTTP/1.1、HTTP/2与HTTP/3",
+        "TCP三次握手"
+      ]
+    },
+    {
+      "id": "rfc-1034-dns",
+      "title": "RFC 1034：Domain Names - Concepts and Facilities",
+      "shortTitle": "DNS概念规范",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "1987-11-01",
+      "company": "IETF",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对DNS层级命名、解析器、权威服务器、缓存和迭代查询；具体报文结合RFC 1035。",
+      "supportsConcepts": [
+        "DNS解析与URL访问全过程",
+        "服务发现与负载均衡"
+      ]
+    },
+    {
+      "id": "linux-mm-admin-guide",
+      "title": "Linux Kernel Documentation：Memory Management",
+      "shortTitle": "Linux内存管理文档",
+      "url": "https://kernel.org/doc/html/latest/admin-guide/mm/index.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "Linux Kernel",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对虚拟内存、页、回收、交换和内存压力；日期为本次核查日期。",
+      "supportsConcepts": [
+        "虚拟内存与分页",
+        "Linux线上排查工具"
+      ]
+    },
+    {
+      "id": "linux-man-pages-epoll",
+      "title": "Linux man-pages：epoll(7)",
+      "shortTitle": "Linux epoll手册",
+      "url": "https://man7.org/linux/man-pages/man7/epoll.7.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "Linux man-pages",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对epoll兴趣列表、就绪列表、LT/ET模式及非阻塞读取要求；日期为本次核查日期。",
+      "supportsConcepts": [
+        "I/O模型与epoll",
+        "Linux线上排查工具",
+        "进程、线程与协程"
+      ]
+    },
+    {
+      "id": "oracle-gc-tuning-21",
+      "title": "Java SE 21 HotSpot Virtual Machine Garbage Collection Tuning Guide",
+      "shortTitle": "Oracle GC调优指南",
+      "url": "https://docs.oracle.com/en/java/javase/21/gctuning/",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "Oracle",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对垃圾收集器目标、G1行为、日志和调优原则；日期为本次核查日期。",
+      "supportsConcepts": [
+        "垃圾判定与GC算法",
+        "G1与ZGC"
+      ]
+    },
+    {
+      "id": "spring-boot-autoconfiguration",
+      "title": "Spring Boot Reference：Auto-configuration",
+      "shortTitle": "Spring Boot自动配置",
+      "url": "https://docs.spring.io/spring-boot/reference/using/auto-configuration.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "Spring",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对自动配置候选、条件注解、回退机制和诊断报告；日期为本次核查日期。",
+      "supportsConcepts": [
+        "Spring Boot自动配置"
+      ]
+    },
+    {
+      "id": "spring-security-jwt",
+      "title": "Spring Security Reference：OAuth 2.0 Resource Server JWT",
+      "shortTitle": "Spring Security JWT",
+      "url": "https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "Spring",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对JWT签名、issuer/JWK发现、声明校验和授权映射；日期为本次核查日期。",
+      "supportsConcepts": [
+        "Spring Security与JWT认证"
+      ]
+    },
+    {
+      "id": "rabbitmq-reliability",
+      "title": "RabbitMQ Documentation：Reliability Guide",
+      "shortTitle": "RabbitMQ可靠性指南",
+      "url": "https://www.rabbitmq.com/docs/reliability",
+      "type": "official",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "RabbitMQ",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对publisher confirms、consumer acknowledgements、连接故障、重投和重复消息边界。",
+      "supportsConcepts": [
+        "消息可靠投递",
+        "重复消费与幂等",
+        "Kafka、RabbitMQ与RocketMQ"
+      ]
+    },
+    {
+      "id": "cap-paper-gilbert-lynch",
+      "title": "Brewer's Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services",
+      "shortTitle": "CAP形式化论文",
+      "url": "https://groups.csail.mit.edu/tds/papers/Gilbert/Brewer2.pdf",
+      "type": "research",
+      "track": [
+        "backend"
+      ],
+      "publishedAt": "2002-06-01",
+      "company": "MIT",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对网络分区模型下的一致性与可用性不可能同时完全保证的形式化边界；不把CAP简化为任意三选二。",
+      "supportsConcepts": [
+        "CAP与BASE",
+        "分布式事务",
+        "最终一致性与对账"
+      ]
+    },
+    {
+      "id": "opentelemetry-signals",
+      "title": "OpenTelemetry Docs：Signals",
+      "shortTitle": "OpenTelemetry信号",
+      "url": "https://opentelemetry.io/docs/concepts/signals/",
+      "type": "official",
+      "track": [
+        "backend",
+        "agent"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "OpenTelemetry",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对traces、metrics、logs与baggage的职责及关联方式；日期为本次核查日期。",
+      "supportsConcepts": [
+        "可观测性与链路追踪",
+        "生产部署、并发与SSE"
+      ]
+    },
+    {
+      "id": "transformer-paper-neurips-2017",
+      "title": "Attention Is All You Need",
+      "shortTitle": "Transformer原始论文",
+      "url": "https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html",
+      "type": "research",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2017-12-01",
+      "company": "NeurIPS",
+      "weight": 0.35,
+      "directQuestionEvidence": false,
+      "notes": "用于核对Transformer、自注意力、多头注意力、位置编码和并行训练的原始设计。",
+      "supportsConcepts": [
+        "Transformer与自注意力"
+      ]
+    },
+    {
+      "id": "json-schema-2020-12",
+      "title": "JSON Schema Specification 2020-12",
+      "shortTitle": "JSON Schema规范",
+      "url": "https://json-schema.org/specification",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2020-12-01",
+      "company": "JSON Schema",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对JSON Schema Core、Validation、方言与元Schema的职责边界。",
+      "supportsConcepts": [
+        "结构化输出与Schema",
+        "Function Calling与工具Schema"
+      ]
+    },
+    {
+      "id": "langgraph-multi-agent",
+      "title": "LangChain Docs：Multi-agent Patterns",
+      "shortTitle": "LangChain多Agent模式",
+      "url": "https://docs.langchain.com/oss/python/langchain/multi-agent",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "LangChain",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对subagents、handoffs、skills、router和自定义工作流的适用条件与上下文工程边界。",
+      "supportsConcepts": [
+        "Plan-and-Execute",
+        "工具选择与动态检索",
+        "多Agent协作与编排"
+      ]
+    },
+    {
+      "id": "agent-skills-spec",
+      "title": "Agent Skills Specification",
+      "shortTitle": "Agent Skills规范",
+      "url": "https://agentskills.io/specification",
+      "type": "official",
+      "track": [
+        "agent"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "Agent Skills",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对SKILL.md结构、元数据、资源组织和渐进式披露；日期为本次核查日期。",
+      "supportsConcepts": [
+        "Skills与渐进式披露"
+      ]
+    },
+    {
+      "id": "whatwg-sse",
+      "title": "WHATWG HTML Living Standard：Server-sent events",
+      "shortTitle": "SSE标准",
+      "url": "https://html.spec.whatwg.org/multipage/server-sent-events.html",
+      "type": "official",
+      "track": [
+        "backend",
+        "agent"
+      ],
+      "publishedAt": "2026-08-31",
+      "company": "WHATWG",
+      "weight": 0.3,
+      "directQuestionEvidence": false,
+      "notes": "用于核对EventSource、text/event-stream、事件解析、重连和Last-Event-ID行为；日期为本次核查日期。",
+      "supportsConcepts": [
+        "REST、RPC、WebSocket与SSE",
+        "生产部署、并发与SSE"
+      ]
     }
   ],
   "sampleAudit": {

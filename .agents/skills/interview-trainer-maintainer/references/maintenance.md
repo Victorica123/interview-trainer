@@ -5,7 +5,8 @@
 | Change | Edit first | Verify/update |
 | --- | --- | --- |
 | Built-in concept or answer seed | `scripts/catalog-*.mjs` | generator, schema, counts, browser sample |
-| Human content-review state | `research/content-reviews.json` | generator status, validator, review source links |
+| Explicit content-review state | `research/content-reviews.json` | generator status, validator, review source links, all current core IDs |
+| Curated worked example/code | `research/content-enhancements.json` | `{scenario,steps,expected,sourceIds,code}`, phase scope, content-quality regression, browser rendering |
 | Evidence/source | `research/sources.json` | methodology, source IDs, regenerated score changes |
 | Scoring | `scripts/generate-questions.mjs` | methodology, updater baseline, validator, score migration |
 | Study UI/state | `public/*` | storage sanitizer/export version, desktop/mobile browser flow |
@@ -45,7 +46,7 @@ For UI work check desktop and 390px mobile layouts, reload persistence, console 
 ## Content maintenance
 
 - Prefer recent direct interview evidence; de-duplicate reposts and record uncertainty.
-- Keep questions concise but beginner answers explanatory. Separate “frequency evidence” from “where to learn it”.
+- Keep questions concise but beginner answers explanatory. The five angles need distinct answer bodies, actionable examples, registered verification sources, and question-specific follow-ups. Separate “frequency evidence” from “where to learn/verify it”; official docs and papers do not raise interview frequency.
 - New concepts add five angles and therefore change expected counts by five.
 - Never hand-edit generated questions as a lasting fix.
 
@@ -63,8 +64,8 @@ For UI work check desktop and 390px mobile layouts, reload persistence, console 
 
 Prioritize by user impact:
 
-1. Updater reliability and auditable content review: cancellation, repeat-run dedup, atomic writes, source-quality flags, and deterministic stub tests.
-2. Beginner content QA: human-review the highest-ranked core definitions/mechanisms and add concrete code/diagram examples where they materially help.
-3. Learning effectiveness: richer recall history, later migrate fixed intervals to FSRS only after real data exists, and add focused weak-topic sessions.
+1. Updater reliability and auditable content review: cancellation, repeat-run dedup, atomic writes, source-quality flags, labeled grounding evaluation, opt-in aggregate telemetry, and deterministic stub tests.
+2. Beginner content QA: core/high are fully registered and enhanced; spot-check factual deltas when sources or framework versions change, then refine extended questions by measured demand.
+3. Learning effectiveness: v4 bounded recall history, failure-reason diagnosis, and focused weak-topic sessions are implemented; keep fixed intervals until real usage data justifies an FSRS migration.
 4. Search/discovery: aliases, typo tolerance, saved filters, and cross-links from path stages to prerequisites.
 5. Optional deployment hardening: only if remote hosting is introduced, add authentication, CSRF/host checks, encrypted secrets, rate limits, and a real persistence layer.

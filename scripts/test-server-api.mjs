@@ -275,7 +275,8 @@ try {
     temperature: 0.2,
     maxTokens: 1200,
     customHeaders: {},
-    rememberKey: true
+    rememberKey: true,
+    telemetryEnabled: true
   }), "utf8");
 
   const fallbackPair = await reserveFallbackPair();
@@ -535,6 +536,9 @@ try {
   assert.equal(draft.newConcepts.length, 1, "draft should contain one new concept");
   assert.equal(draft.newConceptQuestions.length, 5, "draft should preview five generated questions");
   assert.ok(draft.newConceptQuestions.every((question) => question.title.length > 0), "all five preview questions should be renderable");
+  assert.ok(draft.performance.providerTelemetry?.calls >= 1, "opt-in local telemetry should summarize provider calls");
+  assert.equal(draft.performance.providerTelemetry.localOnly, true, "telemetry should declare its local-only scope");
+  assert.equal(JSON.stringify(draft.performance.providerTelemetry).includes(conceptName), false, "telemetry must not retain prompts or model output content");
   assert.deepEqual(await snapshotBusinessFiles(), baseline, "full draft preview must not mutate business files before apply");
   const applyResponse = await fetch(`${base}/api/update/apply`, {
     method: "POST",

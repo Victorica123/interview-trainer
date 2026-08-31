@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f3f0e8" />
     <meta name="description" content="本地优先的 Java 后端与 AI/Agent 面试训练器" />
     <title>面试训练场</title>
-    <link rel="stylesheet" href="/styles.css?v=0.5.0" />
+    <link rel="stylesheet" href="/styles.css?v=0.6.0" />
   </head>
   <body>
     <div class="app-shell">
@@ -220,6 +220,10 @@
             <h2>把不会的题集中解决</h2>
             <p>熟悉度评为 0～1 时会自动进入错题本；收藏和个人笔记彼此独立。掌握后不会被系统擅自移除，你可以手动整理。</p>
             <div id="mistakeSummary" class="mistake-summary"></div>
+            <section class="weakness-insight-card">
+              <div class="section-heading-inline"><div><h3>弱项诊断</h3><small>根据熟悉度、重复低分、作答历史和错因生成</small></div><button class="primary-button" data-start-weak-focus>开始弱项专项</button></div>
+              <div id="mistakeWeaknessSummary" class="weakness-summary"></div>
+            </section>
             <div class="mistake-tabs" role="tablist" aria-label="个人题目筛选">
               <button class="active" data-mistake-filter="mistakes" role="tab">错题本 <b id="mistakeTabCount">0</b></button>
               <button data-mistake-filter="favorites" role="tab">收藏 <b id="favoriteTabCount">0</b></button>
@@ -233,6 +237,11 @@
           <div class="simple-view-card">
             <span class="section-kicker">LEARNING MAP</span>
             <h2>不是“看过多少”，而是“能讲出多少”</h2>
+            <section class="weakness-insight-card progress-weakness-card">
+              <div class="section-heading-inline"><div><h3>优先补哪里</h3><small>只分析已经练过的题，不把未学习误判为薄弱</small></div><button class="primary-button" data-start-weak-focus>开始弱项专项</button></div>
+              <div id="progressWeaknessSummary" class="weakness-summary"></div>
+            </section>
+            <div class="section-heading-inline progress-heading"><h3>全部专题掌握度</h3><small>按当前熟悉度 0～4 汇总</small></div>
             <div id="progressDashboard" class="progress-dashboard"></div>
           </div>
         </section>
@@ -451,6 +460,7 @@
           <label class="wide-field">自定义请求头（JSON）<textarea name="customHeaders" rows="4" placeholder='{"X-Custom-Header":"value"}'></textarea></label>
         </div>
         <label class="checkbox-row"><input name="rememberKey" type="checkbox" />跨服务重启保留 API Key（仅适合可信的个人设备）</label>
+        <label class="checkbox-row"><input name="telemetryEnabled" type="checkbox" />记录本地模型耗时与解析成功率（不记录提示词、回答或密钥）</label>
         <div id="apiKeyStorageHint" class="key-storage-hint" role="status"></div>
         <div id="settingsStatus" class="settings-status"></div>
         <div class="dialog-actions">
@@ -489,6 +499,6 @@
     </dialog>
 
     <div id="toast" class="toast" role="status"></div>
-    <script type="module" src="/app.js?v=0.5.0"></script>
+    <script type="module" src="/app.js?v=0.6.0"></script>
   </body>
 </html>

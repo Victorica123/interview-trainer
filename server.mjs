@@ -45,7 +45,8 @@ let aiConfig = {
   temperature: 0.2,
   maxTokens: 1200,
   customHeaders: {},
-  rememberKey: false
+  rememberKey: false,
+  telemetryEnabled: false
 };
 let apiKeyStorage = "none";
 let lastUpdateRun = null;
@@ -110,7 +111,8 @@ async function saveConfig(next) {
     temperature: clampNumber(next.temperature, 0, 2, 0.2),
     maxTokens: Math.round(clampNumber(next.maxTokens, 64, 32768, 1200)),
     customHeaders: validateHeaders(next.customHeaders),
-    rememberKey
+    rememberKey,
+    telemetryEnabled: Boolean(next.telemetryEnabled)
   };
 
   const persisted = rememberKey ? nextConfig : { ...nextConfig, apiKey: "" };
@@ -616,7 +618,9 @@ async function handleUpdateRun(request, response) {
       aiChat: (messages, options) => upstreamChat(messages, options),
       onEvent: streamEvent,
       signal: controller.signal,
-      finalizeSignal: finalizeController.signal
+      finalizeSignal: finalizeController.signal,
+      telemetryEnabled: aiConfig.telemetryEnabled,
+      telemetryLabel: aiConfig.name
     });
     if (result.draft) {
       lastUpdateRun = result;

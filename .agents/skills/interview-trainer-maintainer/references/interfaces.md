@@ -15,7 +15,7 @@ All endpoints are local and JSON unless noted.
 | `GET /api/questions` | — | Generated question payload with `counts`, five-angle `taxonomy`, and `questions`; each question includes `category` and `topicGroup` |
 | `GET /api/sources` | — | Research snapshot and field-whitelisted public source cards with platform, traceability, explicit engagement, and warnings |
 | `GET /api/insights` | — | Auditable coverage, company/role specialty lists, concept-level trends, limitations, and public source cards |
-| `GET /api/config` | — | AI config without key; includes `hasApiKey` and `apiKeyStorage` (`saved`, `session`, or `none`) |
+| `GET /api/config` | — | AI config without key; includes `hasApiKey`, `apiKeyStorage` (`saved`, `session`, or `none`), and opt-in `telemetryEnabled` |
 | `POST /api/config` | Config fields | Sanitized public config; empty key preserves the in-memory key |
 | `GET /api/models` | — | `{models: string[]}` from compatible upstream |
 | `POST /api/chat` | `{messages, question?, mode?}` | NDJSON lines `{delta}`, optional `{usage}`, then `{done:true}` |
@@ -59,17 +59,17 @@ All endpoints are local and JSON unless noted.
 
 `autoFetch: true` 按“最久未复查优先、发布日期较新优先”轮换已登记面经，单轮最多 200 篇。平台新帖发现由独立的 `/api/discovery/refresh` 完成；它只走公开 Sitemap，不抓取牛客禁止的搜索页。发现缓存最多保存 30000 条版本化筛查结果，每 1000 页原子检查点；规则版本变化会失效旧结果。小红书 Sitemap 缺少标题/日期，仍需用户明确链接或登录浏览器核验。候选池最多 600 条，一次更新最多解析 500 个服务端已核验候选 ID/URL。
 
-`analysisMode: scale` 是大样本默认模式：先用确定性规则映射已有概念，再将低置信来源按 8 篇一批、最多 3 个并发批次提交给 AI。缓存最多保存 5000 个 Prompt/正文哈希结果。草稿的 `performance` 报告 AI 调用、批次、缓存命中和节省调用；`capacityPolicy` 报告约 1000 题容量、新概念晋级预算和观察池数量。
+`analysisMode: scale` 是大样本默认模式：先用确定性规则映射已有概念，再将低置信来源按 8 篇一批、最多 3 个并发批次提交给 AI。缓存最多保存 5000 个 Prompt/正文哈希结果。草稿的 `performance` 报告 AI 调用、批次、缓存命中和节省调用；开启配置中的本地遥测后，另含不带输入输出内容的 `providerTelemetry` 聚合。`capacityPolicy` 报告约 1000 题容量、新概念晋级预算和观察池数量。
 
 Update NDJSON phases: `start`, `fetch`, `analyze`, `partial`, `evaluate`, `draft`, `cancelled`, `done`, `error`. Each work event includes a status such as `pending`, `ok`, `fail`, `empty`, `skipped-budget`, `skipped-partial`, `fallback`, or `budget-skip` as applicable. Only one analysis may run at a time, duplicate manual URLs/texts are collapsed within a run, and a pending review draft must be applied or discarded before another run can start. Rollback is rejected while analysis is active. A `draft` is emitted only after its generated questions pass the release validator; short model fields are normalized before preview. Completed source analyses are cached immediately. A valid review draft is atomically persisted to `.local/pending-update.json` and loaded on the next server start until apply or discard clears it. Drafts may include `sourceRefreshes`; apply persists their collection audit, explicit engagement and quality warnings, and history records `refreshedSources`.
 
 ## Browser storage
 
-- `interviewTrainerProgressV1`: map keyed by stable question ID. Fields: `level`, `attempts`, `answer`, `note`, `favorite`, `inMistakeBook`, `mistakeCount`, `dueAt`, `updatedAt`. Storage is origin-scoped, so changing hostname, port, or browser requires export/import.
+- `interviewTrainerProgressV1`: map keyed by stable question ID. Fields: `level`, `attempts`, `answer`, `note`, `favorite`, `inMistakeBook`, `mistakeCount`, active `reasonCodes`, up to 12 `history` items (`level`, `reasonCodes`, ≤600-character `answerPreview`, `at`), `dueAt`, and `updatedAt`. Storage is origin-scoped, so changing hostname, port, or browser requires export/import.
 - `interviewTrainerSessionsV1`: up to 30 sanitized custom sessions. Each stores one track, per-topic concept/angle/tier/limit/strategy rules, sanitized manual include/exclude question-ID overrides, a fixed question-ID snapshot (up to 5,000 IDs for forward growth), and timestamps. Bank changes never silently replace the snapshot.
 - `interviewTrainerAppearanceV1`: `{theme, readingSize}`.
 - `interviewTrainerLoginBrowserV1`: selected detected browser ID; no executable path is accepted from the page.
-- Export payload version 3: `{version, exportedAt, progress, sessions}`. Import still accepts version 2 without sessions and sanitizes IDs, sizes, booleans, numbers, dates, filters, and session snapshots.
+- Export payload version 4: `{version, exportedAt, progress, sessions}`. Import still accepts version 2/3 and sanitizes IDs, sizes, booleans, numbers, dates, reason codes, bounded history, filters, and session snapshots.
 
 ## Repository data contracts
 
@@ -78,8 +78,10 @@ Update NDJSON phases: `start`, `fetch`, `analyze`, `partial`, `evaluate`, `draft
 - `research/concept-candidates.json`: non-question observation pool for proposed concepts; promotion requires recent independent evidence, diversity and remaining capacity.
 - `research/ai-scores.json`: question-ID map; final integer score must be 0–98 and within ±6 of current formula base.
 - `research/learning-hints.json`: concept-name map to sanitized `{site,title,url}` arrays; does not affect importance.
-- `research/content-reviews.json`: explicit question-ID review registry with `status`, `reviewedAt`, `note`, and registered `sourceIds`; priority alone never produces `reviewed`.
-- `content/questions.json`: generated artifact. Stable ID format is `be|ai-NNN-angleIndex`; five angles per concept.
+- `research/content-reviews.json`: explicit question-ID review registry with `status`, `reviewedAt`, angle-specific `note`, and registered `sourceIds`; priority alone never produces `reviewed`, and every current core/high question must be registered.
+- `research/content-enhancements.json`: `enhancements` maps concept names to curated `{scenario,steps,expected,sourceIds,code}` examples; `qualityPhases` records regression-locked concept scopes. Generation applies an enhancement to all five angles of that concept; the updater loads the same map before draft validation and apply.
+- `research/extraction-eval.json`: synthetic, manually labeled extraction/grounding cases only; no real candidate identity or copied page body.
+- `content/questions.json`: generated artifact. Stable ID format is `be|ai-NNN-angleIndex`; five angles per concept. Each question exposes `detailedAnswer`, `workedExample` (including verification `sourceIds`), and three `interviewFollowUps`.
 - `scripts/taxonomy.mjs`: authoritative Java-backend display taxonomy. Classification edits may not reorder catalog concepts or renumber question IDs.
 
 ## Private local files

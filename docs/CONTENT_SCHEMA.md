@@ -21,7 +21,9 @@
 | `quickAnswer` | 面向复习的精简答案 |
 | `keyPoints` | 自评或 AI 点评使用的要点 |
 | `answerFramework` | 针对当前题型的四步回答结构 |
-| `detailedAnswer` | 定义、机制、项目、误区和对比选型五段式讲解 |
+| `detailedAnswer` | 根据当前题型生成的五段式讲解；同一概念的五类题不再共用同一正文 |
+| `workedExample` | 最小实践场景、至少三步操作、预期结果和 `sourceIds` 核查来源；123 个 core/high 概念另带已维护的代码/命令/SQL/伪代码示例 |
+| `interviewFollowUps` | 与当前题型对应的三道真实追问，用于继续口述或让 AI 导师追问 |
 | `relatedKnowledge` | 可用于反查题库的相关知识点 |
 | `learningSourceIds` | 官方或权威延伸学习来源，与高频证据分开 |
 | `contentStatus` | `reviewed` 或 `outline` |
@@ -32,7 +34,7 @@
 | `scoreSource`（可选） | `ai`；仅被 AI 调整过的题有此字段 |
 | `learningHints`（可选） | 八股文网站对应章节数组：`{site, title, url}`；仅作学习辅助，不参与评分 |
 
-进度只保存在浏览器 `localStorage` 的 `interviewTrainerProgressV1` 键中。每题可记录 `level`、`attempts`、`answer`、`note`、`favorite`、`inMistakeBook`、`mistakeCount`、`dueAt` 和 `updatedAt`。自定义题单保存在 `interviewTrainerSessionsV1`，每个题单同时保存筛选配置和固定题目 ID；导出格式当前为 version 3，仍兼容只含进度的 version 2。主题与阅读字号保存在 `interviewTrainerAppearanceV1`。
+进度只保存在浏览器 `localStorage` 的 `interviewTrainerProgressV1` 键中。每题可记录 `level`、`attempts`、`answer`、`note`、`favorite`、`inMistakeBook`、`mistakeCount`、`reasonCodes`、最近 12 次有界 `history`、`dueAt` 和 `updatedAt`。历史项只保存熟悉度、错因、最多 600 字回答摘要和时间，不复制完整长期答案。自定义题单保存在 `interviewTrainerSessionsV1`，每个题单同时保存筛选配置和固定题目 ID；导出格式当前为 version 4，仍兼容 version 2/3。主题与阅读字号保存在 `interviewTrainerAppearanceV1`。
 
 不要手工编辑 `content/questions.json`，因为再次运行生成脚本会覆盖它。应修改 `scripts/catalog-backend.mjs`、`scripts/catalog-agent.mjs`、`research/new-concepts.json` 或 `research/sources.json`，然后运行：
 
@@ -44,6 +46,6 @@ npm run check
 
 Java 后端主流目录覆盖由 `scripts/test-coverage.mjs` 回归。当前固定 12 个专题中的 123 个必备检查项，要求知识点存在、分类正确、五类问法齐全，并校验学习资料不会误入面经趋势。审计来源和范围见 [COVERAGE_AUDIT.md](COVERAGE_AUDIT.md)。
 
-人工内容复核单独登记在 `research/content-reviews.json`。`reviewBatches` 声明每批 ID、日期与题数，`questions` 按稳定题目 ID 保存状态、日期、说明与核查来源。只有状态为 `reviewed`、ID 存在、日期合法且至少引用一个已登记来源的题，生成后才会得到 `contentStatus: reviewed` 和公开 `contentReview` 摘要；校验器还要求批次声明题数与实际登记数一致。概念优先级或题目分数不会自动产生“已复核”声明。
+显式内容复核单独登记在 `research/content-reviews.json`。`reviewBatches` 声明每批 ID、日期与题数，`questions` 按稳定题目 ID 保存状态、日期、说明与核查来源。只有状态为 `reviewed`、ID 存在、日期合法且至少引用一个已登记来源的题，生成后才会得到 `contentStatus: reviewed` 和公开 `contentReview` 摘要；校验器还要求批次声明题数与实际登记数一致，回归测试要求当前全部 core/high 题都有登记。概念优先级或题目分数不会自动产生“已复核”声明。手工增强示例和 `qualityPhases` 阶段范围维护在 `research/content-enhancements.json`；增强项可显式声明 `sourceIds`，未声明时生成器回退到该题的学习来源。不要直接修改生成文件。
 
 来源记录可额外包含：`position`、`candidateLevel`、`collection`（含 `sitemap-snapshot`）、`discovery`（分析版本、内容哈希、转载簇、直接经历/聚合类型、问题信号数）、`engagement` 和 `qualityWarnings`。不保存网页全文。字段由校验器检查；`GET /api/sources` 使用公开字段白名单，不会透传来源对象上的任意本地字段。

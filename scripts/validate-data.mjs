@@ -75,6 +75,30 @@ export function validatePayload(questionsPayload, sourcesPayload, expected = nul
     if (!Array.isArray(question.keyPoints) || question.keyPoints.length < 2) errors.push(`${question.id} 缺少评分点`);
     if (!Array.isArray(question.answerFramework) || question.answerFramework.length < 4) errors.push(`${question.id} 缺少回答结构`);
     if (!Array.isArray(question.detailedAnswer) || question.detailedAnswer.length < 5) errors.push(`${question.id} 缺少详细讲解`);
+    else if (question.detailedAnswer.some((section) => !section || typeof section.title !== "string" || section.title.trim().length < 4 || typeof section.content !== "string" || section.content.trim().length < 18)) {
+      errors.push(`${question.id} 的详细讲解存在空泛或非法段落`);
+    }
+    if (!question.workedExample || typeof question.workedExample !== "object" || Array.isArray(question.workedExample)) {
+      errors.push(`${question.id} 缺少动手示例`);
+    } else {
+      if (typeof question.workedExample.scenario !== "string" || question.workedExample.scenario.trim().length < 20) errors.push(`${question.id} 的示例场景过短`);
+      if (!Array.isArray(question.workedExample.steps) || question.workedExample.steps.length < 3) errors.push(`${question.id} 的示例步骤不足`);
+      if (typeof question.workedExample.expected !== "string" || question.workedExample.expected.trim().length < 16) errors.push(`${question.id} 的示例验证结果过短`);
+      if (!Array.isArray(question.workedExample.sourceIds) || !question.workedExample.sourceIds.length) {
+        errors.push(`${question.id} 的示例缺少核查来源`);
+      } else {
+        for (const sourceId of question.workedExample.sourceIds) if (!sourceIds.has(sourceId)) errors.push(`${question.id} 的示例引用了不存在的来源 ${sourceId}`);
+      }
+      if (question.workedExample.code !== undefined) {
+        const code = question.workedExample.code;
+        if (!code || typeof code !== "object" || Array.isArray(code) || typeof code.language !== "string" || !code.language || typeof code.title !== "string" || code.title.trim().length < 4 || typeof code.content !== "string" || code.content.trim().length < 20) {
+          errors.push(`${question.id} 的代码示例非法`);
+        }
+      }
+    }
+    if (!Array.isArray(question.interviewFollowUps) || question.interviewFollowUps.length < 3 || new Set(question.interviewFollowUps).size !== question.interviewFollowUps.length) {
+      errors.push(`${question.id} 缺少不重复的面试追问`);
+    }
     if (!Array.isArray(question.relatedKnowledge) || question.relatedKnowledge.length < 2) errors.push(`${question.id} 缺少关联知识点`);
     if (!contentStatuses.has(question.contentStatus)) errors.push(`${question.id} 的 contentStatus 非法`);
     if (contentReviewsPayload !== null && question.contentStatus === "reviewed" && reviewEntries[question.id]?.status !== "reviewed") {

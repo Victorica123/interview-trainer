@@ -203,6 +203,27 @@ select option { color: var(--ink); background: var(--white); }
 .deep-answer-section > span { color: var(--green-2); font-family: Georgia, serif; font-size: 13px; }
 .deep-answer-section h4 { margin: 0 0 5px; color: var(--ink); font-size: 13px; }
 .deep-answer-section p { margin: 0; color: var(--muted); }
+.worked-example { margin: 4px 0 22px; padding: 16px; border: 1px solid color-mix(in srgb, var(--green-2) 28%, var(--line)); border-radius: 13px; background: color-mix(in srgb, var(--lime) 8%, var(--white)); }
+.worked-example-heading { margin-bottom: 9px; }
+.worked-example-heading span, .interview-followups > div > span { display: block; color: var(--green-2); font-size: 8px; font-weight: 900; letter-spacing: .13em; }
+.worked-example-heading h3, .interview-followups h3 { margin: 4px 0 0; color: var(--ink); font-size: 14px; }
+.worked-example > p { margin: 0 0 10px; color: var(--ink); }
+.worked-example > ol, .interview-followups ol { margin: 0; padding-left: 20px; color: var(--muted); font-size: calc(var(--reading-font) - 1px); line-height: var(--reading-line); }
+.worked-example > ol li + li, .interview-followups li + li { margin-top: 5px; }
+.worked-code { margin-top: 13px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #15231f; color: #edf7f2; }
+.worked-code > div { display: flex; justify-content: space-between; gap: 12px; padding: 8px 11px; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 9px; }
+.worked-code > div span { color: #a9c7bc; text-transform: uppercase; }
+.worked-code pre { margin: 0; padding: 12px; overflow-x: auto; font: 11px/1.65 Consolas, "Cascadia Code", monospace; white-space: pre; }
+.worked-code code { font: inherit; }
+.worked-expected { display: grid; grid-template-columns: auto 1fr; gap: 9px; margin-top: 12px; padding-top: 11px; border-top: 1px dashed var(--line); font-size: 10px; line-height: 1.6; }
+.worked-expected b { color: var(--green-2); }
+.worked-expected span { color: var(--muted); }
+.worked-sources { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 12px; padding-top: 11px; border-top: 1px dashed var(--line); }
+.worked-sources b { color: var(--ink); font-size: 9px; }
+.worked-sources a { padding: 4px 7px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); color: var(--green-2); font-size: 9px; font-weight: 800; text-decoration: none; }
+.worked-sources a:hover { border-color: var(--green-2); }
+.interview-followups { margin: 0 0 22px; padding: 15px 16px; border-radius: 12px; background: var(--paper-2); }
+.interview-followups > div { margin-bottom: 9px; }
 .knowledge-chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 22px; }
 .knowledge-chips button { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; background: var(--paper); color: var(--green-2); font-size: 10px; }
 .knowledge-chips button:hover { border-color: var(--green-2); }
@@ -225,6 +246,24 @@ select option { color: var(--ink); background: var(--white); }
 .rating-button b { display: block; color: var(--ink); font-size: 14px; }
 .rating-button:hover, .rating-button.active { color: white; background: var(--green); border-color: var(--green); }
 .rating-button.active b { color: white; }
+.failure-reason-panel { margin-top: 15px; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+.failure-reason-panel .section-heading-inline { align-items: flex-start; }
+.failure-reason-panel .section-heading-inline h3 { margin: 0; }
+.failure-reason-options { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.failure-reason-options button { border: 1px solid var(--line); border-radius: 999px; padding: 7px 10px; color: var(--muted); background: var(--white); font-size: 10px; }
+.failure-reason-options button:hover { border-color: var(--green-2); color: var(--green-2); }
+.failure-reason-options button.active { border-color: var(--green); color: white; background: var(--green); }
+.attempt-history-empty { margin-top: 10px; color: var(--muted); font-size: 9px; }
+.attempt-history { margin-top: 12px; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; background: var(--white); }
+.attempt-history summary { padding: 10px 12px; color: var(--green-2); font-size: 10px; font-weight: 800; cursor: pointer; }
+.attempt-history > div { border-top: 1px solid var(--line); }
+.attempt-history article { padding: 10px 12px; }
+.attempt-history article + article { border-top: 1px solid var(--line); }
+.attempt-history article > div { display: flex; justify-content: space-between; gap: 12px; }
+.attempt-history article b { font-size: 10px; }
+.attempt-history time { color: var(--muted); font-size: 9px; }
+.attempt-history p { margin: 5px 0 0; color: var(--muted); font-size: 9px; }
+.attempt-history blockquote { margin: 8px 0 0; padding: 8px 10px; border-left: 2px solid var(--green-2); color: var(--ink); background: var(--paper); font-size: 10px; line-height: 1.55; white-space: pre-wrap; }
 .section-heading-inline { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .section-heading-inline h3 { margin-bottom: 7px; }
 .section-heading-inline small { color: var(--muted); font-size: 9px; }
@@ -243,6 +282,8 @@ select option { color: var(--ink); background: var(--white); }
 .daily-item small { color: var(--muted); display: block; margin-top: 4px; }
 .daily-item button { border: 0; background: var(--green); color: white; border-radius: 9px; padding: 8px 12px; }
 .progress-dashboard { margin-top: 25px; display: grid; gap: 20px; }
+.progress-heading { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.progress-heading h3 { margin: 0; color: var(--green); }
 .progress-row { display: grid; grid-template-columns: 180px 1fr 55px; align-items: center; gap: 14px; }
 .progress-row span { font-size: 12px; }
 .progress-bar { height: 12px; border-radius: 99px; background: var(--paper-2); overflow: hidden; }
@@ -370,6 +411,26 @@ select option { color: var(--ink); background: var(--white); }
 .saved-session-card button { padding: 9px 12px; font-size: 11px; }
 
 .mistake-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin: 22px 0 14px; }
+.weakness-insight-card { margin: 18px 0; padding: 17px; border: 1px solid color-mix(in srgb, var(--green-2) 24%, var(--line)); border-radius: 15px; background: color-mix(in srgb, var(--lime) 7%, var(--white)); }
+.weakness-insight-card .section-heading-inline h3 { margin: 0 0 4px; color: var(--green); }
+.weakness-insight-card .primary-button:disabled { opacity: .55; cursor: not-allowed; }
+.weakness-summary { display: grid; gap: 10px; margin-top: 14px; }
+.weakness-stat-grid, .weakness-finding-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.weakness-stat-grid article, .weakness-finding-grid article { min-width: 0; padding: 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--white); }
+.weakness-stat-grid span, .weakness-stat-grid b, .weakness-stat-grid small, .weakness-finding-grid span, .weakness-finding-grid b, .weakness-finding-grid small { display: block; }
+.weakness-stat-grid span, .weakness-finding-grid span { color: var(--muted); font-size: 9px; }
+.weakness-stat-grid b { margin: 5px 0 3px; color: var(--green); font-family: Georgia, serif; font-size: 22px; }
+.weakness-finding-grid b { overflow: hidden; margin: 6px 0 4px; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.weakness-stat-grid small, .weakness-finding-grid small { color: var(--muted); font-size: 8px; line-height: 1.45; }
+.weakness-ranking { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.weakness-ranking > b { margin-right: 3px; color: var(--green-2); font-size: 9px; }
+.weakness-ranking > span { display: flex; gap: 5px; align-items: center; padding: 5px 7px; border-radius: 999px; color: var(--ink); background: var(--paper-2); font-size: 9px; }
+.weakness-ranking i { max-width: 150px; overflow: hidden; font-style: normal; text-overflow: ellipsis; white-space: nowrap; }
+.weakness-ranking small { color: var(--muted); font-size: 8px; }
+.weakness-empty { display: grid; gap: 5px; padding: 12px; border-radius: 11px; background: var(--white); }
+.weakness-empty b { font-size: 11px; }
+.weakness-empty span { color: var(--muted); font-size: 9px; line-height: 1.5; }
+.mistake-card-tags .weakness-reason-tag { color: var(--green-2); background: var(--lime); }
 .mistake-tabs { display: flex; gap: 6px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
 .mistake-tabs button { border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; color: var(--muted); background: var(--white); font-size: 10px; font-weight: 800; }
 .mistake-tabs button b { margin-left: 4px; }
@@ -513,6 +574,10 @@ select option { color: var(--ink); background: var(--white); }
   .path-stage-card footer > span { max-width: 62%; }
   .mistake-card { grid-template-columns: 1fr; }
   .mistake-card-actions { display: flex; align-items: center; }
+  .weakness-insight-card .section-heading-inline, .failure-reason-panel .section-heading-inline { align-items: flex-start; flex-direction: column; }
+  .weakness-insight-card .primary-button { width: 100%; }
+  .weakness-finding-grid { grid-template-columns: 1fr; }
+  .weakness-stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .personal-actions small { width: 100%; margin-left: 0; }
   .nav-item { min-height: 42px; }
   .path-stage-card footer button { padding: 10px 12px; font-size: 10px; }

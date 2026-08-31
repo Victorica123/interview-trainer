@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-31",
+  "policy": "人工标注的合成面经短句，仅评估证据归属与概念映射；不保存真实候选人信息或网页正文。",
+  "cases": [
+    {
+      "id": "backend-hashmap-positive",
+      "text": "面试官追问了 HashMap 扩容、哈希冲突以及 equals 和 hashCode 的关系。",
+      "predictions": [{ "name": "HashMap", "mapsToExisting": "HashMap", "evidenceQuote": "HashMap 扩容、哈希冲突以及 equals 和 hashCode 的关系" }],
+      "accepted": ["HashMap"],
+      "rejected": []
+    },
+    {
+      "id": "backend-cross-concept-reject",
+      "text": "面试官追问了 HashMap 扩容和哈希冲突。",
+      "predictions": [{ "name": "B+树索引", "mapsToExisting": "B+树索引", "evidenceQuote": "HashMap 扩容和哈希冲突" }],
+      "accepted": [],
+      "rejected": ["B+树索引"]
+    },
+    {
+      "id": "backend-tcp-positive",
+      "text": "网络部分要求解释 TCP 三次握手和四次挥手，还问了 TIME_WAIT。",
+      "predictions": [{ "name": "TCP三次握手", "mapsToExisting": "TCP三次握手", "evidenceQuote": "TCP 三次握手和四次挥手" }],
+      "accepted": ["TCP三次握手"],
+      "rejected": []
+    },
+    {
+      "id": "backend-invented-quote-reject",
+      "text": "数据库题只讨论了事务隔离级别。",
+      "predictions": [{ "name": "MVCC与Read View", "mapsToExisting": "MVCC与Read View", "evidenceQuote": "MVCC 的 Read View 可见性判断" }],
+      "accepted": [],
+      "rejected": ["MVCC与Read View"]
+    },
+    {
+      "id": "backend-threadpool-positive",
+      "text": "Java 并发问到了 ThreadPoolExecutor 的核心参数、拒绝策略与任务堆积排查。",
+      "predictions": [{ "name": "ThreadPoolExecutor", "mapsToExisting": "ThreadPoolExecutor", "evidenceQuote": "ThreadPoolExecutor 的核心参数、拒绝策略" }],
+      "accepted": ["ThreadPoolExecutor"],
+      "rejected": []
+    },
+    {
+      "id": "agent-mcp-positive",
+      "text": "Agent 岗位重点问 MCP 架构、Host Client Server 的关系和能力协商。",
+      "predictions": [{ "name": "MCP架构与生命周期", "mapsToExisting": "MCP架构与生命周期", "evidenceQuote": "MCP 架构、Host Client Server 的关系" }],
+      "accepted": ["MCP架构与生命周期"],
+      "rejected": []
+    },
+    {
+      "id": "agent-rag-positive",
+      "text": "项目深挖 RAG 评测、Badcase 归因和知识库更新后的回归验证。",
+      "predictions": [{ "name": "RAG评测、Badcase与知识更新", "mapsToExisting": "RAG评测、Badcase与知识更新", "evidenceQuote": "RAG 评测、Badcase 归因和知识库更新" }],
+      "accepted": ["RAG评测、Badcase与知识更新"],
+      "rejected": []
+    },
+    {
+      "id": "agent-hallucination-reject",
+      "text": "只问了模型温度和 Top-p 对输出随机性的影响。",
+      "predictions": [{ "name": "幻觉与事实落地", "mapsToExisting": "幻觉与事实落地", "evidenceQuote": "模型温度和 Top-p 对输出随机性的影响" }],
+      "accepted": [],
+      "rejected": ["幻觉与事实落地"]
+    },
+    {
+      "id": "agent-evidence-too-short-reject",
+      "text": "问了 ReAct。",
+      "predictions": [{ "name": "ReAct与Agent循环", "mapsToExisting": "ReAct与Agent循环", "evidenceQuote": "问了" }],
+      "accepted": [],
+      "rejected": ["ReAct与Agent循环"]
+    },
+    {
+      "id": "mixed-partial-accept",
+      "text": "先问 Redis 分布式锁的续期和误删，再追问 Agent 工具调用如何保证幂等。",
+      "predictions": [
+        { "name": "Redis分布式锁", "mapsToExisting": "Redis分布式锁", "evidenceQuote": "Redis 分布式锁的续期和误删" },
+        { "name": "结构化输出与Schema", "mapsToExisting": "结构化输出与Schema", "evidenceQuote": "Agent 工具调用如何保证幂等" }
+      ],
+      "accepted": ["Redis分布式锁"],
+      "rejected": ["结构化输出与Schema"]
+    }
+  ]
+}

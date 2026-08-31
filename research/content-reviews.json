@@ -1,489 +1,5128 @@
 {
   "schemaVersion": 1,
   "reviewBatches": [
-    { "id": "highest-ranked-core-1", "reviewedAt": "2026-08-28", "questionCount": 40 },
-    { "id": "highest-ranked-core-2", "reviewedAt": "2026-08-28", "questionCount": 40 }
+    {
+      "id": "highest-ranked-core-1",
+      "reviewedAt": "2026-08-28",
+      "questionCount": 40
+    },
+    {
+      "id": "highest-ranked-core-2",
+      "reviewedAt": "2026-08-28",
+      "questionCount": 40
+    },
+    {
+      "id": "all-current-core-3",
+      "reviewedAt": "2026-08-31",
+      "questionCount": 98
+    },
+    {
+      "id": "phase2-high-mainline-4",
+      "reviewedAt": "2026-08-31",
+      "questionCount": 176
+    },
+    {
+      "id": "phase4-high-remainder-5",
+      "reviewedAt": "2026-08-31",
+      "questionCount": 213
+    }
   ],
   "questions": {
     "ai-018-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Workflow 固定编排与 Agent 动态决策的定义、组合关系和适用边界。",
-      "sourceIds": ["javaguide-ai-2026", "kamacoder-agent-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "kamacoder-agent-2026"
+      ]
     },
     "ai-018-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 DAG、状态机与观察—行动循环的执行差异，保留停止条件边界。",
-      "sourceIds": ["javaguide-ai-2026", "kamacoder-agent-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "kamacoder-agent-2026"
+      ]
     },
     "ai-030-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查短期任务状态与跨会话长期记忆的定义、权限和时效边界。",
-      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
     },
     "ai-030-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查上下文、checkpoint、持久化与按需检索注入的机制描述。",
-      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
     },
     "ai-038-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已明确该题考查真实项目表达与架构取舍，不宣称存在固定 Agent 模板。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-038-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已将常见模块改为按真实请求链路选用，避免为凑架构虚构未使用组件。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "be-069-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 RDB、AOF 与混合持久化语义，数据丢失窗口与刷盘策略分开表述。",
-      "sourceIds": ["redis-persistence-official"]
+      "sourceIds": [
+        "redis-persistence-official"
+      ]
     },
     "be-069-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已补充 fork、写时复制、AOF 刷盘与后台重写的机制和资源边界。",
-      "sourceIds": ["redis-persistence-official"]
+      "sourceIds": [
+        "redis-persistence-official"
+      ]
     },
     "ai-001-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Token 与上下文窗口定义，避免将上下文容量等同模型知识或记忆。",
-      "sourceIds": ["openai-chat-api-2026", "javaguide-ai-2026"]
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
     },
     "ai-001-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查分词、输入输出预算与超限后的裁剪、压缩和外置检索机制。",
-      "sourceIds": ["openai-chat-api-2026", "javaguide-ai-2026"]
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
     },
     "ai-019-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 ReAct 的推理、行动、观察交替定义及其多步任务适用边界。",
-      "sourceIds": ["javaguide-ai-2026", "kamacoder-agent-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "kamacoder-agent-2026"
+      ]
     },
     "ai-019-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查控制器、工具结果回写、完成判据与预算上限构成的循环机制。",
-      "sourceIds": ["javaguide-ai-2026", "kamacoder-agent-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "kamacoder-agent-2026"
+      ]
     },
     "ai-026-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查输入输出校验、错误分类与副作用操作幂等三项可靠性边界。",
-      "sourceIds": ["javaguide-ai-2026", "owasp-genai-top10-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "owasp-genai-top10-2026"
+      ]
     },
     "ai-026-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Schema、业务权限、超时重试、熔断和幂等键的分层职责。",
-      "sourceIds": ["javaguide-ai-2026", "owasp-genai-top10-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "owasp-genai-top10-2026"
+      ]
     },
     "ai-037-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Agent 循环限制、等待超时和跨故障安全恢复的定义范围。",
-      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
     },
     "ai-037-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查总预算、可重试性、checkpoint、熔断与外部副作用确认机制。",
-      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
     },
     "be-042-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 OOM 与内存泄漏并非等价，保留内存区域和可回收性边界。",
-      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
     },
     "be-042-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查异常区域、堆转储、GC 日志、增长趋势和引用链的排查顺序。",
-      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
     },
     "be-072-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查缓存一致性本质是不一致窗口与新鲜度取舍，不承诺绝对强一致。",
-      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
     },
     "be-072-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Cache Aside 更新数据库后删缓存及删除失败后的可观测补偿机制。",
-      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"]
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
     },
     "ai-010-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 RAG 外部检索证据、时效性与可追溯性的定义和能力边界。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-010-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查离线采集建索引与在线改写、召回、重排、组装、生成的完整链路。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-017-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查检索、生成和端到端评测需分层，Badcase 归因不能被单一总分替代。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-017-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Recall@K、MRR、NDCG、忠实度、引用及索引版本更新机制。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "be-057-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查联合索引复合有序键和最左前缀定义，避免机械化绝对规则。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-057-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已区分范围后的扫描区间定位与索引下推过滤，并保留优化器决定边界。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-059-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Explain 是执行计划入口，慢 SQL 仍需结合耗时、锁与负载证据。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-059-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查访问类型、索引、估算行数及 EXPLAIN ANALYZE 实际执行边界。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-067-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Redis 抽象数据类型与内部编码不是固定一一对应关系。",
-      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
     },
     "be-067-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查整数、listpack、哈希表、跳表等内部结构及阈值转换表述。",
-      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
     },
     "be-068-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Redis 低延迟来自内存、数据结构和事件驱动等组合因素。",
-      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
     },
     "be-068-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已按版本区分命令执行主路径与可选网络 I/O 线程，避免单线程绝对化。",
-      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
     },
     "ai-007-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查上下文工程覆盖信息选择、组织、压缩与隔离，不等同只改 Prompt。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-007-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查按预算从会话、记忆、检索、工具状态和业务规则构造快照的机制。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-027-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已按协议核查 MCP Host、Client、Server 的职责和工具、资源、提示边界。",
-      "sourceIds": ["mcp-architecture-official"]
+      "sourceIds": [
+        "mcp-architecture-official"
+      ]
     },
     "ai-027-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已补充 initialize、能力协商、发现调用、关闭与断线重建会话的生命周期。",
-      "sourceIds": ["mcp-architecture-official"]
+      "sourceIds": [
+        "mcp-architecture-official"
+      ]
     },
     "ai-028-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Function Calling 是模型接口形式，MCP 是外部能力连接协议。",
-      "sourceIds": ["mcp-architecture-official", "openai-chat-api-2026"]
+      "sourceIds": [
+        "mcp-architecture-official",
+        "openai-chat-api-2026"
+      ]
     },
     "ai-028-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 MCP 工具发现、Schema 转换、模型调用意图与 Client 转发链路。",
-      "sourceIds": ["mcp-architecture-official", "openai-chat-api-2026"]
+      "sourceIds": [
+        "mcp-architecture-official",
+        "openai-chat-api-2026"
+      ]
     },
     "ai-033-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Agent 评测需同时覆盖任务成功、过程、资源与安全约束。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-033-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查可重置环境、判定器、工具轨迹、步数、延迟、费用和违规事件机制。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-039-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 RAG 优化复盘必须先分层定位数据、召回、排序、上下文或生成问题。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "ai-039-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查带证据测试集、单变量实验、离线指标与线上成功率和延迟闭环。",
-      "sourceIds": ["javaguide-ai-2026", "elegy-agent-wiki-2026"]
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
     },
     "be-018-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已按 JDK 8 及以后实现核查哈希桶、链表与条件树化定义，区分接口契约和实现细节。",
-      "sourceIds": ["oracle-java-api-21", "javaguide-priority-2026"]
+      "sourceIds": [
+        "oracle-java-api-21",
+        "javaguide-priority-2026"
+      ]
     },
     "be-018-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已补充索引定位、扩容拆分、树化阈值8与最小容量64的实现边界。",
-      "sourceIds": ["oracle-java-api-21", "javaguide-priority-2026"]
+      "sourceIds": [
+        "oracle-java-api-21",
+        "javaguide-priority-2026"
+      ]
     },
     "be-035-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查线程复用、队列、生命周期和拒绝策略共同形成受控并发边界。",
-      "sourceIds": ["oracle-java-concurrency-21", "javaguide-priority-2026"]
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "javaguide-priority-2026"
+      ]
     },
     "be-035-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已按 execute 实际路径核查核心线程、入队、扩至最大线程、拒绝及预启动边界。",
-      "sourceIds": ["oracle-java-concurrency-21", "javaguide-priority-2026"]
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "javaguide-priority-2026"
+      ]
     },
     "be-048-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查自动配置依赖类路径、属性和已有Bean条件，不再表述成无条件或零配置。",
-      "sourceIds": ["spring-framework-reference", "javaguide-priority-2026"]
+      "sourceIds": [
+        "spring-framework-reference",
+        "javaguide-priority-2026"
+      ]
     },
     "be-048-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查自动配置候选导入、Conditional筛选与MissingBean条件退让，并区分Bean覆盖。",
-      "sourceIds": ["spring-framework-reference", "javaguide-priority-2026"]
+      "sourceIds": [
+        "spring-framework-reference",
+        "javaguide-priority-2026"
+      ]
     },
     "be-054-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 MySQL 连接、解析、预处理、优化、执行和存储引擎访问的层次。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-054-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 Server层执行计划到InnoDB接口的调用边界，并确认未沿用MySQL 8查询缓存旧说法。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-055-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查 B+树非叶路由键、叶子有序链和聚簇/二级叶子内容差异。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-055-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查高扇出、根到叶定位、范围扫描以及页分裂和缓冲池对实际I/O的影响。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-056-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查聚簇叶子整行、二级叶子聚簇键和仅缺少目标列时才回表的定义。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-056-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查主键、非空唯一索引、隐藏聚簇键的选择顺序及覆盖索引机制。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-058-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查所谓索引失效包含不可用于有序定位与优化器成本选择两类情况。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-058-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查函数、隐式转换、前导模糊匹配、统计信息与数据分布影响访问路径的机制。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-060-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查ACID四项定义，并保留一致性同时依赖数据库约束与业务不变量的边界。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-060-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查undo回滚与版本、redo崩溃恢复、锁与MVCC隔离的职责分工。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-062-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查MVCC服务一致性读、Read View保存事务边界且并非所有操作无锁。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-062-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查隐藏事务ID、回滚指针、undo版本链与活跃事务上下界的可见性判断。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-061-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查隔离级别定义必须结合数据库实现和快照读、锁定读类型说明。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-061-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查InnoDB RC每次一致性读与RR首次快照复用机制，并区分当前读锁行为。",
-      "sourceIds": ["mysql-innodb-84", "javaguide-priority-2026"]
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
     },
     "be-075-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查BigKey按内存、元素或操作成本判断，HotKey按访问集中判断且无固定阈值。",
-      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
     },
     "be-075-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查事件循环、网络、复制和分片热点机制，并补充安全采样与异步删除边界。",
-      "sourceIds": ["redis-data-types-official", "javaguide-priority-2026"]
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
     },
     "be-076-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查消息队列通过Broker缓冲和可配置持久化实现异步、解耦与削峰的边界。",
-      "sourceIds": ["kafka-official-design", "javaguide-priority-2026"]
+      "sourceIds": [
+        "kafka-official-design",
+        "javaguide-priority-2026"
+      ]
     },
     "be-076-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查生产、Broker、消费确认链路，并明确积压只能吸收容量内的短期流量差。",
-      "sourceIds": ["kafka-official-design", "javaguide-priority-2026"]
+      "sourceIds": [
+        "kafka-official-design",
+        "javaguide-priority-2026"
+      ]
     },
     "be-077-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查可靠投递覆盖发送、Broker持久化、消费处理与确认，但不承诺业务天然Exactly Once。",
-      "sourceIds": ["kafka-official-design", "javaguide-priority-2026"]
+      "sourceIds": [
+        "kafka-official-design",
+        "javaguide-priority-2026"
+      ]
     },
     "be-077-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查至少一次、幂等消费、Outbox、事务消息和最终对账构成的端到端机制。",
-      "sourceIds": ["kafka-official-design", "javaguide-priority-2026"]
+      "sourceIds": [
+        "kafka-official-design",
+        "javaguide-priority-2026"
+      ]
     },
     "be-087-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查最终一致性允许受控差异窗口，并以权威源和最大收敛时间定义目标。",
-      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+      "sourceIds": [
+        "xiaolin-backend-2026",
+        "javaguide-priority-2026"
+      ]
     },
     "be-087-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查本地状态与事件、异步消费、幂等补偿和定时对账的收敛链路。",
-      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+      "sourceIds": [
+        "xiaolin-backend-2026",
+        "javaguide-priority-2026"
+      ]
     },
     "ai-021-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查LangChain组件抽象与LangGraph状态编排侧重点，明确二者可组合也可独立使用。",
-      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
     },
     "ai-021-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查LangGraph节点、状态、转移和checkpointer机制，并保留版本API快速变化边界。",
-      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"]
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
     },
     "ai-022-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查状态机与Checkpoint定义，并明确状态快照不会自动回滚外部副作用。",
-      "sourceIds": ["langgraph-official-persistence"]
+      "sourceIds": [
+        "langgraph-official-persistence"
+      ]
     },
     "ai-022-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查按执行步保存版本化状态、位置和线程标识，恢复后仍需工具幂等。",
-      "sourceIds": ["langgraph-official-persistence"]
+      "sourceIds": [
+        "langgraph-official-persistence"
+      ]
     },
     "be-082-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查2PC、TCC、Saga和事务消息提供的保证、阻塞与补偿语义不同。",
-      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+      "sourceIds": [
+        "xiaolin-backend-2026",
+        "javaguide-priority-2026"
+      ]
     },
     "be-082-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查2PC两阶段、TCC三动作和Saga本地事务补偿机制及外部可见边界。",
-      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+      "sourceIds": [
+        "xiaolin-backend-2026",
+        "javaguide-priority-2026"
+      ]
     },
     "be-085-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查限流、熔断和降级的保护对象、触发条件与返回语义不可混用。",
-      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+      "sourceIds": [
+        "xiaolin-backend-2026",
+        "javaguide-priority-2026"
+      ]
     },
     "be-085-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查令牌桶、熔断关闭/打开/半开状态及有证据降级的执行机制。",
-      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+      "sourceIds": [
+        "xiaolin-backend-2026",
+        "javaguide-priority-2026"
+      ]
     },
     "be-086-1": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查幂等按业务操作、时间窗口和有效副作用定义，不要求HTTP响应字节相同。",
-      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+      "sourceIds": [
+        "xiaolin-backend-2026",
+        "javaguide-priority-2026"
+      ]
     },
     "be-086-2": {
       "status": "reviewed",
       "reviewedAt": "2026-08-28",
       "note": "已核查同一幂等键、请求一致性、原子状态判定、结果复用和记录过期机制。",
-      "sourceIds": ["xiaolin-backend-2026", "javaguide-priority-2026"]
+      "sourceIds": [
+        "xiaolin-backend-2026",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-004-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核HTTP与HTTPS的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-004-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核HTTP与HTTPS的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-004-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核HTTP与HTTPS和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-018-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核HashMap和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-019-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核ConcurrentHashMap的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-038-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核JVM运行时内存区域的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-038-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核JVM运行时内存区域的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-038-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核JVM运行时内存区域的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-038-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核JVM运行时内存区域和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-042-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核线上OOM与内存泄漏排查的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-042-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核线上OOM与内存泄漏排查的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-042-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核线上OOM与内存泄漏排查和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-043-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核Spring IoC与依赖注入的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-043-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核Spring IoC与依赖注入的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-043-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核Spring IoC与依赖注入的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-043-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核Spring IoC与依赖注入和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-046-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核Spring声明式事务的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-046-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核Spring声明式事务的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-046-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核Spring声明式事务的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-046-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核Spring声明式事务和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-050-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核MyBatis执行流程与缓存的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-054-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核一条SQL的执行流程的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-054-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核一条SQL的执行流程的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-054-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核一条SQL的执行流程和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-055-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核B+树索引的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-055-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核B+树索引的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-055-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核B+树索引和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-060-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核事务ACID和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-061-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核事务隔离级别的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-061-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核事务隔离级别的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-061-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核事务隔离级别和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-067-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核Redis数据类型与底层编码的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-067-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核Redis数据类型与底层编码和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-073-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核Redis分布式锁的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-076-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核消息队列的异步、解耦与削峰和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "kafka-official-design"
+      ]
+    },
+    "be-085-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核限流、熔断与降级的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-085-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核限流、熔断与降级和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-086-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核接口幂等设计的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-086-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核接口幂等设计和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-090-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核秒杀系统的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-096-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核接口延迟突增排查的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-096-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核接口延迟突增排查的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-096-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核接口延迟突增排查和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-097-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核CPU 100%与OOM排查的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-097-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核CPU 100%与OOM排查的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-097-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核CPU 100%与OOM排查和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "ai-001-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核Token与上下文窗口的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-001-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核Token与上下文窗口的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-001-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核Token与上下文窗口和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-005-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核流式响应、限流与重试的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-005-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核流式响应、限流与重试的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-005-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核流式响应、限流与重试的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-005-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核流式响应、限流与重试和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-007-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核上下文工程和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-009-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核Prompt注入与数据指令隔离的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-009-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核Prompt注入与数据指令隔离的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-009-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核Prompt注入与数据指令隔离的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-009-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核Prompt注入与数据指令隔离的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-009-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核Prompt注入与数据指令隔离和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-010-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核RAG端到端流程的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
+    },
+    "ai-010-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核RAG端到端流程的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
+    },
+    "ai-010-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核RAG端到端流程和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
+    },
+    "ai-012-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核Embedding向量表示的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
+    },
+    "ai-012-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核Embedding向量表示的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
+    },
+    "ai-012-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核Embedding向量表示和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
+    },
+    "ai-018-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核Agent与Workflow的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-018-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核Agent与Workflow的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-018-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核Agent与Workflow和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-019-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核ReAct与Agent循环的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-019-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核ReAct与Agent循环的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-019-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核ReAct与Agent循环和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-024-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核Function Calling与工具Schema的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-026-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核工具校验、重试与幂等的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-026-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核工具校验、重试与幂等的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-026-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核工具校验、重试与幂等和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-027-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核MCP架构与生命周期的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-027-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核MCP架构与生命周期的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-027-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核MCP架构与生命周期和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-028-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核MCP与Function Calling的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-028-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核MCP与Function Calling的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-028-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核MCP与Function Calling和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-030-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核短期记忆与长期记忆的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-030-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核短期记忆与长期记忆的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-030-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核短期记忆与长期记忆和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-035-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核权限、安全与数据治理的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-035-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核权限、安全与数据治理的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-035-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核权限、安全与数据治理的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-035-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核权限、安全与数据治理的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-035-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核权限、安全与数据治理和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-036-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按定义题复核成本、延迟与模型路由的问题背景、准确表述、核心机制与概念边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-036-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按机制题复核成本、延迟与模型路由的输入前提、执行顺序、状态结果、失败点和可观测证据。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-036-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核成本、延迟与模型路由的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-036-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核成本、延迟与模型路由和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-037-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核循环、超时与故障恢复和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-038-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按项目题复核Agent项目架构讲解的业务约束、落地链路、失败处理、验证指标与选型理由。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-038-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按排查题复核Agent项目架构讲解的故障现象、证据采集、原因定位、止损修复与回归验证。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-038-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核Agent项目架构讲解和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-039-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按选型题复核RAG项目指标与优化复盘和相邻方案的比较维度、成立前提、优势代价与切换边界。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "be-029-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核Java线程状态的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-029-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核Java线程状态的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-029-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Java线程状态的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-029-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Java线程状态的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-029-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核Java线程状态的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-030-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核synchronized与锁升级的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-030-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核synchronized与锁升级的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-030-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核synchronized与锁升级的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-030-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核synchronized与锁升级的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-030-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核synchronized与锁升级的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-031-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核volatile与Java内存模型的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-031-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核volatile与Java内存模型的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-031-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核volatile与Java内存模型的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-031-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核volatile与Java内存模型的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-031-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核volatile与Java内存模型的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-032-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核CAS与ABA问题的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-032-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核CAS与ABA问题的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-032-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核CAS与ABA问题的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-032-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核CAS与ABA问题的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-032-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核CAS与ABA问题的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-034-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核ReentrantLock与Condition的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-034-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核ReentrantLock与Condition的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-034-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核ReentrantLock与Condition的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-034-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核ReentrantLock与Condition的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-035-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核ThreadPoolExecutor的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-035-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核ThreadPoolExecutor的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-035-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核ThreadPoolExecutor的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-036-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核ThreadLocal的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-036-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核ThreadLocal的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-036-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核ThreadLocal的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-036-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核ThreadLocal的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-036-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核ThreadLocal的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-037-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核死锁与活锁的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "oracle-java-concurrency-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-045-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核Spring AOP与动态代理的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-045-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核Spring AOP与动态代理的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-045-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Spring AOP与动态代理的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-045-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Spring AOP与动态代理的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-045-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核Spring AOP与动态代理的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-046-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Spring声明式事务的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-056-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核聚簇索引与回表的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-056-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核聚簇索引与回表的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-056-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核聚簇索引与回表的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-057-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核联合索引与最左前缀的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-057-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核联合索引与最左前缀的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-057-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核联合索引与最左前缀的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-058-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核索引失效与优化器选择的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-058-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核索引失效与优化器选择的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-059-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Explain与慢SQL排查的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-059-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Explain与慢SQL排查的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-059-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核Explain与慢SQL排查的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-060-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核事务ACID的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-060-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核事务ACID的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-062-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核MVCC与Read View的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-062-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核MVCC与Read View的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-062-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核MVCC与Read View的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-063-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核InnoDB锁与死锁的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-063-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核InnoDB锁与死锁的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-063-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核InnoDB锁与死锁的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-063-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核InnoDB锁与死锁的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-063-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核InnoDB锁与死锁的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-064-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核redo log、undo log与binlog的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-064-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核redo log、undo log与binlog的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-064-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核redo log、undo log与binlog的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-064-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核redo log、undo log与binlog的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-064-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核redo log、undo log与binlog的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84"
+      ]
+    },
+    "be-066-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核分库分表与分布式ID的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-066-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核分库分表与分布式ID的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-066-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核分库分表与分布式ID的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-066-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核分库分表与分布式ID的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-066-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核分库分表与分布式ID的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "mysql-innodb-84",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-067-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Redis数据类型与底层编码的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-068-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Redis高性能与事件循环的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-068-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Redis高性能与事件循环的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-068-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核Redis高性能与事件循环的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-069-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核RDB、AOF与混合持久化的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-persistence-official"
+      ]
+    },
+    "be-069-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核RDB、AOF与混合持久化的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-persistence-official"
+      ]
+    },
+    "be-069-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核RDB、AOF与混合持久化的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-persistence-official"
+      ]
+    },
+    "be-070-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核过期删除与内存淘汰的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-070-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核过期删除与内存淘汰的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-070-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核过期删除与内存淘汰的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-070-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核过期删除与内存淘汰的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-071-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核缓存穿透、击穿与雪崩的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-071-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核缓存穿透、击穿与雪崩的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-071-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核缓存穿透、击穿与雪崩的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-071-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核缓存穿透、击穿与雪崩的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-071-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核缓存穿透、击穿与雪崩的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-072-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核缓存与数据库一致性的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-072-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核缓存与数据库一致性的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-072-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核缓存与数据库一致性的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "javaguide-priority-2026"
+      ]
+    },
+    "be-073-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核Redis分布式锁的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-073-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Redis分布式锁的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-073-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Redis分布式锁的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-073-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核Redis分布式锁的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-074-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核Redis主从、哨兵与Cluster的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-074-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核Redis主从、哨兵与Cluster的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-074-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Redis主从、哨兵与Cluster的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-074-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核Redis主从、哨兵与Cluster的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-075-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核BigKey、HotKey与内存诊断的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-075-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核BigKey、HotKey与内存诊断的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-075-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核BigKey、HotKey与内存诊断的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "redis-data-types-official",
+        "redis-persistence-official"
+      ]
+    },
+    "be-090-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核秒杀系统的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-090-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核秒杀系统的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-090-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核秒杀系统的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-090-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核秒杀系统的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-091-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核订单超时关闭的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-091-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核订单超时关闭的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-091-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核订单超时关闭的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-091-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核订单超时关闭的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-091-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核订单超时关闭的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-092-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核支付回调系统的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-092-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核支付回调系统的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-092-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核支付回调系统的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-093-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核分布式登录态的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-093-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核分布式登录态的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-093-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核分布式登录态的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-093-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核分布式登录态的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-093-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核分布式登录态的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-094-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核短链系统的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-094-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核短链系统的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-094-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核短链系统的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-095-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核热点数据与多级缓存的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-095-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核热点数据与多级缓存的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-095-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核热点数据与多级缓存的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-095-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核热点数据与多级缓存的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-095-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核热点数据与多级缓存的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-096-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核接口延迟突增排查的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-096-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核接口延迟突增排查的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-097-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核CPU 100%与OOM排查的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-097-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核CPU 100%与OOM排查的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-100-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核项目介绍与量化验证的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-100-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核项目介绍与量化验证的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-100-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核项目介绍与量化验证的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "ai-011-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核文档清洗与Chunk切分的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-011-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核文档清洗与Chunk切分的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-011-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核文档清洗与Chunk切分的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-011-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核文档清洗与Chunk切分的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-011-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核文档清洗与Chunk切分的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-012-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Embedding向量表示的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
+    },
+    "ai-012-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Embedding向量表示的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "javaguide-ai-2026",
+        "elegy-agent-wiki-2026"
+      ]
+    },
+    "ai-013-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核向量索引与Vector DB的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "hnsw-paper-arxiv-2016",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-013-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核向量索引与Vector DB的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "hnsw-paper-arxiv-2016",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-013-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核向量索引与Vector DB的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "hnsw-paper-arxiv-2016",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-013-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核向量索引与Vector DB的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "hnsw-paper-arxiv-2016",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-013-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核向量索引与Vector DB的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "hnsw-paper-arxiv-2016",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-014-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核混合检索与RRF融合的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "rrf-paper-sigir-2009",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-014-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核混合检索与RRF融合的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "rrf-paper-sigir-2009",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-014-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核混合检索与RRF融合的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "rrf-paper-sigir-2009",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-014-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核混合检索与RRF融合的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "rrf-paper-sigir-2009",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-014-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核混合检索与RRF融合的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "rrf-paper-sigir-2009",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-015-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核查询改写、扩展与HyDE的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "hyde-paper-acl-2023",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-015-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核查询改写、扩展与HyDE的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "hyde-paper-acl-2023",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-015-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核查询改写、扩展与HyDE的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "hyde-paper-acl-2023",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-016-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核Reranker重排序的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-016-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核Reranker重排序的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-016-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Reranker重排序的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-016-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Reranker重排序的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-016-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核Reranker重排序的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-017-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核RAG评测、Badcase与知识更新的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-017-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核RAG评测、Badcase与知识更新的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-017-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核RAG评测、Badcase与知识更新的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-022-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核状态机与Checkpoint的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-022-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核状态机与Checkpoint的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-022-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核状态机与Checkpoint的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-023-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核人工介入与Replan的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "owasp-genai-top10-2026"
+      ]
+    },
+    "ai-023-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核人工介入与Replan的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "owasp-genai-top10-2026"
+      ]
+    },
+    "ai-023-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核人工介入与Replan的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "owasp-genai-top10-2026"
+      ]
+    },
+    "ai-033-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核Agent评测体系的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "langsmith-agent-evaluation-official",
+        "owasp-genai-top10-2026"
+      ]
+    },
+    "ai-033-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核Agent评测体系的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "langsmith-agent-evaluation-official",
+        "owasp-genai-top10-2026"
+      ]
+    },
+    "ai-033-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核Agent评测体系的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "langsmith-agent-evaluation-official",
+        "owasp-genai-top10-2026"
+      ]
+    },
+    "ai-034-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核可观测性与Tracing的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "opentelemetry-genai-semconv",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-034-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线机制题复核可观测性与Tracing的执行顺序、状态变化、失败点、实践示例与核查来源。",
+      "sourceIds": [
+        "opentelemetry-genai-semconv",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-034-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线选型题复核可观测性与Tracing的比较维度、成立前提、切换边界、实践示例与核查来源。",
+      "sourceIds": [
+        "opentelemetry-genai-semconv",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-036-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核成本、延迟与模型路由的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-037-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线项目题复核循环、超时与故障恢复的业务约束、落地链路、验证指标、实践示例与核查来源。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-037-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线排查题复核循环、超时与故障恢复的故障证据、定位修复、回归方法、实践示例与核查来源。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-042-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已按高频主线定义题复核RAG与Fine-tuning选型的准确表述、适用边界、实践示例与核查来源。",
+      "sourceIds": [
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "be-001-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP三次握手的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-001-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP三次握手的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-001-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP三次握手的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-001-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP三次握手的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-001-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“TCP三次握手与QUIC连接建立如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-002-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP四次挥手的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-002-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP四次挥手的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-002-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP四次挥手的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-002-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP四次挥手的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-002-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“TCP四次挥手与直接RST断开如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-003-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP可靠传输与拥塞控制的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-003-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP可靠传输与拥塞控制的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-003-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP可靠传输与拥塞控制的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-003-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TCP可靠传输与拥塞控制的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-003-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“TCP可靠传输与拥塞控制与UDP传输如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "rfc-9293-tcp",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-004-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HTTP与HTTPS的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-004-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HTTP与HTTPS的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-005-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HTTP/1.1、HTTP/2与HTTP/3的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "rfc-9113-http2",
+        "rfc-9114-http3",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-005-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HTTP/1.1、HTTP/2与HTTP/3的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "rfc-9113-http2",
+        "rfc-9114-http3",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-005-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HTTP/1.1、HTTP/2与HTTP/3的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "rfc-9113-http2",
+        "rfc-9114-http3",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-005-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HTTP/1.1、HTTP/2与HTTP/3的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "rfc-9113-http2",
+        "rfc-9114-http3",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-005-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“HTTP/1.1、HTTP/2与HTTP/3与WebSocket如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "rfc-9113-http2",
+        "rfc-9114-http3",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-006-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对DNS解析与URL访问全过程的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-006-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对DNS解析与URL访问全过程的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-006-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对DNS解析与URL访问全过程的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-006-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对DNS解析与URL访问全过程的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-006-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“DNS解析与URL访问全过程与服务发现如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-008-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对进程、线程与协程的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "openjdk-jep-444",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-008-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对进程、线程与协程的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "openjdk-jep-444",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-008-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对进程、线程与协程的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "openjdk-jep-444",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-008-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对进程、线程与协程的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "openjdk-jep-444",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-008-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“进程、线程与协程与Java虚拟线程如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "openjdk-jep-444",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-009-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对虚拟内存与分页的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-009-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对虚拟内存与分页的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-009-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对虚拟内存与分页的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-009-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对虚拟内存与分页的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-009-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“虚拟内存与分页与直接物理内存访问如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-010-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对I/O模型与epoll的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-010-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对I/O模型与epoll的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-010-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对I/O模型与epoll的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-010-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对I/O模型与epoll的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-010-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“I/O模型与epoll与select和poll如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "linux-man-pages-epoll",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-011-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Linux线上排查工具的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "linux-man-pages-epoll",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-011-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Linux线上排查工具的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "linux-man-pages-epoll",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-011-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Linux线上排查工具的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "linux-man-pages-epoll",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-011-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Linux线上排查工具的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "linux-man-pages-epoll",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-011-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Linux线上排查工具与应用监控平台如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "linux-mm-admin-guide",
+        "linux-man-pages-epoll",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-012-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对REST、RPC、WebSocket与SSE的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "whatwg-sse",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-012-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对REST、RPC、WebSocket与SSE的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "whatwg-sse",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-012-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对REST、RPC、WebSocket与SSE的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "whatwg-sse",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-012-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对REST、RPC、WebSocket与SSE的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "whatwg-sse",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-012-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“REST、RPC、WebSocket与SSE与传统轮询如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "rfc-9112-http11",
+        "whatwg-sse",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-013-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对面向对象与SOLID的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-java-spec-21",
+        "oracle-java-api-21"
+      ]
+    },
+    "be-013-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对面向对象与SOLID的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-java-spec-21",
+        "oracle-java-api-21"
+      ]
+    },
+    "be-013-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对面向对象与SOLID的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-spec-21",
+        "oracle-java-api-21"
+      ]
+    },
+    "be-013-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“面向对象与SOLID与面向过程设计如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-java-spec-21",
+        "oracle-java-api-21"
+      ]
+    },
+    "be-014-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对String不可变与字符串常量池的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-014-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对String不可变与字符串常量池的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-014-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对String不可变与字符串常量池的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-014-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“String不可变与字符串常量池与StringBuilder与StringBuffer如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-015-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对equals与hashCode契约的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-015-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对equals与hashCode契约的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-015-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对equals与hashCode契约的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-015-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对equals与hashCode契约的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-015-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“equals与hashCode契约与Comparable与Comparator如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-016-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对ArrayList的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-016-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对ArrayList的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-016-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对ArrayList的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-016-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对ArrayList的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-016-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“ArrayList与LinkedList如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-018-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HashMap的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-018-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HashMap的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-019-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对ConcurrentHashMap的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-019-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对ConcurrentHashMap的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-019-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对ConcurrentHashMap的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-019-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“ConcurrentHashMap与Collections.synchronizedMap如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-020-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TreeMap与红黑树的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-020-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TreeMap与红黑树的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-020-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TreeMap与红黑树的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-020-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对TreeMap与红黑树的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-020-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“TreeMap与红黑树与HashMap如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-021-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HashSet与集合去重的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-021-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HashSet与集合去重的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-021-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对HashSet与集合去重的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-021-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“HashSet与集合去重与数据库唯一索引如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-022-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Java异常体系的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-022-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Java异常体系的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-022-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Java异常体系的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-022-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Java异常体系的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-022-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Java异常体系与返回错误码如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-java-api-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-038-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对JVM运行时内存区域的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-039-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对垃圾判定与GC算法的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-039-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对垃圾判定与GC算法的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-039-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对垃圾判定与GC算法的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-039-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对垃圾判定与GC算法的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-039-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“垃圾判定与GC算法与手动内存管理如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-040-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对G1与ZGC的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-040-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对G1与ZGC的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-040-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对G1与ZGC的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-040-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“G1与ZGC与Parallel GC如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "oracle-gc-tuning-21",
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-041-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对类加载与双亲委派的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "oracle-java-spec-21"
+      ]
+    },
+    "be-043-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring IoC与依赖注入的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-044-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Bean生命周期的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-044-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Bean生命周期的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-044-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Bean生命周期的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-044-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Bean生命周期的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-044-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Spring Bean生命周期与普通Java对象生命周期如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-047-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring循环依赖与三级缓存的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-047-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring循环依赖与三级缓存的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-047-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring循环依赖与三级缓存的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-047-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring循环依赖与三级缓存的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-047-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Spring循环依赖与三级缓存与重构消除循环如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-048-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Boot自动配置的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "spring-boot-autoconfiguration",
+        "spring-framework-reference"
+      ]
+    },
+    "be-048-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Boot自动配置的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "spring-boot-autoconfiguration",
+        "spring-framework-reference"
+      ]
+    },
+    "be-048-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Spring Boot自动配置与手工Spring配置如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "spring-boot-autoconfiguration",
+        "spring-framework-reference"
+      ]
+    },
+    "be-050-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对MyBatis执行流程与缓存的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-050-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对MyBatis执行流程与缓存的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-050-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对MyBatis执行流程与缓存的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-050-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“MyBatis执行流程与缓存与JPA/Hibernate如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-051-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Security与JWT认证的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "spring-security-jwt",
+        "spring-framework-reference"
+      ]
+    },
+    "be-051-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Security与JWT认证的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "spring-security-jwt",
+        "spring-framework-reference"
+      ]
+    },
+    "be-051-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Security与JWT认证的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "spring-security-jwt",
+        "spring-framework-reference"
+      ]
+    },
+    "be-051-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Spring Security与JWT认证的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "spring-security-jwt",
+        "spring-framework-reference"
+      ]
+    },
+    "be-051-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Spring Security与JWT认证与Session认证如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "spring-security-jwt",
+        "spring-framework-reference"
+      ]
+    },
+    "be-053-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对异步任务与定时任务的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-053-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对异步任务与定时任务的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-053-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对异步任务与定时任务的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-053-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对异步任务与定时任务的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-053-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“异步任务与定时任务与消息队列如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "spring-framework-reference"
+      ]
+    },
+    "be-076-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对消息队列的异步、解耦与削峰的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "kafka-official-design"
+      ]
+    },
+    "be-076-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对消息队列的异步、解耦与削峰的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "kafka-official-design"
+      ]
+    },
+    "be-077-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对消息可靠投递的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-077-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对消息可靠投递的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-077-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“消息可靠投递与本地事务Outbox如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-078-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对重复消费与幂等的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-078-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对重复消费与幂等的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-078-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对重复消费与幂等的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-078-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对重复消费与幂等的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-078-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“重复消费与幂等与Exactly-once语义如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-080-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Kafka、RabbitMQ与RocketMQ的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-080-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Kafka、RabbitMQ与RocketMQ的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-080-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Kafka、RabbitMQ与RocketMQ的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-080-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Kafka、RabbitMQ与RocketMQ的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-080-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Kafka、RabbitMQ与RocketMQ与数据库任务表如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "kafka-official-design",
+        "rabbitmq-reliability"
+      ]
+    },
+    "be-081-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对CAP与BASE的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "cap-paper-gilbert-lynch",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-081-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对CAP与BASE的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "cap-paper-gilbert-lynch",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-081-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对CAP与BASE的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "cap-paper-gilbert-lynch",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-081-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对CAP与BASE的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "cap-paper-gilbert-lynch",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-081-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“CAP与BASE与ACID事务如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "cap-paper-gilbert-lynch",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-082-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“分布式事务与本地数据库事务如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "cap-paper-gilbert-lynch",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-084-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对服务发现与负载均衡的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-084-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对服务发现与负载均衡的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-084-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对服务发现与负载均衡的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-084-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对服务发现与负载均衡的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-084-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“服务发现与负载均衡与DNS负载均衡如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "rfc-1034-dns",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-085-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对限流、熔断与降级的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-086-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对接口幂等设计的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-087-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“最终一致性与对账与强一致同步事务如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "cap-paper-gilbert-lynch",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-088-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对微服务拆分的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-088-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对微服务拆分的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-088-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对微服务拆分的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-088-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对微服务拆分的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-088-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“微服务拆分与模块化单体如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "javaguide-priority-2026",
+        "opentelemetry-signals",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "be-089-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对可观测性与链路追踪的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "opentelemetry-signals",
+        "javaguide-priority-2026",
+        "xiaolin-backend-2026"
+      ]
+    },
+    "ai-002-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Transformer与自注意力的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "transformer-paper-neurips-2017",
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-004-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对结构化输出与Schema的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "json-schema-2020-12",
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-004-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对结构化输出与Schema的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "json-schema-2020-12",
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-004-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对结构化输出与Schema的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "json-schema-2020-12",
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-004-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对结构化输出与Schema的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "json-schema-2020-12",
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-004-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“结构化输出与Schema与自由文本输出如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "json-schema-2020-12",
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-005-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对流式响应、限流与重试的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-006-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对消息角色与Prompt模板的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-006-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对消息角色与Prompt模板的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-006-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对消息角色与Prompt模板的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-006-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对消息角色与Prompt模板的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-006-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“消息角色与Prompt模板与硬编码单字符串Prompt如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "openai-chat-api-2026",
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-007-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对上下文工程的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-007-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对上下文工程的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-008-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对幻觉与事实落地的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-008-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对幻觉与事实落地的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-008-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对幻觉与事实落地的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-008-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对幻觉与事实落地的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-008-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“幻觉与事实落地与普通业务错误如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "owasp-genai-top10-2026",
+        "rag-paper-neurips-2020",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-020-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Plan-and-Execute的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-020-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Plan-and-Execute的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-020-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Plan-and-Execute的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-020-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Plan-and-Execute的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-020-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Plan-and-Execute与ReAct如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-021-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对LangChain与LangGraph的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-021-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对LangChain与LangGraph的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-021-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“LangChain与LangGraph与手写状态机如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-024-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Function Calling与工具Schema的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-024-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Function Calling与工具Schema的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-024-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Function Calling与工具Schema的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-024-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Function Calling与工具Schema与自然语言解析如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-025-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对工具选择与动态检索的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-029-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Skills与渐进式披露的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "agent-skills-spec",
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-029-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Skills与渐进式披露的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "agent-skills-spec",
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-029-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Skills与渐进式披露的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "agent-skills-spec",
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-029-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对Skills与渐进式披露的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "agent-skills-spec",
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-029-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“Skills与渐进式披露与把全部规则写入System Prompt如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "agent-skills-spec",
+        "mcp-architecture-official",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-032-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对多Agent协作与编排的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-032-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对多Agent协作与编排的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-032-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对多Agent协作与编排的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-032-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对多Agent协作与编排的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-032-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“多Agent协作与编排与单Agent如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "langgraph-multi-agent",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-039-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对RAG项目指标与优化复盘的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-039-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对RAG项目指标与优化复盘的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-040-1": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对生产部署、并发与SSE的定义、要解决的问题、成立前提与术语边界。",
+      "sourceIds": [
+        "whatwg-sse",
+        "opentelemetry-signals",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-040-2": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对生产部署、并发与SSE的执行链、关键状态、因果关系与失败边界。",
+      "sourceIds": [
+        "whatwg-sse",
+        "opentelemetry-signals",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-040-3": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对生产部署、并发与SSE的使用约束、关键参数、异常处理与验证指标。",
+      "sourceIds": [
+        "whatwg-sse",
+        "opentelemetry-signals",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-040-4": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对生产部署、并发与SSE的常见故障、证据采集、定位顺序与修复验证。",
+      "sourceIds": [
+        "whatwg-sse",
+        "opentelemetry-signals",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
+    },
+    "ai-040-5": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "note": "已核对“生产部署、并发与SSE与同步短请求服务如何比较和选型？”涉及的比较维度、适用前提、代价与选型边界。",
+      "sourceIds": [
+        "whatwg-sse",
+        "opentelemetry-signals",
+        "langgraph-official-persistence",
+        "javaguide-ai-2026"
+      ]
     }
   }
 }

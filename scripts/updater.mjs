@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { backendConcepts } from "./catalog-backend.mjs";
 import { agentConcepts } from "./catalog-agent.mjs";
-import { buildQuestions, allCatalogConcepts, loadSources, loadNewConcepts, loadLearningHints, loadContentReviews, sanitizeLearningHints } from "./generate-questions.mjs";
+import { buildQuestions, allCatalogConcepts, loadSources, loadNewConcepts, loadLearningHints, loadContentReviews, loadContentEnhancements, sanitizeLearningHints } from "./generate-questions.mjs";
 import { browserStatus, browserFetchText } from "./browser-login.mjs";
 import { validatePayload, expectedCounts } from "./validate-data.mjs";
 import { writeFileAtomic, writeJsonAtomic } from "./local-json.mjs";
@@ -132,7 +132,7 @@ function evidenceTerms(concept) {
   return [...new Set([...namedTerms, ...tagTerms])].sort((a, b) => b.length - a.length);
 }
 
-function groundAiExtraction(parsed, input, knownConceptByName) {
+export function groundAiExtraction(parsed, input, knownConceptByName) {
   const concepts = Array.isArray(parsed?.concepts) ? parsed.concepts : [];
   const sourceText = normalizedSearchText(input.promptText);
   const accepted = [];
@@ -624,7 +624,42 @@ async function saveAnalysisCache(entries) {
   } catch {}
 }
 
-export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manualUrls = [], manualTexts = [], aiChat, onEvent = () => {}, perSourceTimeoutMs = 300_000, budgetMs = 30 * 60_000, analysisMode = "scale", signal, finalizeSignal } = {}) {
+export function summarizeTelemetry(samples, label = "自定义模型") {
+  const clean = (Array.isArray(samples) ? samples : []).filter((sample) => Number.isFinite(sample?.durationMs) && sample.durationMs >= 0);
+  const durations = clean.map((sample) => Math.round(sample.durationMs)).sort((a, b) => a - b);
+  const percentile = (ratio) => durations.length ? durations[Math.min(durations.length - 1, Math.floor((durations.length - 1) * ratio))] : null;
+  const byStage = {};
+  for (const sample of clean) {
+    const stage = cleanText(sample.stage, 60) || "unknown";
+    const bucket = byStage[stage] ||= { calls: 0, ok: 0, requestErrors: 0, parseErrors: 0, totalDurationMs: 0 };
+    bucket.calls += 1;
+    bucket.totalDurationMs += Math.round(sample.durationMs);
+    if (sample.status === "ok") bucket.ok += 1;
+    else if (sample.status === "parse-error") bucket.parseErrors += 1;
+    else bucket.requestErrors += 1;
+  }
+  for (const bucket of Object.values(byStage)) {
+    bucket.averageDurationMs = bucket.calls ? Math.round(bucket.totalDurationMs / bucket.calls) : null;
+    delete bucket.totalDurationMs;
+  }
+  return {
+    localOnly: true,
+    label: cleanText(label, 80) || "自定义模型",
+    calls: clean.length,
+    ok: clean.filter((sample) => sample.status === "ok").length,
+    requestErrors: clean.filter((sample) => sample.status === "request-error").length,
+    parseErrors: clean.filter((sample) => sample.status === "parse-error").length,
+    durationMs: {
+      average: durations.length ? Math.round(durations.reduce((sum, value) => sum + value, 0) / durations.length) : null,
+      p50: percentile(0.5),
+      p95: percentile(0.95),
+      max: durations.at(-1) ?? null
+    },
+    byStage
+  };
+}
+
+export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manualUrls = [], manualTexts = [], aiChat, onEvent = () => {}, perSourceTimeoutMs = 300_000, budgetMs = 30 * 60_000, analysisMode = "scale", signal, finalizeSignal, telemetryEnabled = false, telemetryLabel = "自定义模型" } = {}) {
   if (typeof aiChat !== "function") throw new Error("缺少 aiChat 函数");
   throwIfAborted(signal);
   const deadline = budgetMs > 0 ? Date.now() + budgetMs : 0;
@@ -634,6 +669,7 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
   const existingConceptCandidates = await loadConceptCandidates();
   const contentReviewsPayload = await loadContentReviews();
   const contentReviews = contentReviewsPayload.questions || {};
+  const contentEnhancements = await loadContentEnhancements();
   const knownConcepts = [...backendConcepts, ...agentConcepts, ...existingDynamicConcepts];
   const knownConceptNames = [...new Set(knownConcepts.map((concept) => concept.name).filter(Boolean))];
   const knownConceptSet = new Set(knownConceptNames);
@@ -747,6 +783,26 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
     batchCircuitTrips: 0,
     batchBypassedSources: 0
   };
+  const telemetrySamples = [];
+  const trackedAi = async (stage, messages, options, parse) => {
+    const startedAt = Date.now();
+    let rawReceived = false;
+    try {
+      const raw = await aiChat(messages, options);
+      rawReceived = true;
+      const parsed = parse(raw);
+      if (telemetryEnabled) telemetrySamples.push({ stage, status: "ok", durationMs: Date.now() - startedAt });
+      return parsed;
+    } catch (error) {
+      if (telemetryEnabled) telemetrySamples.push({
+        stage,
+        status: rawReceived ? "parse-error" : "request-error",
+        durationMs: Date.now() - startedAt,
+        errorClass: cleanText(error?.code || error?.name || "Error", 60)
+      });
+      throw error;
+    }
+  };
   const unresolved = [];
   items.forEach((item, index) => {
     const promptText = selectRelevantText(item.text, profile.inputChars);
@@ -813,14 +869,14 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
       try {
         aiPerformance.calls += 1;
         aiPerformance.batchCalls += 1;
-        const raw = await aiChat(
+        const usable = await trackedAi("batch-extraction",
           [
             { role: "system", content: batchExtractionSystemPrompt() },
             { role: "user", content: batchExtractionUserPrompt(batch, profile.maxConcepts, profile.name === "compatible") }
           ],
-          { maxTokens: profile.extractionTokens, temperature: 0.15, timeoutMs: perSourceTimeoutMs, signal: combineSignals(signal, finalizeSignal) }
+          { maxTokens: profile.extractionTokens, temperature: 0.15, timeoutMs: perSourceTimeoutMs, signal: combineSignals(signal, finalizeSignal) },
+          storeBatchResult
         );
-        const usable = storeBatchResult(raw);
         consecutiveBatchFailures = 0;
         onEvent({ phase: "batch", id: batchId, status: "ok", sources: batch.length, usable, durationMs: Date.now() - startedAt });
       } catch (error) {
@@ -829,14 +885,14 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
           const compactBatch = batch.map((input) => ({ ...input, promptText: selectRelevantText(input.promptText, 1_200) }));
           aiPerformance.calls += 1;
           aiPerformance.batchCalls += 1;
-          const retryRaw = await aiChat(
+          const usable = await trackedAi("batch-retry",
             [
               { role: "system", content: batchExtractionSystemPrompt() },
               { role: "user", content: batchExtractionUserPrompt(compactBatch, Math.min(6, profile.maxConcepts), true) }
             ],
-            { maxTokens: Math.min(4_500, profile.extractionTokens), temperature: 0.1, timeoutMs: perSourceTimeoutMs, signal: combineSignals(signal, finalizeSignal) }
+            { maxTokens: Math.min(4_500, profile.extractionTokens), temperature: 0.1, timeoutMs: perSourceTimeoutMs, signal: combineSignals(signal, finalizeSignal) },
+            storeBatchResult
           );
-          const usable = storeBatchResult(retryRaw);
           consecutiveBatchFailures = 0;
           onEvent({ phase: "batch", id: batchId, status: "ok", sources: batch.length, usable, retry: true, durationMs: Date.now() - startedAt });
         } catch (retryError) {
@@ -884,14 +940,14 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
         try {
           aiPerformance.calls += 1;
           aiPerformance.singleCalls += 1;
-          const raw = await aiChat(
+          parsed = await trackedAi("single-extraction",
             [
               { role: "system", content: extractionSystemPrompt() },
               { role: "user", content: extractionUserPrompt(item.ref, promptText, candidateNames, profile.maxConcepts, profile.name === "compatible") }
             ],
-            { ...chatOptions, signal: workSignal }
+            { ...chatOptions, signal: workSignal },
+            parseGrounded
           );
-          parsed = parseGrounded(raw);
         } catch (firstError) {
           if (finalizeSignal?.aborted) throw firstError;
           if (signal?.aborted) throw abortError();
@@ -902,14 +958,14 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
           aiPerformance.calls += 1;
           aiPerformance.singleCalls += 1;
           const compactText = selectRelevantText(promptText, Math.max(1200, Math.floor(profile.inputChars / 2)));
-          const retryRaw = await aiChat(
+          parsed = await trackedAi("single-retry",
             [
               { role: "system", content: extractionSystemPrompt() },
               { role: "user", content: extractionUserPrompt(item.ref, compactText, candidateNames, profile.maxConcepts, true, cleanText(firstError.message, 180)) }
             ],
-            { ...chatOptions, maxTokens: Math.max(800, Math.floor(profile.extractionTokens * 0.75)), signal: workSignal }
+            { ...chatOptions, maxTokens: Math.max(800, Math.floor(profile.extractionTokens * 0.75)), signal: workSignal },
+            parseGrounded
           );
-          parsed = parseGrounded(retryRaw);
         }
         aiPerformance.fallbackSingleSources += 1;
         analysisCache[cacheKey] = { analyzedAt: new Date().toISOString(), source: parsed.source, concepts: parsed.concepts, method: analysisMethod };
@@ -1105,8 +1161,8 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
   const cleanConcepts = promotedConcepts.map(({ originSource, promotion, ...rest }) => rest);
   const { backend, agent } = allCatalogConcepts([...existingDynamicConcepts, ...cleanConcepts]);
   const afterQuestions = [
-    ...buildQuestions(backend, "backend", "be", mergedSources, sourcesPayload.snapshotDate, null, contentReviews),
-    ...buildQuestions(agent, "agent", "ai", mergedSources, sourcesPayload.snapshotDate, null, contentReviews)
+    ...buildQuestions(backend, "backend", "be", mergedSources, sourcesPayload.snapshotDate, null, contentReviews, new Map(), contentEnhancements),
+    ...buildQuestions(agent, "agent", "ai", mergedSources, sourcesPayload.snapshotDate, null, contentReviews, new Map(), contentEnhancements)
   ];
   const beforeById = new Map(beforePayload.questions.map((q) => [q.id, q]));
   const formulaImportance = new Map(afterQuestions.map((q) => [q.id, q.importance]));
@@ -1146,19 +1202,20 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
       const evalTimeout = deadline ? Math.min(240_000, Math.max(60_000, deadline - Date.now() - 10_000)) : 240_000;
       const batches = [evalCandidates.slice(0, 20), evalCandidates.slice(20)];
       const settled = await Promise.allSettled(batches.map((batch) => batch.length
-        ? aiChat(
+        ? trackedAi("score-evaluation",
             [
               { role: "system", content: evaluationSystemPrompt() },
               { role: "user", content: evaluationUserPrompt(makeRows(batch)) }
             ],
-            { maxTokens: 4000, temperature: 0.1, timeoutMs: evalTimeout, signal }
+            { maxTokens: 4000, temperature: 0.1, timeoutMs: evalTimeout, signal },
+            parseEvaluation
           )
         : Promise.reject(new Error("空批次"))));
       const adjustments = [];
       throwIfAborted(signal);
       for (const result of settled) {
         if (result.status !== "fulfilled") continue;
-        try { adjustments.push(...parseEvaluation(result.value)); } catch {}
+        adjustments.push(...result.value);
       }
       if (!adjustments.length && settled.every((result) => result.status === "rejected")) {
         throw settled[0].reason || new Error("评分复核失败");
@@ -1288,7 +1345,8 @@ export async function runAnalysis({ autoFetch = true, maxAutoSources = 80, manua
         ? Number((aiPerformance.evidenceAccepted / (aiPerformance.evidenceAccepted + aiPerformance.evidenceRejected)).toFixed(3))
         : null,
       batchSize: profile.batchSize,
-      batchConcurrency: profile.batchConcurrency
+      batchConcurrency: profile.batchConcurrency,
+      ...(telemetryEnabled ? { providerTelemetry: summarizeTelemetry(telemetrySamples, telemetryLabel) } : {})
     },
     expectedCounts: draftExpectedCounts,
     analysisMode: profile.name,
@@ -1448,13 +1506,14 @@ export async function applyUpdate({ selectedSourceIds = null, selectedConceptNam
       candidates: [...watchlistByName.values()].slice(0, 300)
     });
 
-    const { buildPayload, buildQuestions, allCatalogConcepts, loadAiScores, loadContentReviews } = await import("./generate-questions.mjs");
+    const { buildPayload, buildQuestions, allCatalogConcepts, loadAiScores, loadContentReviews, loadContentEnhancements } = await import("./generate-questions.mjs");
     const sourcesAfterWrite = await loadSources();
     const { backend: bConcepts, agent: aConcepts } = allCatalogConcepts(await loadNewConcepts());
     const contentReviews = (await loadContentReviews()).questions || {};
+    const contentEnhancements = await loadContentEnhancements();
     const formulaQuestions = [
-      ...buildQuestions(bConcepts, "backend", "be", sourcesAfterWrite.sources, sourcesAfterWrite.snapshotDate, null, contentReviews),
-      ...buildQuestions(aConcepts, "agent", "ai", sourcesAfterWrite.sources, sourcesAfterWrite.snapshotDate, null, contentReviews)
+      ...buildQuestions(bConcepts, "backend", "be", sourcesAfterWrite.sources, sourcesAfterWrite.snapshotDate, null, contentReviews, new Map(), contentEnhancements),
+      ...buildQuestions(aConcepts, "agent", "ai", sourcesAfterWrite.sources, sourcesAfterWrite.snapshotDate, null, contentReviews, new Map(), contentEnhancements)
     ];
     const baseById = new Map(formulaQuestions.map((q) => [q.id, q.importance]));
     const existingScores = await loadAiScores();

@@ -50,6 +50,17 @@ export async function loadContentReviews() {
   }
 }
 
+export async function loadContentEnhancements() {
+  try {
+    const payload = JSON.parse(await readFile(join(root, "research", "content-enhancements.json"), "utf8"));
+    return payload?.enhancements && typeof payload.enhancements === "object" && !Array.isArray(payload.enhancements)
+      ? payload.enhancements
+      : {};
+  } catch {
+    return {};
+  }
+}
+
 export function sanitizeLearningHints(hints) {
   if (!Array.isArray(hints)) return [];
   const seen = new Set();
@@ -175,6 +186,122 @@ const answerFrameworks = {
   comparison: ["先统一比较维度", "分别说优势与代价", "说明各自成立前提", "根据当前场景给结论"]
 };
 
+function withoutTrailingPunctuation(value) {
+  return String(value || "").trim().replace(/[。！？!?；;]+$/u, "");
+}
+
+function detailedAnswerForAngle(concept, angle) {
+  const alternatives = concept.compare || "相邻方案";
+  const sections = {
+    definition: [
+      { title: "一句话先懂", content: concept.definition },
+      { title: "它为什么会出现", content: `先从问题出发：${withoutTrailingPunctuation(concept.application)}。${concept.name}的价值不是背名词，而是让这类约束有明确的处理方式。` },
+      { title: "抓住一个核心机制", content: concept.mechanism },
+      { title: "什么时候不能只套定义", content: `真实系统还要结合数据规模、并发、失败恢复和可观测性判断；${concept.pitfall}` },
+      { title: `别和${alternatives}混淆`, content: concept.tradeoff }
+    ],
+    mechanism: [
+      { title: "先明确输入与前提", content: `${withoutTrailingPunctuation(concept.definition)}。讲机制前先说明参与者、输入以及成立条件，避免直接跳到实现细节。` },
+      { title: "按因果顺序讲执行链", content: concept.mechanism },
+      { title: "执行后得到什么", content: `机制最终要服务于项目目标：${concept.application}` },
+      { title: "链路最容易在哪里断", content: concept.pitfall },
+      { title: "如何证明机制真的生效", content: `不要只复述源码或流程图，应通过日志、指标、状态变化或对照实验验证；选型时还要说明：${concept.tradeoff}` }
+    ],
+    application: [
+      { title: "先说业务目标与约束", content: `${withoutTrailingPunctuation(concept.definition)}。落到项目时先交代流量、数据量、一致性、延迟和团队维护成本等约束。` },
+      { title: "给出可落地的设计", content: concept.application },
+      { title: "解释关键参数和链路", content: concept.mechanism },
+      { title: "覆盖失败处理", content: `设计不能只描述成功路径。需要提前处理这些风险：${concept.pitfall}` },
+      { title: "用指标和对照验证", content: `上线前后用成功率、P95/P99、资源消耗和故障恢复结果验证，并说明为什么没有选择${alternatives}：${concept.tradeoff}` }
+    ],
+    pitfall: [
+      { title: "先描述可观察的故障", content: `不要从猜原因开始。先说明错误、延迟、资源曲线、数据状态或用户影响，再围绕${concept.name}缩小范围。` },
+      { title: "收集证据再定位", content: `结合调用链、日志、指标、配置和最小复现检查核心链路：${concept.mechanism}` },
+      { title: "高概率原因", content: concept.pitfall },
+      { title: "止损、修复与验证", content: `先降低影响面，再按项目约束修复：${withoutTrailingPunctuation(concept.application)}。修复后用同一组证据和回归用例确认问题消失。` },
+      { title: "避免错误归因", content: `还要排除${alternatives}等相邻机制，并说明两者边界：${concept.tradeoff}` }
+    ],
+    comparison: [
+      { title: "先统一比较维度", content: `围绕功能目标、正确性、性能、复杂度、成本和适用前提比较${concept.name}与${alternatives}，不要直接宣布谁更好。` },
+      { title: `${concept.name}的优势与代价`, content: `${withoutTrailingPunctuation(concept.definition)}。核心实现是：${concept.mechanism}` },
+      { title: `${alternatives}适合什么情况`, content: concept.tradeoff },
+      { title: "带入真实约束做决定", content: concept.application },
+      { title: "结论必须带边界", content: `如果约束变化，选择也可能变化；同时要规避这些常见误判：${concept.pitfall}` }
+    ]
+  };
+  return sections[angle.key] || sections.definition;
+}
+
+function interviewFollowUps(concept, angle) {
+  const alternatives = concept.compare || "相邻方案";
+  const followUps = {
+    definition: [
+      `如果不用${concept.name}，最先出现的工程问题是什么？`,
+      `${concept.name}成立需要哪些前提或边界？`,
+      `它和${alternatives}最容易混淆的区别是什么？`
+    ],
+    mechanism: [
+      `请按时间或调用顺序完整讲一遍${concept.name}，中间有哪些状态变化？`,
+      `链路中任一步失败时，系统如何发现、重试或恢复？`,
+      `你会查看哪些日志、指标或数据来证明机制按预期运行？`
+    ],
+    application: [
+      `如果流量或数据量增长十倍，你的${concept.name}方案要改哪里？`,
+      `这个设计的失败路径、降级策略和回滚方案是什么？`,
+      `你用什么基线和指标证明该方案比${alternatives}更合适？`
+    ],
+    pitfall: [
+      `线上出现相关告警时，你最先看哪三项证据，为什么？`,
+      `如何区分${concept.name}自身问题和${alternatives}引发的相似现象？`,
+      `临时止损后，你会补哪些监控、测试或机制避免复发？`
+    ],
+    comparison: [
+      `在什么约束变化下，你会从${concept.name}切换到${alternatives}？`,
+      `请从正确性、性能、复杂度和成本四个维度给出取舍。`,
+      `如果团队缺少相关经验，你会如何降低选型和迁移风险？`
+    ]
+  };
+  return followUps[angle.key] || followUps.definition;
+}
+
+function normalizeContentEnhancement(raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const scenario = String(raw.scenario || "").trim().slice(0, 500);
+  const steps = Array.isArray(raw.steps) ? raw.steps.map((step) => String(step).trim().slice(0, 260)).filter(Boolean).slice(0, 6) : [];
+  const expected = String(raw.expected || "").trim().slice(0, 400);
+  const sourceIds = Array.isArray(raw.sourceIds)
+    ? [...new Set(raw.sourceIds.map((sourceId) => String(sourceId).trim()).filter(Boolean))].slice(0, 8)
+    : [];
+  const code = raw.code && typeof raw.code === "object" && !Array.isArray(raw.code)
+    ? {
+        language: String(raw.code.language || "text").trim().slice(0, 30),
+        title: String(raw.code.title || "参考片段").trim().slice(0, 100),
+        content: String(raw.code.content || "").replace(/\r\n/g, "\n").trim().slice(0, 5000)
+      }
+    : null;
+  if (!scenario && !steps.length && !code?.content) return null;
+  return { scenario, steps, expected, ...(sourceIds.length ? { sourceIds } : {}), ...(code?.content ? { code } : {}) };
+}
+
+function workedExample(concept, angle, enhancement, fallbackSourceIds = []) {
+  const curated = normalizeContentEnhancement(enhancement);
+  const sourceIds = curated?.sourceIds?.length
+    ? curated.sourceIds
+    : [...new Set((fallbackSourceIds || []).map(String).filter(Boolean))].slice(0, 8);
+  return {
+    title: curated?.code ? curated.code.title : `${concept.name}最小演练`,
+    scenario: curated?.scenario || `把“${concept.application}”作为一个最小项目场景，先写下目标、输入和约束。`,
+    steps: curated?.steps?.length ? curated.steps : [
+      `画出${concept.name}的关键执行链：${concept.mechanism}`,
+      `主动注入一个失败条件并观察：${concept.pitfall}`,
+      `记录验证指标，再与${concept.compare}做一次对照。`
+    ],
+    expected: curated?.expected || `能够用当前题型“${angle.key}”复述设计、证据和边界，而不是只背结论。`,
+    ...(sourceIds.length ? { sourceIds } : {}),
+    ...(curated?.code ? { code: curated.code } : {})
+  };
+}
+
 export function effectiveSourceIds(concept, sourcesArray) {
   const direct = concept.sourceIds || [];
   const viaSupport = sourcesArray
@@ -218,7 +345,7 @@ function ageDays(date, asOf) {
   return Number.isFinite(time) ? Math.max(0, Math.floor((asOf.getTime() - time) / 86_400_000)) : 10_000;
 }
 
-export function buildQuestions(concepts, track, prefix, sourcesArray, snapshotDate, hintsMap = null, contentReviews = {}, publicAttentionMap = new Map()) {
+export function buildQuestions(concepts, track, prefix, sourcesArray, snapshotDate, hintsMap = null, contentReviews = {}, publicAttentionMap = new Map(), contentEnhancements = {}) {
   const sourceMap = new Map(sourcesArray.map((source) => [source.id, source]));
   const asOf = /^\d{4}-\d{2}-\d{2}$/.test(snapshotDate || "") ? new Date(`${snapshotDate}T00:00:00Z`) : new Date();
   const globalInterviewSamples = uniqueClusterSources(sourcesArray.filter(frequencyEligibleSource)).filter((source) => !aggregateSource(source)).length;
@@ -230,6 +357,7 @@ export function buildQuestions(concepts, track, prefix, sourcesArray, snapshotDa
       ...(hintsMap?.get(concept.name) || []),
       ...(concept.learningHints || [])
     ]);
+    const contentEnhancement = contentEnhancements?.[concept.name];
     const sources = effectiveSourceIds(concept, sourcesArray).map((id) => sourceMap.get(id)).filter(Boolean);
     const independentSources = uniqueClusterSources(sources);
     const interviewSources = independentSources.filter(frequencyEligibleSource);
@@ -281,13 +409,9 @@ export function buildQuestions(concepts, track, prefix, sourcesArray, snapshotDa
       quickAnswer: angle.answer(concept),
       keyPoints,
       answerFramework: answerFrameworks[angle.key],
-      detailedAnswer: [
-        { title: "先理解它解决什么", content: concept.definition },
-        { title: "核心机制怎么运转", content: concept.mechanism },
-        { title: "真实项目里怎么用", content: concept.application },
-        { title: "最容易踩的坑", content: concept.pitfall },
-        { title: `与${concept.compare}如何选择`, content: concept.tradeoff }
-      ],
+      detailedAnswer: detailedAnswerForAngle(concept, angle),
+      workedExample: workedExample(concept, angle, contentEnhancement, learningSourceIds),
+      interviewFollowUps: interviewFollowUps(concept, angle),
       relatedKnowledge: [...new Set([...(concept.tags || []), concept.compare, concept.topicGroup, concept.category])].filter(Boolean),
       learningSourceIds,
       ...(conceptHints.length ? { learningHints: conceptHints } : {}),
@@ -395,6 +519,7 @@ export async function buildPayload() {
   const newConcepts = await loadNewConcepts();
   const hintsMap = new Map(Object.entries(await loadLearningHints()));
   const contentReviews = (await loadContentReviews()).questions || {};
+  const contentEnhancements = await loadContentEnhancements();
   const { backend, agent } = allCatalogConcepts(newConcepts);
   const publicSignalPayload = await loadPublicQuestionSignals();
   const publicSignalResult = buildPublicQuestionAttention(publicSignalPayload, [
@@ -402,8 +527,8 @@ export async function buildPayload() {
     ...agent.map((concept) => ({ ...concept, track: "agent" }))
   ]);
   const questions = applyAiScores([
-    ...buildQuestions(backend, "backend", "be", sourcePayload.sources, sourcePayload.snapshotDate, hintsMap, contentReviews, publicSignalResult.attention),
-    ...buildQuestions(agent, "agent", "ai", sourcePayload.sources, sourcePayload.snapshotDate, hintsMap, contentReviews, publicSignalResult.attention)
+    ...buildQuestions(backend, "backend", "be", sourcePayload.sources, sourcePayload.snapshotDate, hintsMap, contentReviews, publicSignalResult.attention, contentEnhancements),
+    ...buildQuestions(agent, "agent", "ai", sourcePayload.sources, sourcePayload.snapshotDate, hintsMap, contentReviews, publicSignalResult.attention, contentEnhancements)
   ], await loadAiScores());
   return {
     schemaVersion: 1,
