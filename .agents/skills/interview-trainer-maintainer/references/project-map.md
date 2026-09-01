@@ -11,7 +11,7 @@ No account or database is required. The distributable runs from Node.js and keep
 | Layer | Technology | Role |
 | --- | --- | --- |
 | UI | Semantic HTML, modern CSS, vanilla ES modules | SPA views, responsive layout, themes, question/detail/update interactions |
-| Local state | Browser `localStorage` | Familiarity, bounded attempt history, failure reasons, due date, weak-focus queues, mistakes, favorites, notes, appearance |
+| Local state | Browser `localStorage` | Familiarity, recall-support evidence, adaptive stability/difficulty, bounded history, failure reasons, due date, weak-focus queues, mistakes, favorites, notes, appearance |
 | Server | Node.js 20 built-ins (`http`, `fs`, `fetch`, streams) | Static files, JSON APIs, local config, model proxy, updater orchestration |
 | AI compatibility | OpenAI Chat Completions-style `/v1/chat/completions` and `/v1/models` | Tutor, extraction, constrained score review; supports compatible relays |
 | Content build | ESM catalogs + deterministic generator/validator | Produces and checks `content/questions.json` |
@@ -42,7 +42,7 @@ There are no npm runtime dependencies. Chrome is optional and only needed for th
 
 ### Study
 
-`GET questions/sources/insights` → render topic/group/concept/type/company filters, recommended paths, saved custom sessions, specialty trends, and detail → save recall/rating/failure reasons/bounded history/collections/sessions in `localStorage` → derive daily, custom, or diagnosed weak-focus queues and progress → optional `POST /api/chat` tutor stream.
+`GET questions/sources/insights` → render filters, paths, sessions, trends, and detail → record independent/hinted/revealed recall with bounded adaptive history in `localStorage` → derive due/custom/weak-focus queues → optional `POST /api/chat` structured rubric/follow-up stream.
 
 ### Deterministic content build
 

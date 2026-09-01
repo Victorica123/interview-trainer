@@ -20,9 +20,17 @@ const generatedReviewedIds = questionsPayload.questions
 
 const declaredReviewCount = (reviewsPayload.reviewBatches || []).reduce((sum, batch) => sum + Number(batch.questionCount || 0), 0);
 assert.equal(registeredReviewedIds.length, declaredReviewCount, "explicit review entries should match the declared batch counts");
-assert.equal(registeredReviewedIds.length, 567, "the current explicit content-review registry should contain every core and high question");
+assert.equal(registeredReviewedIds.length, 632, "the current explicit content-review registry should contain core/high plus the evidence-backed extended batch");
 assert.deepEqual(generatedReviewedIds, registeredReviewedIds, "generated reviewed status must come only from the explicit registry");
-assert.equal(questionsPayload.questions.find((question) => question.tier === "extended")?.contentStatus, "outline", "priority alone must not automatically claim content review");
+assert.ok(questionsPayload.questions.some((question) => question.tier === "extended" && question.contentStatus === "outline"), "unselected extended questions must remain honest outlines");
+
+const phase6Extended = questionsPayload.questions.filter((question) =>
+  question.tier === "extended"
+  && question.importance >= 70
+  && Number(question.evidence?.independentInterviewSamples || 0) >= 2
+);
+assert.equal(phase6Extended.length, 65, "the evidence-backed near-threshold extended batch should remain stable");
+assert.ok(phase6Extended.every((question) => question.contentStatus === "reviewed"), "every selected phase-6 extended question should be explicitly reviewed");
 
 const coreQuestionIds = questionsPayload.questions
   .filter((question) => question.tier === "core")

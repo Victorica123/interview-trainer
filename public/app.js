@@ -95,7 +95,8 @@ const state = {
   updateFinalizing: false,
   updateAbort: null,
   sourceCandidates: [],
-  selectedCandidateIds: new Set()
+  selectedCandidateIds: new Set(),
+  recallSessions: new Map()
 };
 
 applyAppearance(state.appearance);
@@ -630,6 +631,7 @@ function renderQuestionList() {
 function selectQuestion(id) {
   const question = state.questions.find((item) => item.id === id);
   if (!question) return;
+  if (state.selectedId !== id) state.recallSessions.set(id, { hintUsed: false, answerRevealed: false });
   state.selectedId = id;
   location.hash = `q=${id}`;
   if (state.currentView !== "library") switchView("library");
@@ -682,6 +684,35 @@ function failureReasonLabel(reasonId, short = false) {
   return short ? reason?.shortLabel : reason?.label;
 }
 
+function recallSession(questionId) {
+  if (!state.recallSessions.has(questionId)) state.recallSessions.set(questionId, { hintUsed: false, answerRevealed: false });
+  return state.recallSessions.get(questionId);
+}
+
+function reviewKind(questionId) {
+  const session = recallSession(questionId);
+  return session.answerRevealed ? "revealed" : session.hintUsed ? "hinted" : "independent";
+}
+
+function reviewKindLabel(kind) {
+  if (kind === "revealed") return "已看答案，本轮最高按 2/4 记录";
+  if (kind === "hinted") return "使用过提示，本轮最高按 3/4 记录";
+  if (kind === "legacy") return "旧版记录";
+  return "独立回忆，可完整计入掌握度";
+}
+
+function markRecallSupport(questionId, kind) {
+  const session = recallSession(questionId);
+  if (kind === "hinted") session.hintUsed = true;
+  if (kind === "revealed") session.answerRevealed = true;
+  const indicator = $("#recallEvidence");
+  if (indicator) {
+    const currentKind = reviewKind(questionId);
+    indicator.dataset.kind = currentKind;
+    indicator.textContent = reviewKindLabel(currentKind);
+  }
+}
+
 function renderFailureReasonPicker(progress) {
   const selected = new Set(progress.reasonCodes || []);
   return `<div class="failure-reason-panel">
@@ -697,7 +728,10 @@ function renderAttemptHistory(progress) {
     const date = new Date(entry.at);
     const time = Number.isFinite(date.getTime()) ? date.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }) : "时间未知";
     const reasons = (entry.reasonCodes || []).map((reason) => failureReasonLabel(reason, true)).filter(Boolean);
-    return `<article><div><b>${entry.level}/4 · ${escapeHtml(ratingLabel(entry.level))}</b><time>${escapeHtml(time)}</time></div><p>${reasons.length ? escapeHtml(reasons.join(" · ")) : "本次未记录弱项原因"}</p>${entry.answerPreview ? `<blockquote>${escapeHtml(entry.answerPreview)}</blockquote>` : ""}</article>`;
+    const support = reviewKindLabel(entry.reviewKind || "legacy");
+    const interval = Number(entry.scheduledDays || 0);
+    const selfRating = Number.isInteger(entry.selfLevel) && entry.selfLevel !== entry.level ? ` · 自评 ${entry.selfLevel}/4` : "";
+    return `<article><div><b>${entry.level}/4 · ${escapeHtml(ratingLabel(entry.level))}${selfRating}</b><time>${escapeHtml(time)}</time></div><p>${escapeHtml(support)}${interval ? ` · 下次间隔 ${escapeHtml(String(interval))} 天` : ""}${reasons.length ? ` · ${escapeHtml(reasons.join(" · "))}` : ""}</p>${entry.answerPreview ? `<blockquote>${escapeHtml(entry.answerPreview)}</blockquote>` : ""}</article>`;
   }).join("")}</div></details>`;
 }
 
@@ -710,6 +744,10 @@ function renderQuestionDetail(question) {
   const publicAttention = question.evidence?.publicQuestionAttention;
   const companies = questionCompanies(question);
   const evidenceText = { strong: "近期面经强信号", medium: "多来源支持", foundation: "基础必要性" }[question.evidence?.level] || "待核查";
+  const dueDate = progress.dueAt ? new Date(progress.dueAt) : null;
+  const dueText = progress.attempts && dueDate && Number.isFinite(dueDate.getTime())
+    ? `${dueDate.getTime() <= Date.now() ? "已经到期" : `预计 ${dueDate.toLocaleDateString("zh-CN")} 复习`} · 当前稳定间隔 ${progress.stabilityDays || "—"} 天 · 遗忘 ${progress.lapses || 0} 次`
+    : "完成第一次主动回忆后，系统会根据表现安排复习";
   $("#questionDetail").className = "question-detail";
   $("#questionDetail").innerHTML = `<div class="detail-inner">
     <div class="tag-row">
@@ -729,6 +767,7 @@ function renderQuestionDetail(question) {
     <div class="recall-box">
       <label for="recallAnswer">先写下或口述你的答案</label>
       <textarea id="recallAnswer" placeholder="不要求完美。先从脑中提取，再对照答案，效果远好于直接阅读。">${escapeHtml(progress.answer || "")}</textarea>
+      <small id="recallEvidence" class="recall-evidence" data-kind="${reviewKind(question.id)}">${escapeHtml(reviewKindLabel(reviewKind(question.id)))}</small>
     </div>
 
     <div class="answer-actions">
@@ -765,6 +804,7 @@ function renderQuestionDetail(question) {
 
     <div class="detail-section">
       <h3>你的熟悉程度</h3>
+      <p class="adaptive-review-summary">${escapeHtml(dueText)}</p>
       <div class="rating-grid">${[0,1,2,3,4].map((level) => `<button class="rating-button ${progress.level === level && progress.attempts > 0 ? "active" : ""}" data-rating="${level}"><b>${level}</b>${ratingLabel(level)}</button>`).join("")}</div>
       ${renderFailureReasonPicker(progress)}
       ${renderAttemptHistory(progress)}
@@ -795,11 +835,20 @@ function renderQuestionDetail(question) {
   });
   $("#favoriteButton").addEventListener("click", () => toggleQuestionFlag(question, "favorite"));
   $("#mistakeButton").addEventListener("click", () => toggleQuestionFlag(question, "inMistakeBook"));
-  $("#hintButton").addEventListener("click", () => $("#hintPanel").classList.toggle("open"));
-  $("#answerButton").addEventListener("click", () => $("#answerPanel").classList.toggle("open"));
+  $("#hintButton").addEventListener("click", () => {
+    const panel = $("#hintPanel");
+    panel.classList.toggle("open");
+    if (panel.classList.contains("open")) markRecallSupport(question.id, "hinted");
+  });
+  $("#answerButton").addEventListener("click", () => {
+    const panel = $("#answerPanel");
+    panel.classList.toggle("open");
+    if (panel.classList.contains("open")) markRecallSupport(question.id, "revealed");
+  });
   $("#detailedAnswerButton").addEventListener("click", () => {
     const panel = $("#detailedAnswerPanel");
     panel.classList.toggle("open");
+    if (panel.classList.contains("open")) markRecallSupport(question.id, "revealed");
     $("#detailedAnswerButton").textContent = panel.classList.contains("open") ? "收起新手详细讲解" : "查看新手详细讲解";
   });
   $$('[data-related-topic]', $("#questionDetail")).forEach((button) => button.addEventListener("click", () => {
@@ -821,16 +870,19 @@ function renderQuestionDetail(question) {
 
 function rateQuestion(question, level) {
   const current = getProgress(question.id);
-  const intervalDays = [0, 1, 3, 7, 21][level];
-  state.progress[question.id] = recordProgressRating(current, {
+  const kind = reviewKind(question.id);
+  const next = recordProgressRating(current, {
     level,
     answer: $("#recallAnswer")?.value || current.answer,
-    reasonCodes: current.reasonCodes
+    reasonCodes: current.reasonCodes,
+    reviewKind: kind
   });
+  state.progress[question.id] = next;
   saveProgress();
   renderAll();
   renderQuestionDetail(question);
-  showToast(level <= 1 ? "已加入近期复习队列和错题本" : level >= 3 ? `已记录：${ratingLabel(level)}，${intervalDays} 天后复习` : "已加入近期复习队列");
+  const capped = next.level !== level ? `因${kind === "revealed" ? "已查看答案" : "使用过提示"}，本次按 ${next.level}/4 计入。` : "";
+  showToast(`${capped}下次复习约 ${next.stabilityDays} 天后${next.level <= 1 ? "，并已加入错题本" : ""}`);
 }
 
 function toggleFailureReason(question, reasonId) {
@@ -860,7 +912,10 @@ function randomQuestion() {
 }
 
 function dailyQuestions() {
-  const due = state.questions.filter((question) => isDue(getProgress(question.id))).sort((a, b) => b.importance - a.importance);
+  const due = state.questions.filter((question) => isDue(getProgress(question.id))).sort((a, b) => {
+    const dueDelta = new Date(getProgress(a.id).dueAt || 0) - new Date(getProgress(b.id).dueAt || 0);
+    return dueDelta || b.importance - a.importance;
+  });
   const newCore = state.questions.filter((question) => getProgress(question.id).attempts === 0 && question.tier === "core").sort((a, b) => b.importance - a.importance);
   return [...due.slice(0, 15), ...newCore.slice(0, Math.max(0, 20 - due.length))];
 }
@@ -1607,8 +1662,10 @@ function useQuickAction(mode) {
   if (!question) {
     $("#chatInput").value = "请先帮我选择一个适合新手的核心问题，并说明为什么应该先学它。";
   } else if (mode === "hint") {
+    markRecallSupport(question.id, "hinted");
     $("#chatInput").value = "请只给我一点提示，不要直接公布完整答案。";
   } else if (mode === "explain") {
+    markRecallSupport(question.id, "revealed");
     $("#chatInput").value = "请把这道题讲给完全没有基础的人听，并给一个具体例子。";
   } else if (mode === "review") {
     const answer = getProgress(question.id).answer;
@@ -1634,7 +1691,17 @@ async function submitChat(event) {
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ messages: state.aiMessages.slice(-12), question, mode: state.aiMode })
+      body: JSON.stringify({
+        messages: state.aiMessages.slice(-12),
+        question,
+        mode: state.aiMode,
+        studyContext: question ? {
+          reviewKind: reviewKind(question.id),
+          attempts: getProgress(question.id).attempts,
+          level: getProgress(question.id).level,
+          reasonCodes: getProgress(question.id).reasonCodes
+        } : null
+      })
     });
     if (!response.ok) {
       const payload = await response.json().catch(() => ({}));
@@ -1679,7 +1746,7 @@ function appendChat(role, content) {
 }
 
 function exportProgress() {
-  const payload = { version: 4, exportedAt: new Date().toISOString(), progress: state.progress, sessions: state.customSessions };
+  const payload = { version: 5, exportedAt: new Date().toISOString(), progress: state.progress, sessions: state.customSessions };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");

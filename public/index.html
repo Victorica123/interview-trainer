@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f3f0e8" />
     <meta name="description" content="本地优先的 Java 后端与 AI/Agent 面试训练器" />
     <title>面试训练场</title>
-    <link rel="stylesheet" href="/styles.css?v=0.6.0" />
+    <link rel="stylesheet" href="/styles.css?v=0.7.0" />
   </head>
   <body>
     <div class="app-shell">
@@ -432,10 +432,10 @@
         <button data-ai-mode="hint">给点提示</button>
         <button data-ai-mode="explain">新手解释</button>
         <button data-ai-mode="review">评价回答</button>
-        <button data-ai-mode="followup">继续追问</button>
+        <button data-ai-mode="followup">模拟面试</button>
       </div>
       <div id="chatMessages" class="chat-messages">
-        <div class="chat-bubble assistant">我可以围绕当前题目给提示、解释概念、评价你的回答，或者模拟面试官追问。</div>
+        <div class="chat-bubble assistant">先独立回答，再让我按评分点逐项评价；模拟面试时我每次只追问一个关键缺口。</div>
       </div>
       <form id="chatForm" class="chat-form">
         <textarea id="chatInput" rows="3" placeholder="输入问题或粘贴你的回答…"></textarea>
@@ -499,6 +499,6 @@
     </dialog>
 
     <div id="toast" class="toast" role="status"></div>
-    <script type="module" src="/app.js?v=0.6.0"></script>
+    <script type="module" src="/app.js?v=0.7.0"></script>
   </body>
 </html>

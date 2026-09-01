@@ -18,7 +18,7 @@ All endpoints are local and JSON unless noted.
 | `GET /api/config` | — | AI config without key; includes `hasApiKey`, `apiKeyStorage` (`saved`, `session`, or `none`), and opt-in `telemetryEnabled` |
 | `POST /api/config` | Config fields | Sanitized public config; empty key preserves the in-memory key |
 | `GET /api/models` | — | `{models: string[]}` from compatible upstream |
-| `POST /api/chat` | `{messages, question?, mode?}` | NDJSON lines `{delta}`, optional `{usage}`, then `{done:true}` |
+| `POST /api/chat` | `{messages, question?, mode?, studyContext?}` | NDJSON lines `{delta}`, optional `{usage}`, then `{done:true}`; `studyContext` only carries bounded level/attempt count and `independent|hinted|revealed` evidence |
 | `GET /api/discovery/candidates` | — | 本机候选链接、平台、待分析/已登记状态和最近使用时间 |
 | `POST /api/discovery/candidates` | `{urls: string[]}` | URL 规范化、去重后的候选池；只接受无凭据的 http/https |
 | `DELETE /api/discovery/candidates` | `{ids: string[]}` | 按不透明候选 ID 删除；ID 不会被解释成路径或程序名 |
@@ -65,11 +65,11 @@ Update NDJSON phases: `start`, `fetch`, `analyze`, `partial`, `evaluate`, `draft
 
 ## Browser storage
 
-- `interviewTrainerProgressV1`: map keyed by stable question ID. Fields: `level`, `attempts`, `answer`, `note`, `favorite`, `inMistakeBook`, `mistakeCount`, active `reasonCodes`, up to 12 `history` items (`level`, `reasonCodes`, ≤600-character `answerPreview`, `at`), `dueAt`, and `updatedAt`. Storage is origin-scoped, so changing hostname, port, or browser requires export/import.
+- `interviewTrainerProgressV1`: stable-ID map retaining old fields plus `stabilityDays`, `difficulty`, `lapses`, `lastReviewAt`, and `lastReviewKind`. Each of 12 bounded history items records self/applied level, `independent|hinted|revealed|legacy`, interval, reasons, ≤600-character answer preview, and time. Hint use caps mastery at 3; answer reveal caps it at 2.
 - `interviewTrainerSessionsV1`: up to 30 sanitized custom sessions. Each stores one track, per-topic concept/angle/tier/limit/strategy rules, sanitized manual include/exclude question-ID overrides, a fixed question-ID snapshot (up to 5,000 IDs for forward growth), and timestamps. Bank changes never silently replace the snapshot.
 - `interviewTrainerAppearanceV1`: `{theme, readingSize}`.
 - `interviewTrainerLoginBrowserV1`: selected detected browser ID; no executable path is accepted from the page.
-- Export payload version 4: `{version, exportedAt, progress, sessions}`. Import still accepts version 2/3 and sanitizes IDs, sizes, booleans, numbers, dates, reason codes, bounded history, filters, and session snapshots.
+- Export payload version 5: `{version, exportedAt, progress, sessions}`. Import still accepts version 2/3/4 and sanitizes IDs, adaptive fields, sizes, booleans, dates, reason codes, bounded history, filters, and session snapshots.
 
 ## Repository data contracts
 

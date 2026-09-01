@@ -9,12 +9,19 @@ export const FAILURE_REASONS = [
 
 export const MAX_ATTEMPT_HISTORY = 12;
 export const MAX_HISTORY_ANSWER_CHARS = 600;
+export const REVIEW_KINDS = ["independent", "hinted", "revealed", "legacy"];
 
 const QUESTION_ID_PATTERN = /^(be|ai)-\d{3}-[1-5]$/;
 const REASON_IDS = new Set(FAILURE_REASONS.map((reason) => reason.id));
+const REVIEW_KIND_IDS = new Set(REVIEW_KINDS);
 
 function boundedInteger(value, min, max) {
   return Math.min(max, Math.max(min, Math.round(Number(value) || 0)));
+}
+
+function boundedNumber(value, min, max, fallback = min) {
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallback;
 }
 
 function validDate(value) {
@@ -34,8 +41,12 @@ function sanitizeHistory(value) {
     if (!at) return [];
     return [{
       level: boundedInteger(entry.level, 0, 4),
+      selfLevel: boundedInteger(entry.selfLevel ?? entry.level, 0, 4),
       reasonCodes: sanitizeReasonCodes(entry.reasonCodes),
       answerPreview: typeof entry.answerPreview === "string" ? entry.answerPreview.slice(0, MAX_HISTORY_ANSWER_CHARS) : "",
+      reviewKind: REVIEW_KIND_IDS.has(entry.reviewKind) ? entry.reviewKind : "legacy",
+      scheduledDays: boundedNumber(entry.scheduledDays, 0.25, 365, 1),
+      stabilityDays: boundedNumber(entry.stabilityDays, 0.25, 365, 1),
       at
     }];
   });
@@ -50,6 +61,11 @@ export function defaultProgress() {
     favorite: false,
     inMistakeBook: false,
     mistakeCount: 0,
+    stabilityDays: 0,
+    difficulty: 5,
+    lapses: 0,
+    lastReviewAt: null,
+    lastReviewKind: null,
     reasonCodes: [],
     history: [],
     dueAt: null,
@@ -69,6 +85,11 @@ export function sanitizeProgressEntry(value) {
     favorite: Boolean(value.favorite),
     inMistakeBook: typeof value.inMistakeBook === "boolean" ? value.inMistakeBook : attempts > 0 && level <= 1,
     mistakeCount: boundedInteger(value.mistakeCount, 0, 100_000),
+    stabilityDays: boundedNumber(value.stabilityDays, 0, 365, 0),
+    difficulty: boundedNumber(value.difficulty, 1, 10, 5),
+    lapses: boundedInteger(value.lapses, 0, 100_000),
+    lastReviewAt: validDate(value.lastReviewAt),
+    lastReviewKind: REVIEW_KIND_IDS.has(value.lastReviewKind) ? value.lastReviewKind : null,
     reasonCodes: sanitizeReasonCodes(value.reasonCodes),
     history: sanitizeHistory(value.history),
     dueAt: validDate(value.dueAt),
@@ -86,24 +107,75 @@ export function sanitizeProgress(input) {
   return clean;
 }
 
-export function recordProgressRating(currentValue, { level, answer = "", reasonCodes = [], now = new Date() }) {
+function roundedDays(value) {
+  return Math.round(Math.min(365, Math.max(0.25, value)) * 4) / 4;
+}
+
+function adaptiveSchedule(current, selfLevel, reviewKind, at) {
+  const cap = reviewKind === "revealed" ? 2 : reviewKind === "hinted" ? 3 : 4;
+  const level = Math.min(selfLevel, cap);
+  const previousStability = current.stabilityDays || [0.25, 1, 2, 5, 14][current.level] || 1;
+  const lastReviewMs = current.lastReviewAt ? new Date(current.lastReviewAt).getTime() : NaN;
+  const elapsedDays = Number.isFinite(lastReviewMs) ? Math.max(0, (new Date(at).getTime() - lastReviewMs) / 86_400_000) : previousStability;
+  const elapsedFactor = Math.min(1.8, Math.max(0.65, elapsedDays / Math.max(0.25, previousStability)));
+  const supportFactor = reviewKind === "independent" ? 1 : reviewKind === "hinted" ? 0.78 : 0.52;
+  const difficulty = boundedNumber(
+    current.difficulty + (2 - level) * 0.55 + (reviewKind === "independent" ? -0.15 : reviewKind === "hinted" ? 0.2 : 0.55),
+    1,
+    10,
+    5
+  );
+  const ease = Math.min(1.2, Math.max(0.72, 1.18 - (difficulty - 1) * 0.055));
+  let stabilityDays;
+  if (level === 0) stabilityDays = Math.max(0.25, previousStability * 0.28);
+  else if (level === 1) stabilityDays = Math.max(1, previousStability * 0.62);
+  else if (level === 2) stabilityDays = Math.max(2, previousStability * 1.35 * elapsedFactor * supportFactor * ease);
+  else if (level === 3) stabilityDays = Math.max(5, previousStability * 2.05 * elapsedFactor * supportFactor * ease);
+  else stabilityDays = Math.max(14, previousStability * 2.85 * elapsedFactor * ease);
+  stabilityDays = roundedDays(stabilityDays);
+  return {
+    level,
+    difficulty: Math.round(difficulty * 100) / 100,
+    stabilityDays,
+    scheduledDays: stabilityDays,
+    lapses: current.lapses + (level <= 1 ? 1 : 0)
+  };
+}
+
+export function recordProgressRating(currentValue, { level, answer = "", reasonCodes = [], reviewKind = "independent", now = new Date() }) {
   const current = sanitizeProgressEntry(currentValue);
-  const nextLevel = boundedInteger(level, 0, 4);
+  const selfLevel = boundedInteger(level, 0, 4);
+  const safeReviewKind = ["independent", "hinted", "revealed"].includes(reviewKind) ? reviewKind : "independent";
   const at = now instanceof Date && Number.isFinite(now.getTime()) ? now.toISOString() : new Date().toISOString();
+  const schedule = adaptiveSchedule(current, selfLevel, safeReviewKind, at);
+  const nextLevel = schedule.level;
   let reasons = sanitizeReasonCodes(reasonCodes);
   if (nextLevel === 0 && reasons.length === 0) reasons = ["unknown"];
   if (nextLevel === 1 && reasons.length === 0) reasons = ["forgot-keywords"];
   if (nextLevel >= 3) reasons = [];
-  const intervalDays = [0, 1, 3, 7, 21][nextLevel];
-  const dueAt = new Date(new Date(at).getTime() + intervalDays * 86_400_000).toISOString();
+  const dueAt = new Date(new Date(at).getTime() + schedule.scheduledDays * 86_400_000).toISOString();
   const answerPreview = String(answer || "").trim().slice(0, MAX_HISTORY_ANSWER_CHARS);
-  const history = [...current.history, { level: nextLevel, reasonCodes: reasons, answerPreview, at }].slice(-MAX_ATTEMPT_HISTORY);
+  const history = [...current.history, {
+    level: nextLevel,
+    selfLevel,
+    reasonCodes: reasons,
+    answerPreview,
+    reviewKind: safeReviewKind,
+    scheduledDays: schedule.scheduledDays,
+    stabilityDays: schedule.stabilityDays,
+    at
+  }].slice(-MAX_ATTEMPT_HISTORY);
   return {
     ...current,
     level: nextLevel,
     attempts: Math.min(100_000, current.attempts + 1),
     inMistakeBook: nextLevel <= 1 ? true : current.inMistakeBook,
     mistakeCount: Math.min(100_000, current.mistakeCount + (nextLevel <= 1 ? 1 : 0)),
+    stabilityDays: schedule.stabilityDays,
+    difficulty: schedule.difficulty,
+    lapses: schedule.lapses,
+    lastReviewAt: at,
+    lastReviewKind: safeReviewKind,
     reasonCodes: nextLevel >= 3 ? [] : reasons,
     history,
     updatedAt: at,

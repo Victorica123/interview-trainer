@@ -264,21 +264,25 @@ function sendJson(response, status, value) {
   response.end(JSON.stringify(value));
 }
 
-function tutorInstruction(question, mode) {
+function tutorInstruction(question, mode, studyContext) {
   const detailed = Array.isArray(question?.detailedAnswer)
     ? question.detailedAnswer.slice(0, 5).map((section) => `${cleanText(section.title, 80)}：${cleanText(section.content, 1200)}`).join("\n")
     : "";
+  const safeReviewKind = ["independent", "hinted", "revealed"].includes(studyContext?.reviewKind) ? studyContext.reviewKind : "independent";
+  const studyEvidence = question
+    ? `\n本轮学习证据：${safeReviewKind === "revealed" ? "用户已经展开题库答案，不能把照着答案复述视为独立掌握" : safeReviewKind === "hinted" ? "用户使用过提示，评价时需区分提示后完成与独立掌握" : "用户尚未使用提示或展开答案，可按独立回忆评价"}。历史熟悉度 ${Math.min(4, Math.max(0, Number(studyContext?.level) || 0))}/4，历史作答 ${Math.min(100000, Math.max(0, Math.round(Number(studyContext?.attempts) || 0)))} 次。`
+    : "";
   const context = question
-    ? `\n当前题目：${cleanText(question.title, 500)}\n题目所属模块：${cleanText(question.category, 120)}\n题库精简答案：${cleanText(question.quickAnswer, 2000) || "暂无"}\n评分点：${(question.keyPoints || []).slice(0, 8).map((point) => cleanText(point, 400)).join("；") || "暂无"}\n题库详细讲解：\n${detailed || "暂无"}`
+    ? `\n当前题目：${cleanText(question.title, 500)}\n题目所属模块：${cleanText(question.category, 120)}\n题库精简答案：${cleanText(question.quickAnswer, 2000) || "暂无"}\n评分点：${(question.keyPoints || []).slice(0, 8).map((point) => cleanText(point, 400)).join("；") || "暂无"}\n题库详细讲解：\n${detailed || "暂无"}${studyEvidence}`
     : "";
   const modeRules = {
-    hint: "只给一到两个方向提示，不直接公布完整答案。",
+    hint: "只给一到两个方向提示，不直接公布完整答案。提示后停下，等待用户作答。",
     explain: "面向完全新手解释，先用生活化类比，再给准确技术定义。",
-    review: "评价用户回答：先指出正确部分，再列遗漏、错误与下一步改进，不编造用户没说过的内容。",
-    followup: "扮演技术面试官，每次只追问一个问题，并根据用户回答继续深入。",
+    review: "严格依据题目评分点评价用户回答，不按语言流畅度猜测掌握。固定输出五段：①本轮结论（0–4级及一句理由）；②覆盖评分点（逐项标记已覆盖/部分/缺失）；③说对的内容；④最关键的遗漏或错误（最多3项）；⑤下一道追问（只问1个，不附答案）。如果用户没有提供实际回答，只给回答框架和第一个引导问题，不泄露完整标准答案。",
+    followup: "扮演结构化技术面试官。一次只问一个问题；优先追问用户刚才遗漏或含糊的评分点，等待回答后再继续。不要在问题后附标准答案，不要一次列出题单。",
     chat: "直接回答用户问题，保持简洁；不确定时明确说明，并建议核对官方资料。"
   };
-  return `你是一个面向实习、校招和0到1年经验初学者的技术面试教练。${modeRules[mode] || modeRules.chat}\n不得把题库提示当作绝对真理；发现其可能过时或有争议时要明确指出。回答以中文为主，先结论后解释。${context}`;
+  return `你是一个面向实习、校招和0到1年经验初学者的技术面试教练。${modeRules[mode] || modeRules.chat}\n不得把题库提示当作绝对真理；发现其可能过时或有争议时要明确指出。不得声称已经修改用户的本地熟悉度或复习计划。回答以中文为主，先结论后解释。${context}`;
 }
 
 async function handleModels(response) {
@@ -310,7 +314,7 @@ async function handleChat(request, response) {
   const primaryPayload = {
     model: aiConfig.model,
     messages: [
-      { role: "system", content: tutorInstruction(body.question, body.mode) },
+      { role: "system", content: tutorInstruction(body.question, body.mode, body.studyContext) },
       ...messages
     ],
     temperature: aiConfig.temperature,

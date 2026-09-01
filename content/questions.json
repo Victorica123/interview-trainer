@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-31T10:54:08.299Z",
+  "generatedAt": "2026-09-01T01:14:48.525Z",
   "researchSnapshot": "2026-08-29",
   "disclaimer": "重要度是基于当前收录公开样本的可解释排序，不是全市场精确命中率。提纲版答案用于主动回忆起点，变化快或有争议的内容仍应核对官方文档。",
   "publicQuestionSignals": {
@@ -11762,7 +11762,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "oracle-java-spec-21",
+          "oracle-java-api-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -12443,7 +12451,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -17885,7 +17901,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -19392,18 +19416,23 @@
         }
       ],
       "workedExample": {
-        "title": "反射与注解最小演练",
-        "scenario": "把“框架扩展、序列化和依赖注入可使用；业务热路径应缓存元数据并控制访问边界。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "读取受控运行期注解",
+        "scenario": "扫描带有业务注解的处理器并建立只读路由表，同时避免运行期任意开放私有成员。",
         "steps": [
-          "画出反射与注解的关键执行链：Class描述类型，反射查找构造器、字段和方法；框架扫描注解后完成实例化、绑定和代理。",
-          "主动注入一个失败条件并观察：无边界反射破坏封装、模块访问受限、性能和异常复杂度增加，输入驱动反射还有安全风险。",
-          "记录验证指标，再与代码生成做一次对照。"
+          "定义运行期注解并限制可标注目标",
+          "扫描受信包并校验方法签名",
+          "缓存元数据并为重复键、非法签名建立启动失败测试"
         ],
-        "expected": "能够用当前题型“definition”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释注解只是元数据、反射负责读取；同时说明性能、封装和可维护性边界。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "读取受控运行期注解",
+          "content": "for (Method method : Handler.class.getDeclaredMethods()) {\n  if (!method.isAnnotationPresent(Route.class)) continue;\n  validateSignature(method);\n  routes.put(method.getAnnotation(Route.class).value(), method);\n}"
+        }
       },
       "interviewFollowUps": [
         "如果不用反射与注解，最先出现的工程问题是什么？",
@@ -19421,7 +19450,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对定义、问题与适用边界。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -19510,18 +19547,23 @@
         }
       ],
       "workedExample": {
-        "title": "反射与注解最小演练",
-        "scenario": "把“框架扩展、序列化和依赖注入可使用；业务热路径应缓存元数据并控制访问边界。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "读取受控运行期注解",
+        "scenario": "扫描带有业务注解的处理器并建立只读路由表，同时避免运行期任意开放私有成员。",
         "steps": [
-          "画出反射与注解的关键执行链：Class描述类型，反射查找构造器、字段和方法；框架扫描注解后完成实例化、绑定和代理。",
-          "主动注入一个失败条件并观察：无边界反射破坏封装、模块访问受限、性能和异常复杂度增加，输入驱动反射还有安全风险。",
-          "记录验证指标，再与代码生成做一次对照。"
+          "定义运行期注解并限制可标注目标",
+          "扫描受信包并校验方法签名",
+          "缓存元数据并为重复键、非法签名建立启动失败测试"
         ],
-        "expected": "能够用当前题型“mechanism”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释注解只是元数据、反射负责读取；同时说明性能、封装和可维护性边界。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "读取受控运行期注解",
+          "content": "for (Method method : Handler.class.getDeclaredMethods()) {\n  if (!method.isAnnotationPresent(Route.class)) continue;\n  validateSignature(method);\n  routes.put(method.getAnnotation(Route.class).value(), method);\n}"
+        }
       },
       "interviewFollowUps": [
         "请按时间或调用顺序完整讲一遍反射与注解，中间有哪些状态变化？",
@@ -19539,7 +19581,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -19628,18 +19678,23 @@
         }
       ],
       "workedExample": {
-        "title": "反射与注解最小演练",
-        "scenario": "把“框架扩展、序列化和依赖注入可使用；业务热路径应缓存元数据并控制访问边界。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "读取受控运行期注解",
+        "scenario": "扫描带有业务注解的处理器并建立只读路由表，同时避免运行期任意开放私有成员。",
         "steps": [
-          "画出反射与注解的关键执行链：Class描述类型，反射查找构造器、字段和方法；框架扫描注解后完成实例化、绑定和代理。",
-          "主动注入一个失败条件并观察：无边界反射破坏封装、模块访问受限、性能和异常复杂度增加，输入驱动反射还有安全风险。",
-          "记录验证指标，再与代码生成做一次对照。"
+          "定义运行期注解并限制可标注目标",
+          "扫描受信包并校验方法签名",
+          "缓存元数据并为重复键、非法签名建立启动失败测试"
         ],
-        "expected": "能够用当前题型“application”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释注解只是元数据、反射负责读取；同时说明性能、封装和可维护性边界。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "读取受控运行期注解",
+          "content": "for (Method method : Handler.class.getDeclaredMethods()) {\n  if (!method.isAnnotationPresent(Route.class)) continue;\n  validateSignature(method);\n  routes.put(method.getAnnotation(Route.class).value(), method);\n}"
+        }
       },
       "interviewFollowUps": [
         "如果流量或数据量增长十倍，你的反射与注解方案要改哪里？",
@@ -19657,7 +19712,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -19746,18 +19809,23 @@
         }
       ],
       "workedExample": {
-        "title": "反射与注解最小演练",
-        "scenario": "把“框架扩展、序列化和依赖注入可使用；业务热路径应缓存元数据并控制访问边界。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "读取受控运行期注解",
+        "scenario": "扫描带有业务注解的处理器并建立只读路由表，同时避免运行期任意开放私有成员。",
         "steps": [
-          "画出反射与注解的关键执行链：Class描述类型，反射查找构造器、字段和方法；框架扫描注解后完成实例化、绑定和代理。",
-          "主动注入一个失败条件并观察：无边界反射破坏封装、模块访问受限、性能和异常复杂度增加，输入驱动反射还有安全风险。",
-          "记录验证指标，再与代码生成做一次对照。"
+          "定义运行期注解并限制可标注目标",
+          "扫描受信包并校验方法签名",
+          "缓存元数据并为重复键、非法签名建立启动失败测试"
         ],
-        "expected": "能够用当前题型“pitfall”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释注解只是元数据、反射负责读取；同时说明性能、封装和可维护性边界。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "读取受控运行期注解",
+          "content": "for (Method method : Handler.class.getDeclaredMethods()) {\n  if (!method.isAnnotationPresent(Route.class)) continue;\n  validateSignature(method);\n  routes.put(method.getAnnotation(Route.class).value(), method);\n}"
+        }
       },
       "interviewFollowUps": [
         "线上出现相关告警时，你最先看哪三项证据，为什么？",
@@ -19865,18 +19933,23 @@
         }
       ],
       "workedExample": {
-        "title": "反射与注解最小演练",
-        "scenario": "把“框架扩展、序列化和依赖注入可使用；业务热路径应缓存元数据并控制访问边界。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "读取受控运行期注解",
+        "scenario": "扫描带有业务注解的处理器并建立只读路由表，同时避免运行期任意开放私有成员。",
         "steps": [
-          "画出反射与注解的关键执行链：Class描述类型，反射查找构造器、字段和方法；框架扫描注解后完成实例化、绑定和代理。",
-          "主动注入一个失败条件并观察：无边界反射破坏封装、模块访问受限、性能和异常复杂度增加，输入驱动反射还有安全风险。",
-          "记录验证指标，再与代码生成做一次对照。"
+          "定义运行期注解并限制可标注目标",
+          "扫描受信包并校验方法签名",
+          "缓存元数据并为重复键、非法签名建立启动失败测试"
         ],
-        "expected": "能够用当前题型“comparison”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释注解只是元数据、反射负责读取；同时说明性能、封装和可维护性边界。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "读取受控运行期注解",
+          "content": "for (Method method : Handler.class.getDeclaredMethods()) {\n  if (!method.isAnnotationPresent(Route.class)) continue;\n  validateSignature(method);\n  routes.put(method.getAnnotation(Route.class).value(), method);\n}"
+        }
       },
       "interviewFollowUps": [
         "在什么约束变化下，你会从反射与注解切换到代码生成？",
@@ -19894,7 +19967,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -19983,18 +20064,23 @@
         }
       ],
       "workedExample": {
-        "title": "Java序列化最小演练",
-        "scenario": "把“跨服务优先使用明确、可演进的协议格式，并设置版本、兼容和大小限制。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "反序列化前设置过滤器",
+        "scenario": "读取历史 Java 对象文件时限制允许反序列化的类型，并为协议迁移准备版本字段。",
         "steps": [
-          "画出Java序列化的关键执行链：Java原生序列化记录类描述和字段；JSON、Protobuf等通过明确schema或字段映射编码。",
-          "主动注入一个失败条件并观察：原生反序列化存在安全风险，serialVersionUID不匹配、循环引用和字段演进也会失败。",
-          "记录验证指标，再与JSON与Protobuf做一次对照。"
+          "只接收可信来源并先限制类型、深度和数组大小",
+          "固定 serialVersionUID 并写兼容性测试",
+          "跨服务新协议优先使用显式 Schema 的 JSON 或 Protobuf"
         ],
-        "expected": "能够用当前题型“definition”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明原生序列化的对象图和版本机制，也能解释不应反序列化不可信输入。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "反序列化前设置过滤器",
+          "content": "ObjectInputFilter filter = ObjectInputFilter.Config\n    .createFilter(\"com.example.dto.*;java.base/*;!*\");\nin.setObjectInputFilter(filter);\nOrderSnapshot snapshot = (OrderSnapshot) in.readObject();"
+        }
       },
       "interviewFollowUps": [
         "如果不用Java序列化，最先出现的工程问题是什么？",
@@ -20011,7 +20097,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对定义、问题与适用边界。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -20106,18 +20200,23 @@
         }
       ],
       "workedExample": {
-        "title": "Java序列化最小演练",
-        "scenario": "把“跨服务优先使用明确、可演进的协议格式，并设置版本、兼容和大小限制。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "反序列化前设置过滤器",
+        "scenario": "读取历史 Java 对象文件时限制允许反序列化的类型，并为协议迁移准备版本字段。",
         "steps": [
-          "画出Java序列化的关键执行链：Java原生序列化记录类描述和字段；JSON、Protobuf等通过明确schema或字段映射编码。",
-          "主动注入一个失败条件并观察：原生反序列化存在安全风险，serialVersionUID不匹配、循环引用和字段演进也会失败。",
-          "记录验证指标，再与JSON与Protobuf做一次对照。"
+          "只接收可信来源并先限制类型、深度和数组大小",
+          "固定 serialVersionUID 并写兼容性测试",
+          "跨服务新协议优先使用显式 Schema 的 JSON 或 Protobuf"
         ],
-        "expected": "能够用当前题型“mechanism”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明原生序列化的对象图和版本机制，也能解释不应反序列化不可信输入。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "反序列化前设置过滤器",
+          "content": "ObjectInputFilter filter = ObjectInputFilter.Config\n    .createFilter(\"com.example.dto.*;java.base/*;!*\");\nin.setObjectInputFilter(filter);\nOrderSnapshot snapshot = (OrderSnapshot) in.readObject();"
+        }
       },
       "interviewFollowUps": [
         "请按时间或调用顺序完整讲一遍Java序列化，中间有哪些状态变化？",
@@ -20134,7 +20233,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -20228,18 +20335,23 @@
         }
       ],
       "workedExample": {
-        "title": "Java序列化最小演练",
-        "scenario": "把“跨服务优先使用明确、可演进的协议格式，并设置版本、兼容和大小限制。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "反序列化前设置过滤器",
+        "scenario": "读取历史 Java 对象文件时限制允许反序列化的类型，并为协议迁移准备版本字段。",
         "steps": [
-          "画出Java序列化的关键执行链：Java原生序列化记录类描述和字段；JSON、Protobuf等通过明确schema或字段映射编码。",
-          "主动注入一个失败条件并观察：原生反序列化存在安全风险，serialVersionUID不匹配、循环引用和字段演进也会失败。",
-          "记录验证指标，再与JSON与Protobuf做一次对照。"
+          "只接收可信来源并先限制类型、深度和数组大小",
+          "固定 serialVersionUID 并写兼容性测试",
+          "跨服务新协议优先使用显式 Schema 的 JSON 或 Protobuf"
         ],
-        "expected": "能够用当前题型“application”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明原生序列化的对象图和版本机制，也能解释不应反序列化不可信输入。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "反序列化前设置过滤器",
+          "content": "ObjectInputFilter filter = ObjectInputFilter.Config\n    .createFilter(\"com.example.dto.*;java.base/*;!*\");\nin.setObjectInputFilter(filter);\nOrderSnapshot snapshot = (OrderSnapshot) in.readObject();"
+        }
       },
       "interviewFollowUps": [
         "如果流量或数据量增长十倍，你的Java序列化方案要改哪里？",
@@ -20350,18 +20462,23 @@
         }
       ],
       "workedExample": {
-        "title": "Java序列化最小演练",
-        "scenario": "把“跨服务优先使用明确、可演进的协议格式，并设置版本、兼容和大小限制。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "反序列化前设置过滤器",
+        "scenario": "读取历史 Java 对象文件时限制允许反序列化的类型，并为协议迁移准备版本字段。",
         "steps": [
-          "画出Java序列化的关键执行链：Java原生序列化记录类描述和字段；JSON、Protobuf等通过明确schema或字段映射编码。",
-          "主动注入一个失败条件并观察：原生反序列化存在安全风险，serialVersionUID不匹配、循环引用和字段演进也会失败。",
-          "记录验证指标，再与JSON与Protobuf做一次对照。"
+          "只接收可信来源并先限制类型、深度和数组大小",
+          "固定 serialVersionUID 并写兼容性测试",
+          "跨服务新协议优先使用显式 Schema 的 JSON 或 Protobuf"
         ],
-        "expected": "能够用当前题型“pitfall”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明原生序列化的对象图和版本机制，也能解释不应反序列化不可信输入。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "反序列化前设置过滤器",
+          "content": "ObjectInputFilter filter = ObjectInputFilter.Config\n    .createFilter(\"com.example.dto.*;java.base/*;!*\");\nin.setObjectInputFilter(filter);\nOrderSnapshot snapshot = (OrderSnapshot) in.readObject();"
+        }
       },
       "interviewFollowUps": [
         "线上出现相关告警时，你最先看哪三项证据，为什么？",
@@ -20473,18 +20590,23 @@
         }
       ],
       "workedExample": {
-        "title": "Java序列化最小演练",
-        "scenario": "把“跨服务优先使用明确、可演进的协议格式，并设置版本、兼容和大小限制。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "反序列化前设置过滤器",
+        "scenario": "读取历史 Java 对象文件时限制允许反序列化的类型，并为协议迁移准备版本字段。",
         "steps": [
-          "画出Java序列化的关键执行链：Java原生序列化记录类描述和字段；JSON、Protobuf等通过明确schema或字段映射编码。",
-          "主动注入一个失败条件并观察：原生反序列化存在安全风险，serialVersionUID不匹配、循环引用和字段演进也会失败。",
-          "记录验证指标，再与JSON与Protobuf做一次对照。"
+          "只接收可信来源并先限制类型、深度和数组大小",
+          "固定 serialVersionUID 并写兼容性测试",
+          "跨服务新协议优先使用显式 Schema 的 JSON 或 Protobuf"
         ],
-        "expected": "能够用当前题型“comparison”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明原生序列化的对象图和版本机制，也能解释不应反序列化不可信输入。",
         "sourceIds": [
           "oracle-java-api-21",
           "oracle-java-spec-21"
-        ]
+        ],
+        "code": {
+          "language": "java",
+          "title": "反序列化前设置过滤器",
+          "content": "ObjectInputFilter filter = ObjectInputFilter.Config\n    .createFilter(\"com.example.dto.*;java.base/*;!*\");\nin.setObjectInputFilter(filter);\nOrderSnapshot snapshot = (OrderSnapshot) in.readObject();"
+        }
       },
       "interviewFollowUps": [
         "在什么约束变化下，你会从Java序列化切换到JSON与Protobuf？",
@@ -20501,7 +20623,15 @@
         "oracle-java-api-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "oracle-java-api-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -26995,7 +27125,15 @@
         "oracle-java-concurrency-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "oracle-java-concurrency-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -29117,7 +29255,15 @@
         "oracle-java-concurrency-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "oracle-java-concurrency-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -29257,7 +29403,15 @@
         "oracle-java-concurrency-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "oracle-java-concurrency-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -29397,7 +29551,15 @@
         "oracle-java-concurrency-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "oracle-java-concurrency-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -29537,7 +29699,15 @@
         "oracle-java-concurrency-21",
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "oracle-java-concurrency-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -31973,7 +32143,15 @@
       "learningSourceIds": [
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "oracle-gc-tuning-21",
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -32404,7 +32582,14 @@
       "learningSourceIds": [
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -32526,7 +32711,14 @@
       "learningSourceIds": [
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -32648,7 +32840,14 @@
       "learningSourceIds": [
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -32771,7 +32970,14 @@
       "learningSourceIds": [
         "oracle-java-spec-21"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "oracle-java-spec-21"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -46969,7 +47175,14 @@
       "learningSourceIds": [
         "mysql-innodb-84"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "mysql-innodb-84"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -56922,7 +57135,15 @@
         "redis-data-types-official",
         "redis-persistence-official"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "redis-data-types-official",
+          "redis-persistence-official"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -60142,7 +60363,15 @@
         "redis-data-types-official",
         "redis-persistence-official"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "redis-data-types-official",
+          "redis-persistence-official"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -66270,7 +66499,16 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "cap-paper-gilbert-lynch",
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -66415,7 +66653,16 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "cap-paper-gilbert-lynch",
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -66678,18 +66925,23 @@
         }
       ],
       "workedExample": {
-        "title": "一致性哈希最小演练",
-        "scenario": "把“适合客户端分片和缓存路由，但仍需处理热点、复制、节点状态和数据迁移。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "环上查找与迁移验证",
+        "scenario": "缓存节点扩缩容时只迁移环上相邻区间，并用虚拟节点缓解负载倾斜。",
         "steps": [
-          "画出一致性哈希的关键执行链：键沿环顺时针找到节点，虚拟节点改善负载均衡并减少物理节点差异影响。",
-          "主动注入一个失败条件并观察：虚拟节点太少导致倾斜、节点列表不一致、扩容期间双写缺失会造成大量未命中。",
-          "记录验证指标，再与固定取模分片做一次对照。"
+          "把每个物理节点映射为多个虚拟节点",
+          "对键哈希并顺时针查找第一个节点",
+          "扩缩容前后统计迁移比例、分布方差和热点"
         ],
-        "expected": "能够用当前题型“definition”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释一致性哈希减少重映射但不自动解决热点、容量差异和副本容错。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "环上查找与迁移验证",
+          "content": "ring = sorted(virtual_node_hashes)\npos = lower_bound(ring, hash(key))\nnode = ring[pos % ring.length].physical_node\nassert remapped_ratio_after_add << modulo_remapped_ratio"
+        }
       },
       "interviewFollowUps": [
         "如果不用一致性哈希，最先出现的工程问题是什么？",
@@ -66707,7 +66959,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对定义、问题与适用边界。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -66799,18 +67059,23 @@
         }
       ],
       "workedExample": {
-        "title": "一致性哈希最小演练",
-        "scenario": "把“适合客户端分片和缓存路由，但仍需处理热点、复制、节点状态和数据迁移。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "环上查找与迁移验证",
+        "scenario": "缓存节点扩缩容时只迁移环上相邻区间，并用虚拟节点缓解负载倾斜。",
         "steps": [
-          "画出一致性哈希的关键执行链：键沿环顺时针找到节点，虚拟节点改善负载均衡并减少物理节点差异影响。",
-          "主动注入一个失败条件并观察：虚拟节点太少导致倾斜、节点列表不一致、扩容期间双写缺失会造成大量未命中。",
-          "记录验证指标，再与固定取模分片做一次对照。"
+          "把每个物理节点映射为多个虚拟节点",
+          "对键哈希并顺时针查找第一个节点",
+          "扩缩容前后统计迁移比例、分布方差和热点"
         ],
-        "expected": "能够用当前题型“mechanism”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释一致性哈希减少重映射但不自动解决热点、容量差异和副本容错。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "环上查找与迁移验证",
+          "content": "ring = sorted(virtual_node_hashes)\npos = lower_bound(ring, hash(key))\nnode = ring[pos % ring.length].physical_node\nassert remapped_ratio_after_add << modulo_remapped_ratio"
+        }
       },
       "interviewFollowUps": [
         "请按时间或调用顺序完整讲一遍一致性哈希，中间有哪些状态变化？",
@@ -66828,7 +67093,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -66920,18 +67193,23 @@
         }
       ],
       "workedExample": {
-        "title": "一致性哈希最小演练",
-        "scenario": "把“适合客户端分片和缓存路由，但仍需处理热点、复制、节点状态和数据迁移。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "环上查找与迁移验证",
+        "scenario": "缓存节点扩缩容时只迁移环上相邻区间，并用虚拟节点缓解负载倾斜。",
         "steps": [
-          "画出一致性哈希的关键执行链：键沿环顺时针找到节点，虚拟节点改善负载均衡并减少物理节点差异影响。",
-          "主动注入一个失败条件并观察：虚拟节点太少导致倾斜、节点列表不一致、扩容期间双写缺失会造成大量未命中。",
-          "记录验证指标，再与固定取模分片做一次对照。"
+          "把每个物理节点映射为多个虚拟节点",
+          "对键哈希并顺时针查找第一个节点",
+          "扩缩容前后统计迁移比例、分布方差和热点"
         ],
-        "expected": "能够用当前题型“application”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释一致性哈希减少重映射但不自动解决热点、容量差异和副本容错。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "环上查找与迁移验证",
+          "content": "ring = sorted(virtual_node_hashes)\npos = lower_bound(ring, hash(key))\nnode = ring[pos % ring.length].physical_node\nassert remapped_ratio_after_add << modulo_remapped_ratio"
+        }
       },
       "interviewFollowUps": [
         "如果流量或数据量增长十倍，你的一致性哈希方案要改哪里？",
@@ -66949,7 +67227,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -67041,18 +67327,23 @@
         }
       ],
       "workedExample": {
-        "title": "一致性哈希最小演练",
-        "scenario": "把“适合客户端分片和缓存路由，但仍需处理热点、复制、节点状态和数据迁移。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "环上查找与迁移验证",
+        "scenario": "缓存节点扩缩容时只迁移环上相邻区间，并用虚拟节点缓解负载倾斜。",
         "steps": [
-          "画出一致性哈希的关键执行链：键沿环顺时针找到节点，虚拟节点改善负载均衡并减少物理节点差异影响。",
-          "主动注入一个失败条件并观察：虚拟节点太少导致倾斜、节点列表不一致、扩容期间双写缺失会造成大量未命中。",
-          "记录验证指标，再与固定取模分片做一次对照。"
+          "把每个物理节点映射为多个虚拟节点",
+          "对键哈希并顺时针查找第一个节点",
+          "扩缩容前后统计迁移比例、分布方差和热点"
         ],
-        "expected": "能够用当前题型“pitfall”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释一致性哈希减少重映射但不自动解决热点、容量差异和副本容错。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "环上查找与迁移验证",
+          "content": "ring = sorted(virtual_node_hashes)\npos = lower_bound(ring, hash(key))\nnode = ring[pos % ring.length].physical_node\nassert remapped_ratio_after_add << modulo_remapped_ratio"
+        }
       },
       "interviewFollowUps": [
         "线上出现相关告警时，你最先看哪三项证据，为什么？",
@@ -67070,7 +67361,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -67163,18 +67462,23 @@
         }
       ],
       "workedExample": {
-        "title": "一致性哈希最小演练",
-        "scenario": "把“适合客户端分片和缓存路由，但仍需处理热点、复制、节点状态和数据迁移。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "环上查找与迁移验证",
+        "scenario": "缓存节点扩缩容时只迁移环上相邻区间，并用虚拟节点缓解负载倾斜。",
         "steps": [
-          "画出一致性哈希的关键执行链：键沿环顺时针找到节点，虚拟节点改善负载均衡并减少物理节点差异影响。",
-          "主动注入一个失败条件并观察：虚拟节点太少导致倾斜、节点列表不一致、扩容期间双写缺失会造成大量未命中。",
-          "记录验证指标，再与固定取模分片做一次对照。"
+          "把每个物理节点映射为多个虚拟节点",
+          "对键哈希并顺时针查找第一个节点",
+          "扩缩容前后统计迁移比例、分布方差和热点"
         ],
-        "expected": "能够用当前题型“comparison”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能解释一致性哈希减少重映射但不自动解决热点、容量差异和副本容错。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "环上查找与迁移验证",
+          "content": "ring = sorted(virtual_node_hashes)\npos = lower_bound(ring, hash(key))\nnode = ring[pos % ring.length].physical_node\nassert remapped_ratio_after_add << modulo_remapped_ratio"
+        }
       },
       "interviewFollowUps": [
         "在什么约束变化下，你会从一致性哈希切换到固定取模分片？",
@@ -67192,7 +67496,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -70073,7 +70385,16 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "cap-paper-gilbert-lynch",
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -70197,7 +70518,16 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "cap-paper-gilbert-lynch",
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -71502,7 +71832,16 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "opentelemetry-signals",
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -71623,7 +71962,16 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "opentelemetry-signals",
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -71744,7 +72092,16 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "opentelemetry-signals",
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -71866,7 +72223,16 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "opentelemetry-signals",
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -73732,7 +74098,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -73855,7 +74229,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -75091,7 +75473,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -75232,7 +75622,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -77925,18 +78323,23 @@
         }
       ],
       "workedExample": {
-        "title": "百万数据导入导出最小演练",
-        "scenario": "把“异步任务、断点续传、限速、校验报告、对象存储和过期清理构成完整方案。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "使用唯一键游标分页",
+        "scenario": "导出百万级订单时避免一次性加载和深分页，并支持失败后从检查点继续。",
         "steps": [
-          "画出百万数据导入导出的关键执行链：游标或主键分页读取，流式写文件并分片上传；导入分批校验写入并记录任务进度。",
-          "主动注入一个失败条件并观察：OFFSET深分页、一次加载内存、超大事务、Excel行数限制和失败全量重来是常见问题。",
-          "记录验证指标，再与同步接口直接返回做一次对照。"
+          "按稳定唯一键做游标分页",
+          "分批读取、转换和流式写出并施加背压",
+          "保存最后成功游标，校验总数、重复数、失败数和文件摘要"
         ],
-        "expected": "能够用当前题型“definition”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能给出批大小、内存上限、断点续传和一致性口径，而不是只说开启多线程。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "sql",
+          "title": "使用唯一键游标分页",
+          "content": "SELECT id, status, amount\nFROM orders\nWHERE id > :last_id\nORDER BY id\nLIMIT :batch_size;"
+        }
       },
       "interviewFollowUps": [
         "如果不用百万数据导入导出，最先出现的工程问题是什么？",
@@ -77954,7 +78357,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对定义、问题与适用边界。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -78043,18 +78454,23 @@
         }
       ],
       "workedExample": {
-        "title": "百万数据导入导出最小演练",
-        "scenario": "把“异步任务、断点续传、限速、校验报告、对象存储和过期清理构成完整方案。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "使用唯一键游标分页",
+        "scenario": "导出百万级订单时避免一次性加载和深分页，并支持失败后从检查点继续。",
         "steps": [
-          "画出百万数据导入导出的关键执行链：游标或主键分页读取，流式写文件并分片上传；导入分批校验写入并记录任务进度。",
-          "主动注入一个失败条件并观察：OFFSET深分页、一次加载内存、超大事务、Excel行数限制和失败全量重来是常见问题。",
-          "记录验证指标，再与同步接口直接返回做一次对照。"
+          "按稳定唯一键做游标分页",
+          "分批读取、转换和流式写出并施加背压",
+          "保存最后成功游标，校验总数、重复数、失败数和文件摘要"
         ],
-        "expected": "能够用当前题型“mechanism”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能给出批大小、内存上限、断点续传和一致性口径，而不是只说开启多线程。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "sql",
+          "title": "使用唯一键游标分页",
+          "content": "SELECT id, status, amount\nFROM orders\nWHERE id > :last_id\nORDER BY id\nLIMIT :batch_size;"
+        }
       },
       "interviewFollowUps": [
         "请按时间或调用顺序完整讲一遍百万数据导入导出，中间有哪些状态变化？",
@@ -78160,18 +78576,23 @@
         }
       ],
       "workedExample": {
-        "title": "百万数据导入导出最小演练",
-        "scenario": "把“异步任务、断点续传、限速、校验报告、对象存储和过期清理构成完整方案。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "使用唯一键游标分页",
+        "scenario": "导出百万级订单时避免一次性加载和深分页，并支持失败后从检查点继续。",
         "steps": [
-          "画出百万数据导入导出的关键执行链：游标或主键分页读取，流式写文件并分片上传；导入分批校验写入并记录任务进度。",
-          "主动注入一个失败条件并观察：OFFSET深分页、一次加载内存、超大事务、Excel行数限制和失败全量重来是常见问题。",
-          "记录验证指标，再与同步接口直接返回做一次对照。"
+          "按稳定唯一键做游标分页",
+          "分批读取、转换和流式写出并施加背压",
+          "保存最后成功游标，校验总数、重复数、失败数和文件摘要"
         ],
-        "expected": "能够用当前题型“application”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能给出批大小、内存上限、断点续传和一致性口径，而不是只说开启多线程。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "sql",
+          "title": "使用唯一键游标分页",
+          "content": "SELECT id, status, amount\nFROM orders\nWHERE id > :last_id\nORDER BY id\nLIMIT :batch_size;"
+        }
       },
       "interviewFollowUps": [
         "如果流量或数据量增长十倍，你的百万数据导入导出方案要改哪里？",
@@ -78277,18 +78698,23 @@
         }
       ],
       "workedExample": {
-        "title": "百万数据导入导出最小演练",
-        "scenario": "把“异步任务、断点续传、限速、校验报告、对象存储和过期清理构成完整方案。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "使用唯一键游标分页",
+        "scenario": "导出百万级订单时避免一次性加载和深分页，并支持失败后从检查点继续。",
         "steps": [
-          "画出百万数据导入导出的关键执行链：游标或主键分页读取，流式写文件并分片上传；导入分批校验写入并记录任务进度。",
-          "主动注入一个失败条件并观察：OFFSET深分页、一次加载内存、超大事务、Excel行数限制和失败全量重来是常见问题。",
-          "记录验证指标，再与同步接口直接返回做一次对照。"
+          "按稳定唯一键做游标分页",
+          "分批读取、转换和流式写出并施加背压",
+          "保存最后成功游标，校验总数、重复数、失败数和文件摘要"
         ],
-        "expected": "能够用当前题型“pitfall”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能给出批大小、内存上限、断点续传和一致性口径，而不是只说开启多线程。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "sql",
+          "title": "使用唯一键游标分页",
+          "content": "SELECT id, status, amount\nFROM orders\nWHERE id > :last_id\nORDER BY id\nLIMIT :batch_size;"
+        }
       },
       "interviewFollowUps": [
         "线上出现相关告警时，你最先看哪三项证据，为什么？",
@@ -78395,18 +78821,23 @@
         }
       ],
       "workedExample": {
-        "title": "百万数据导入导出最小演练",
-        "scenario": "把“异步任务、断点续传、限速、校验报告、对象存储和过期清理构成完整方案。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "使用唯一键游标分页",
+        "scenario": "导出百万级订单时避免一次性加载和深分页，并支持失败后从检查点继续。",
         "steps": [
-          "画出百万数据导入导出的关键执行链：游标或主键分页读取，流式写文件并分片上传；导入分批校验写入并记录任务进度。",
-          "主动注入一个失败条件并观察：OFFSET深分页、一次加载内存、超大事务、Excel行数限制和失败全量重来是常见问题。",
-          "记录验证指标，再与同步接口直接返回做一次对照。"
+          "按稳定唯一键做游标分页",
+          "分批读取、转换和流式写出并施加背压",
+          "保存最后成功游标，校验总数、重复数、失败数和文件摘要"
         ],
-        "expected": "能够用当前题型“comparison”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能给出批大小、内存上限、断点续传和一致性口径，而不是只说开启多线程。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "sql",
+          "title": "使用唯一键游标分页",
+          "content": "SELECT id, status, amount\nFROM orders\nWHERE id > :last_id\nORDER BY id\nLIMIT :batch_size;"
+        }
       },
       "interviewFollowUps": [
         "在什么约束变化下，你会从百万数据导入导出切换到同步接口直接返回？",
@@ -78512,18 +78943,23 @@
         }
       ],
       "workedExample": {
-        "title": "高可用与容灾最小演练",
-        "scenario": "把“从业务SLO反推架构，消除单点，设置降级和容量余量，定期故障演练与恢复验证。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "最小容灾验收单",
+        "scenario": "为订单服务设计同城故障切换和异地数据恢复演练，明确 RTO、RPO 与降级边界。",
         "steps": [
-          "画出高可用与容灾的关键执行链：冗余实例、健康检查和自动切换处理组件故障；跨区域复制、备份和演练支持灾难恢复。",
-          "主动注入一个失败条件并观察：有副本就认为高可用、备份从不恢复演练、切换脚本过期和依赖单点都会让方案失效。",
-          "记录验证指标，再与单机高性能做一次对照。"
+          "先定义允许中断时间和数据丢失量",
+          "消除单点并验证健康检查、流量切换和数据复制",
+          "定期执行故障注入、回切和数据对账"
         ],
-        "expected": "能够用当前题型“definition”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能区分高可用与灾难恢复，并用演练证据证明方案而不是只画多副本架构图。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "最小容灾验收单",
+          "content": "SLO: monthly_availability >= 99.95%\nRTO: <= 15m\nRPO: <= 5m\ndrill: cut traffic -> restore -> reconcile -> controlled failback"
+        }
       },
       "interviewFollowUps": [
         "如果不用高可用与容灾，最先出现的工程问题是什么？",
@@ -78541,7 +78977,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对定义、问题与适用边界。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -78632,18 +79076,23 @@
         }
       ],
       "workedExample": {
-        "title": "高可用与容灾最小演练",
-        "scenario": "把“从业务SLO反推架构，消除单点，设置降级和容量余量，定期故障演练与恢复验证。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "最小容灾验收单",
+        "scenario": "为订单服务设计同城故障切换和异地数据恢复演练，明确 RTO、RPO 与降级边界。",
         "steps": [
-          "画出高可用与容灾的关键执行链：冗余实例、健康检查和自动切换处理组件故障；跨区域复制、备份和演练支持灾难恢复。",
-          "主动注入一个失败条件并观察：有副本就认为高可用、备份从不恢复演练、切换脚本过期和依赖单点都会让方案失效。",
-          "记录验证指标，再与单机高性能做一次对照。"
+          "先定义允许中断时间和数据丢失量",
+          "消除单点并验证健康检查、流量切换和数据复制",
+          "定期执行故障注入、回切和数据对账"
         ],
-        "expected": "能够用当前题型“mechanism”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能区分高可用与灾难恢复，并用演练证据证明方案而不是只画多副本架构图。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "最小容灾验收单",
+          "content": "SLO: monthly_availability >= 99.95%\nRTO: <= 15m\nRPO: <= 5m\ndrill: cut traffic -> restore -> reconcile -> controlled failback"
+        }
       },
       "interviewFollowUps": [
         "请按时间或调用顺序完整讲一遍高可用与容灾，中间有哪些状态变化？",
@@ -78661,7 +79110,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -78751,18 +79208,23 @@
         }
       ],
       "workedExample": {
-        "title": "高可用与容灾最小演练",
-        "scenario": "把“从业务SLO反推架构，消除单点，设置降级和容量余量，定期故障演练与恢复验证。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "最小容灾验收单",
+        "scenario": "为订单服务设计同城故障切换和异地数据恢复演练，明确 RTO、RPO 与降级边界。",
         "steps": [
-          "画出高可用与容灾的关键执行链：冗余实例、健康检查和自动切换处理组件故障；跨区域复制、备份和演练支持灾难恢复。",
-          "主动注入一个失败条件并观察：有副本就认为高可用、备份从不恢复演练、切换脚本过期和依赖单点都会让方案失效。",
-          "记录验证指标，再与单机高性能做一次对照。"
+          "先定义允许中断时间和数据丢失量",
+          "消除单点并验证健康检查、流量切换和数据复制",
+          "定期执行故障注入、回切和数据对账"
         ],
-        "expected": "能够用当前题型“application”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能区分高可用与灾难恢复，并用演练证据证明方案而不是只画多副本架构图。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "最小容灾验收单",
+          "content": "SLO: monthly_availability >= 99.95%\nRTO: <= 15m\nRPO: <= 5m\ndrill: cut traffic -> restore -> reconcile -> controlled failback"
+        }
       },
       "interviewFollowUps": [
         "如果流量或数据量增长十倍，你的高可用与容灾方案要改哪里？",
@@ -78780,7 +79242,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -78870,18 +79340,23 @@
         }
       ],
       "workedExample": {
-        "title": "高可用与容灾最小演练",
-        "scenario": "把“从业务SLO反推架构，消除单点，设置降级和容量余量，定期故障演练与恢复验证。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "最小容灾验收单",
+        "scenario": "为订单服务设计同城故障切换和异地数据恢复演练，明确 RTO、RPO 与降级边界。",
         "steps": [
-          "画出高可用与容灾的关键执行链：冗余实例、健康检查和自动切换处理组件故障；跨区域复制、备份和演练支持灾难恢复。",
-          "主动注入一个失败条件并观察：有副本就认为高可用、备份从不恢复演练、切换脚本过期和依赖单点都会让方案失效。",
-          "记录验证指标，再与单机高性能做一次对照。"
+          "先定义允许中断时间和数据丢失量",
+          "消除单点并验证健康检查、流量切换和数据复制",
+          "定期执行故障注入、回切和数据对账"
         ],
-        "expected": "能够用当前题型“pitfall”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能区分高可用与灾难恢复，并用演练证据证明方案而不是只画多副本架构图。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "最小容灾验收单",
+          "content": "SLO: monthly_availability >= 99.95%\nRTO: <= 15m\nRPO: <= 5m\ndrill: cut traffic -> restore -> reconcile -> controlled failback"
+        }
       },
       "interviewFollowUps": [
         "线上出现相关告警时，你最先看哪三项证据，为什么？",
@@ -78899,7 +79374,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -78990,18 +79473,23 @@
         }
       ],
       "workedExample": {
-        "title": "高可用与容灾最小演练",
-        "scenario": "把“从业务SLO反推架构，消除单点，设置降级和容量余量，定期故障演练与恢复验证。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "最小容灾验收单",
+        "scenario": "为订单服务设计同城故障切换和异地数据恢复演练，明确 RTO、RPO 与降级边界。",
         "steps": [
-          "画出高可用与容灾的关键执行链：冗余实例、健康检查和自动切换处理组件故障；跨区域复制、备份和演练支持灾难恢复。",
-          "主动注入一个失败条件并观察：有副本就认为高可用、备份从不恢复演练、切换脚本过期和依赖单点都会让方案失效。",
-          "记录验证指标，再与单机高性能做一次对照。"
+          "先定义允许中断时间和数据丢失量",
+          "消除单点并验证健康检查、流量切换和数据复制",
+          "定期执行故障注入、回切和数据对账"
         ],
-        "expected": "能够用当前题型“comparison”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能区分高可用与灾难恢复，并用演练证据证明方案而不是只画多副本架构图。",
         "sourceIds": [
           "javaguide-priority-2026",
           "xiaolin-backend-2026"
-        ]
+        ],
+        "code": {
+          "language": "text",
+          "title": "最小容灾验收单",
+          "content": "SLO: monthly_availability >= 99.95%\nRTO: <= 15m\nRPO: <= 5m\ndrill: cut traffic -> restore -> reconcile -> controlled failback"
+        }
       },
       "interviewFollowUps": [
         "在什么约束变化下，你会从高可用与容灾切换到单机高性能？",
@@ -79019,7 +79507,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -79398,7 +79894,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -79517,7 +80021,15 @@
         "javaguide-priority-2026",
         "xiaolin-backend-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "javaguide-priority-2026",
+          "xiaolin-backend-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -110935,7 +111447,16 @@
         "openai-chat-api-2026",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "transformer-paper-neurips-2017",
+          "openai-chat-api-2026",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -111096,7 +111617,16 @@
         "openai-chat-api-2026",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "transformer-paper-neurips-2017",
+          "openai-chat-api-2026",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -111257,7 +111787,16 @@
         "openai-chat-api-2026",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "transformer-paper-neurips-2017",
+          "openai-chat-api-2026",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -111419,7 +111958,16 @@
         "openai-chat-api-2026",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "transformer-paper-neurips-2017",
+          "openai-chat-api-2026",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -122330,7 +122878,16 @@
         "javaguide-ai-2026",
         "elegy-agent-wiki-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "hyde-paper-acl-2023",
+          "javaguide-ai-2026",
+          "elegy-agent-wiki-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -122480,7 +123037,16 @@
         "javaguide-ai-2026",
         "elegy-agent-wiki-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "hyde-paper-acl-2023",
+          "javaguide-ai-2026",
+          "elegy-agent-wiki-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -129816,7 +130382,16 @@
         "langgraph-official-persistence",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "langgraph-official-persistence",
+          "owasp-genai-top10-2026",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -129935,7 +130510,16 @@
         "langgraph-official-persistence",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "langgraph-official-persistence",
+          "owasp-genai-top10-2026",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -131220,7 +131804,16 @@
         "mcp-architecture-official",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "langgraph-multi-agent",
+          "mcp-architecture-official",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -131376,7 +131969,16 @@
         "mcp-architecture-official",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "langgraph-multi-agent",
+          "mcp-architecture-official",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -131532,7 +132134,16 @@
         "mcp-architecture-official",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "langgraph-multi-agent",
+          "mcp-architecture-official",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -131689,7 +132300,16 @@
         "mcp-architecture-official",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "langgraph-multi-agent",
+          "mcp-architecture-official",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -136625,18 +137245,23 @@
         }
       ],
       "workedExample": {
-        "title": "记忆写入、检索与遗忘最小演练",
-        "scenario": "把“为每条记忆保存类型、主体、来源、时间、作用域和TTL，用命中率、纠错率及错误注入率评测。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "带作用域和有效期的记忆记录",
+        "scenario": "Agent 只保存用户明确授权的长期偏好，并支持按租户、有效期和来源删除。",
         "steps": [
-          "画出记忆写入、检索与遗忘的关键执行链：写入侧抽取候选并去重、校验；检索侧结合相关性、时效和重要性排序；维护侧执行合并、过期和删除。",
-          "主动注入一个失败条件并观察：每轮自动总结并覆盖原文、不同用户作用域串线、删除请求未清理索引、无效记忆永不过期都很常见。",
-          "记录验证指标，再与仅使用对话摘要做一次对照。"
+          "区分任务状态、会话摘要和长期记忆",
+          "写入前做授权、去重、敏感信息过滤和有效期设置",
+          "检索时做租户隔离、相关性排序和来源展示，定期清理"
         ],
-        "expected": "能够用当前题型“definition”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明记忆不是无限追加聊天记录，并覆盖写入、召回、冲突、隐私和遗忘策略。",
         "sourceIds": [
           "langgraph-official-persistence",
           "javaguide-ai-2026"
-        ]
+        ],
+        "code": {
+          "language": "json",
+          "title": "带作用域和有效期的记忆记录",
+          "content": "{\n  \"tenantId\": \"user-42\",\n  \"kind\": \"preference\",\n  \"value\": \"回答先给结论\",\n  \"source\": \"explicit-user-choice\",\n  \"expiresAt\": \"2027-02-28T00:00:00Z\"\n}"
+        }
       },
       "interviewFollowUps": [
         "如果不用记忆写入、检索与遗忘，最先出现的工程问题是什么？",
@@ -136653,7 +137278,15 @@
         "langgraph-official-persistence",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对定义、问题与适用边界。",
+        "sourceIds": [
+          "langgraph-official-persistence",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -136740,18 +137373,23 @@
         }
       ],
       "workedExample": {
-        "title": "记忆写入、检索与遗忘最小演练",
-        "scenario": "把“为每条记忆保存类型、主体、来源、时间、作用域和TTL，用命中率、纠错率及错误注入率评测。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "带作用域和有效期的记忆记录",
+        "scenario": "Agent 只保存用户明确授权的长期偏好，并支持按租户、有效期和来源删除。",
         "steps": [
-          "画出记忆写入、检索与遗忘的关键执行链：写入侧抽取候选并去重、校验；检索侧结合相关性、时效和重要性排序；维护侧执行合并、过期和删除。",
-          "主动注入一个失败条件并观察：每轮自动总结并覆盖原文、不同用户作用域串线、删除请求未清理索引、无效记忆永不过期都很常见。",
-          "记录验证指标，再与仅使用对话摘要做一次对照。"
+          "区分任务状态、会话摘要和长期记忆",
+          "写入前做授权、去重、敏感信息过滤和有效期设置",
+          "检索时做租户隔离、相关性排序和来源展示，定期清理"
         ],
-        "expected": "能够用当前题型“mechanism”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明记忆不是无限追加聊天记录，并覆盖写入、召回、冲突、隐私和遗忘策略。",
         "sourceIds": [
           "langgraph-official-persistence",
           "javaguide-ai-2026"
-        ]
+        ],
+        "code": {
+          "language": "json",
+          "title": "带作用域和有效期的记忆记录",
+          "content": "{\n  \"tenantId\": \"user-42\",\n  \"kind\": \"preference\",\n  \"value\": \"回答先给结论\",\n  \"source\": \"explicit-user-choice\",\n  \"expiresAt\": \"2027-02-28T00:00:00Z\"\n}"
+        }
       },
       "interviewFollowUps": [
         "请按时间或调用顺序完整讲一遍记忆写入、检索与遗忘，中间有哪些状态变化？",
@@ -136768,7 +137406,15 @@
         "langgraph-official-persistence",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对执行链路、因果关系与实现边界。",
+        "sourceIds": [
+          "langgraph-official-persistence",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -136853,18 +137499,23 @@
         }
       ],
       "workedExample": {
-        "title": "记忆写入、检索与遗忘最小演练",
-        "scenario": "把“为每条记忆保存类型、主体、来源、时间、作用域和TTL，用命中率、纠错率及错误注入率评测。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "带作用域和有效期的记忆记录",
+        "scenario": "Agent 只保存用户明确授权的长期偏好，并支持按租户、有效期和来源删除。",
         "steps": [
-          "画出记忆写入、检索与遗忘的关键执行链：写入侧抽取候选并去重、校验；检索侧结合相关性、时效和重要性排序；维护侧执行合并、过期和删除。",
-          "主动注入一个失败条件并观察：每轮自动总结并覆盖原文、不同用户作用域串线、删除请求未清理索引、无效记忆永不过期都很常见。",
-          "记录验证指标，再与仅使用对话摘要做一次对照。"
+          "区分任务状态、会话摘要和长期记忆",
+          "写入前做授权、去重、敏感信息过滤和有效期设置",
+          "检索时做租户隔离、相关性排序和来源展示，定期清理"
         ],
-        "expected": "能够用当前题型“application”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明记忆不是无限追加聊天记录，并覆盖写入、召回、冲突、隐私和遗忘策略。",
         "sourceIds": [
           "langgraph-official-persistence",
           "javaguide-ai-2026"
-        ]
+        ],
+        "code": {
+          "language": "json",
+          "title": "带作用域和有效期的记忆记录",
+          "content": "{\n  \"tenantId\": \"user-42\",\n  \"kind\": \"preference\",\n  \"value\": \"回答先给结论\",\n  \"source\": \"explicit-user-choice\",\n  \"expiresAt\": \"2027-02-28T00:00:00Z\"\n}"
+        }
       },
       "interviewFollowUps": [
         "如果流量或数据量增长十倍，你的记忆写入、检索与遗忘方案要改哪里？",
@@ -136966,18 +137617,23 @@
         }
       ],
       "workedExample": {
-        "title": "记忆写入、检索与遗忘最小演练",
-        "scenario": "把“为每条记忆保存类型、主体、来源、时间、作用域和TTL，用命中率、纠错率及错误注入率评测。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "带作用域和有效期的记忆记录",
+        "scenario": "Agent 只保存用户明确授权的长期偏好，并支持按租户、有效期和来源删除。",
         "steps": [
-          "画出记忆写入、检索与遗忘的关键执行链：写入侧抽取候选并去重、校验；检索侧结合相关性、时效和重要性排序；维护侧执行合并、过期和删除。",
-          "主动注入一个失败条件并观察：每轮自动总结并覆盖原文、不同用户作用域串线、删除请求未清理索引、无效记忆永不过期都很常见。",
-          "记录验证指标，再与仅使用对话摘要做一次对照。"
+          "区分任务状态、会话摘要和长期记忆",
+          "写入前做授权、去重、敏感信息过滤和有效期设置",
+          "检索时做租户隔离、相关性排序和来源展示，定期清理"
         ],
-        "expected": "能够用当前题型“pitfall”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明记忆不是无限追加聊天记录，并覆盖写入、召回、冲突、隐私和遗忘策略。",
         "sourceIds": [
           "langgraph-official-persistence",
           "javaguide-ai-2026"
-        ]
+        ],
+        "code": {
+          "language": "json",
+          "title": "带作用域和有效期的记忆记录",
+          "content": "{\n  \"tenantId\": \"user-42\",\n  \"kind\": \"preference\",\n  \"value\": \"回答先给结论\",\n  \"source\": \"explicit-user-choice\",\n  \"expiresAt\": \"2027-02-28T00:00:00Z\"\n}"
+        }
       },
       "interviewFollowUps": [
         "线上出现相关告警时，你最先看哪三项证据，为什么？",
@@ -137080,18 +137736,23 @@
         }
       ],
       "workedExample": {
-        "title": "记忆写入、检索与遗忘最小演练",
-        "scenario": "把“为每条记忆保存类型、主体、来源、时间、作用域和TTL，用命中率、纠错率及错误注入率评测。”作为一个最小项目场景，先写下目标、输入和约束。",
+        "title": "带作用域和有效期的记忆记录",
+        "scenario": "Agent 只保存用户明确授权的长期偏好，并支持按租户、有效期和来源删除。",
         "steps": [
-          "画出记忆写入、检索与遗忘的关键执行链：写入侧抽取候选并去重、校验；检索侧结合相关性、时效和重要性排序；维护侧执行合并、过期和删除。",
-          "主动注入一个失败条件并观察：每轮自动总结并覆盖原文、不同用户作用域串线、删除请求未清理索引、无效记忆永不过期都很常见。",
-          "记录验证指标，再与仅使用对话摘要做一次对照。"
+          "区分任务状态、会话摘要和长期记忆",
+          "写入前做授权、去重、敏感信息过滤和有效期设置",
+          "检索时做租户隔离、相关性排序和来源展示，定期清理"
         ],
-        "expected": "能够用当前题型“comparison”复述设计、证据和边界，而不是只背结论。",
+        "expected": "能说明记忆不是无限追加聊天记录，并覆盖写入、召回、冲突、隐私和遗忘策略。",
         "sourceIds": [
           "langgraph-official-persistence",
           "javaguide-ai-2026"
-        ]
+        ],
+        "code": {
+          "language": "json",
+          "title": "带作用域和有效期的记忆记录",
+          "content": "{\n  \"tenantId\": \"user-42\",\n  \"kind\": \"preference\",\n  \"value\": \"回答先给结论\",\n  \"source\": \"explicit-user-choice\",\n  \"expiresAt\": \"2027-02-28T00:00:00Z\"\n}"
+        }
       },
       "interviewFollowUps": [
         "在什么约束变化下，你会从记忆写入、检索与遗忘切换到仅使用对话摘要？",
@@ -137108,7 +137769,15 @@
         "langgraph-official-persistence",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对比较维度、方案代价与选型边界。",
+        "sourceIds": [
+          "langgraph-official-persistence",
+          "javaguide-ai-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -139233,7 +139902,16 @@
         "owasp-genai-top10-2026",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对项目步骤、保护措施与验证指标。",
+        "sourceIds": [
+          "opentelemetry-genai-semconv",
+          "javaguide-ai-2026",
+          "owasp-genai-top10-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [
@@ -139353,7 +140031,16 @@
         "owasp-genai-top10-2026",
         "javaguide-ai-2026"
       ],
-      "contentStatus": "outline",
+      "contentStatus": "reviewed",
+      "contentReview": {
+        "reviewedAt": "2026-08-31",
+        "note": "已核对故障现象、定位顺序与修复验证。",
+        "sourceIds": [
+          "opentelemetry-genai-semconv",
+          "javaguide-ai-2026",
+          "owasp-genai-top10-2026"
+        ]
+      },
       "evidence": {
         "level": "medium",
         "sourceIds": [

@@ -28,6 +28,8 @@ assert.equal(sanitized["be-001-1"].level, 4, "ratings should stay inside 0-4");
 assert.deepEqual(sanitized["be-001-1"].reasonCodes, ["forgot-keywords"], "unknown and duplicate reason codes should be removed");
 assert.equal(sanitized["be-001-1"].history.length, 1, "history entries without valid dates should be removed");
 assert.equal(sanitized["be-001-1"].history[0].answerPreview.length, 600, "history answer previews should be bounded");
+assert.equal(sanitized["be-001-1"].history[0].reviewKind, "legacy", "v4 history should import as an explicit legacy review kind");
+assert.equal(sanitized["be-001-1"].difficulty, 5, "older progress should receive a neutral adaptive difficulty");
 
 let progress = recordProgressRating({}, { level: 0, answer: "我暂时不会", now });
 assert.equal(progress.attempts, 1);
@@ -50,6 +52,24 @@ assert.equal(progress.history.at(-1).answerPreview, `第 ${MAX_ATTEMPT_HISTORY +
 progress = recordProgressRating(progress, { level: 3, reasonCodes: ["weak-mechanism"], now: new Date("2026-09-01T08:00:00.000Z") });
 assert.deepEqual(progress.reasonCodes, [], "a successful answer should clear active weakness reasons");
 assert.deepEqual(progress.history.at(-1).reasonCodes, [], "cleared reasons should also be reflected in the successful attempt");
+
+const revealed = recordProgressRating({}, { level: 4, reviewKind: "revealed", now });
+assert.equal(revealed.level, 2, "revealing the answer should cap the recorded mastery level at 2");
+assert.equal(revealed.history[0].selfLevel, 4, "the original self-rating should remain auditable");
+assert.equal(revealed.history[0].reviewKind, "revealed");
+
+const hinted = recordProgressRating({}, { level: 4, reviewKind: "hinted", now });
+assert.equal(hinted.level, 3, "using a hint should cap the recorded mastery level at 3");
+
+const firstIndependent = recordProgressRating({}, { level: 4, reviewKind: "independent", now });
+const secondIndependent = recordProgressRating(firstIndependent, {
+  level: 4,
+  reviewKind: "independent",
+  now: new Date(new Date(firstIndependent.dueAt).getTime())
+});
+assert.ok(secondIndependent.stabilityDays > firstIndependent.stabilityDays, "successful independent recall at the due time should extend stability");
+assert.equal(secondIndependent.lastReviewKind, "independent");
+assert.ok(new Date(secondIndependent.dueAt) > new Date(secondIndependent.lastReviewAt), "adaptive review should schedule a future due date");
 
 const questions = [
   { id: "be-001-1", category: "Java并发", concept: "线程池", angle: "mechanism", importance: 95 },
@@ -83,4 +103,4 @@ assert.equal(new Set(queue.map((question) => question.id)).size, 4, "focus queue
 assert.ok(queue.every((question) => progressMap[question.id]?.attempts > 0), "focus queue should contain only attempted weak questions");
 assert.ok(!queue.some((question) => question.id === "ai-002-1"), "a mastered question should not displace active weak questions");
 
-console.log("Learning progress regression passed: sanitized v4 history, weakness diagnosis, and focused queue.");
+console.log("Learning progress regression passed: v2-v4 compatibility, adaptive review evidence, weakness diagnosis, and focused queue.");

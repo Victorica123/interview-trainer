@@ -13,6 +13,7 @@ let upstream;
 let app;
 let startupBlocker;
 let appOutput = "";
+let tutorPrompt = "";
 const conceptName = "服务接口新增题目回归概念";
 const autoConceptName = "自动来源抓取回归概念";
 const trackedFiles = [
@@ -203,6 +204,12 @@ try {
     if (request.url === "/v1/chat/completions") {
       const body = await readRequestJson(request);
       const prompt = (body.messages || []).map((message) => message.content || "").join("\n");
+      if (prompt.includes("技术面试教练")) {
+        tutorPrompt = prompt;
+        response.writeHead(200, { "content-type": "text/event-stream; charset=utf-8" });
+        response.end(`data: ${JSON.stringify({ choices: [{ delta: { content: "结构化评价完成" } }] })}\n\ndata: [DONE]\n\n`);
+        return;
+      }
       if (prompt.includes("等待取消") || prompt.includes("等待部分收口")) {
         const timer = setTimeout(() => {
           if (response.destroyed) return;
@@ -337,6 +344,22 @@ try {
   await startApp(appPort);
   assert.equal((await (await fetch(`${base}/api/config`)).json()).apiKeyStorage, "saved", "a remembered key should survive restart");
   assert.equal((await readdir(join(sandbox, ".local"))).some((name) => name.endsWith(".tmp")), false, "atomic config writes should not leave temporary files");
+  const tutorQuestion = (await (await fetch(`${base}/api/questions`)).json()).questions[0];
+  const tutorResponse = await fetch(`${base}/api/chat`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      messages: [{ role: "user", content: "这是我的回答，请评价。" }],
+      question: tutorQuestion,
+      mode: "review",
+      studyContext: { reviewKind: "revealed", level: 2, attempts: 3, reasonCodes: ["weak-mechanism"] }
+    })
+  });
+  const tutorEvents = (await tutorResponse.text()).trim().split("\n").map((line) => JSON.parse(line));
+  assert.equal(tutorEvents.some((event) => event.delta === "结构化评价完成"), true, "tutor endpoint should preserve compatible streaming output");
+  assert.match(tutorPrompt, /固定输出五段/, "review mode should require a stable scoring rubric");
+  assert.match(tutorPrompt, /已经展开题库答案/, "tutor should receive answer-reveal evidence instead of overstating mastery");
+  assert.match(tutorPrompt, /只问1个/, "review mode should end with exactly one targeted follow-up");
   const testCookie = "session=test-only-cookie-value";
   const cookieStatus = await (await fetch(`${base}/api/site-cookies`, {
     method: "POST",

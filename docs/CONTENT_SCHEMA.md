@@ -22,7 +22,7 @@
 | `keyPoints` | 自评或 AI 点评使用的要点 |
 | `answerFramework` | 针对当前题型的四步回答结构 |
 | `detailedAnswer` | 根据当前题型生成的五段式讲解；同一概念的五类题不再共用同一正文 |
-| `workedExample` | 最小实践场景、至少三步操作、预期结果和 `sourceIds` 核查来源；123 个 core/high 概念另带已维护的代码/命令/SQL/伪代码示例 |
+| `workedExample` | 最小实践场景、至少三步操作、预期结果和 `sourceIds` 核查来源；129 个重点概念另带已维护的代码/命令/SQL/伪代码示例 |
 | `interviewFollowUps` | 与当前题型对应的三道真实追问，用于继续口述或让 AI 导师追问 |
 | `relatedKnowledge` | 可用于反查题库的相关知识点 |
 | `learningSourceIds` | 官方或权威延伸学习来源，与高频证据分开 |
@@ -34,7 +34,7 @@
 | `scoreSource`（可选） | `ai`；仅被 AI 调整过的题有此字段 |
 | `learningHints`（可选） | 八股文网站对应章节数组：`{site, title, url}`；仅作学习辅助，不参与评分 |
 
-进度只保存在浏览器 `localStorage` 的 `interviewTrainerProgressV1` 键中。每题可记录 `level`、`attempts`、`answer`、`note`、`favorite`、`inMistakeBook`、`mistakeCount`、`reasonCodes`、最近 12 次有界 `history`、`dueAt` 和 `updatedAt`。历史项只保存熟悉度、错因、最多 600 字回答摘要和时间，不复制完整长期答案。自定义题单保存在 `interviewTrainerSessionsV1`，每个题单同时保存筛选配置和固定题目 ID；导出格式当前为 version 4，仍兼容 version 2/3。主题与阅读字号保存在 `interviewTrainerAppearanceV1`。
+进度只保存在浏览器 `localStorage` 的 `interviewTrainerProgressV1` 键中。每题除原有熟悉度、答案、笔记、错题与最多 12 次历史外，还记录 `stabilityDays`、`difficulty`、`lapses`、`lastReviewAt` 和 `lastReviewKind`。历史项保存自评/实际等级、`independent|hinted|revealed|legacy` 学习证据、自适应间隔、错因、最多 600 字回答摘要和时间；不复制完整长期答案。提示后最高按 3/4，答案展开后最高按 2/4 计入。自定义题单仍保存在 `interviewTrainerSessionsV1`；导出格式为 version 5，继续兼容 version 2/3/4。主题与阅读字号保存在 `interviewTrainerAppearanceV1`。
 
 不要手工编辑 `content/questions.json`，因为再次运行生成脚本会覆盖它。应修改 `scripts/catalog-backend.mjs`、`scripts/catalog-agent.mjs`、`research/new-concepts.json` 或 `research/sources.json`，然后运行：
 

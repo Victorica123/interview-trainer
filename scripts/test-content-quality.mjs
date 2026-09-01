@@ -66,6 +66,18 @@ assert.ok(allHighQuestions.every((question) => question.contentStatus === "revie
 assert.ok(allHighQuestions.every((question) => question.workedExample?.code?.content), "every high question should expose curated code, command, or pseudocode");
 assert.ok(allHighQuestions.every((question) => question.workedExample?.sourceIds?.length), "every high question should expose verification sources");
 
+const phase6Extended = questions.filter((question) =>
+  question.tier === "extended"
+  && question.importance >= 70
+  && Number(question.evidence?.independentInterviewSamples || 0) >= 2
+);
+assert.equal(phase6Extended.length, 65, "phase 6 should retain the evidence-backed extended review scope");
+assert.ok(phase6Extended.every((question) => question.contentStatus === "reviewed"), "every phase-6 extended question should be explicitly reviewed");
+assert.ok(phase6Extended.every((question) => question.contentReview?.sourceIds?.length), "every phase-6 extended review should expose verification sources");
+const phase6Concepts = [...new Set(phase6Extended.map((question) => question.concept))];
+assert.equal(phase6Concepts.length, 27, "phase 6 should retain 27 evidence-backed concepts");
+assert.ok(phase6Concepts.every((concept) => enhancementPayload.enhancements?.[concept]?.code?.content), "every phase-6 concept should expose a curated code, command, or pseudocode example");
+
 const distinctBodies = new Set(questions.map((question) => JSON.stringify(question.detailedAnswer))).size;
 assert.equal(distinctBodies, questions.length, "all generated detailed answers should be question-specific");
 assert.ok(Object.keys(enhancements).length >= 123, "the curated enhancement registry should cover every current core and high concept");

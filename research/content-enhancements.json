@@ -164,6 +164,19 @@
           "生产部署、并发与SSE"
         ]
       }
+    },
+    "phase6-evidence-backed-extended": {
+      "label": "近高频扩展题精修",
+      "completedAt": "2026-08-31",
+      "selection": "importance 70–73 且至少有两个独立面经样本的 65 道 extended 题；只锁定当前研究快照。",
+      "domains": {
+        "Java 后端": [
+          "面向对象与SOLID", "String不可变与字符串常量池", "HashSet与集合去重", "反射与注解", "Java序列化", "ReentrantLock与Condition", "死锁与活锁", "G1与ZGC", "类加载与双亲委派", "索引失效与优化器选择", "过期删除与内存淘汰", "Redis主从、哨兵与Cluster", "分布式事务", "一致性哈希", "最终一致性与对账", "可观测性与链路追踪", "支付回调系统", "短链系统", "百万数据导入导出", "高可用与容灾", "项目介绍与量化验证"
+        ],
+        "AI / Agent": [
+          "Transformer与自注意力", "查询改写、扩展与HyDE", "人工介入与Replan", "工具选择与动态检索", "记忆写入、检索与遗忘", "可观测性与Tracing"
+        ]
+      }
     }
   },
   "enhancements": {
@@ -2191,6 +2204,48 @@
         "title": "SSE事件与取消链",
         "content": "Content-Type: text/event-stream\nCache-Control: no-cache\n\ndata: {\"delta\":\"hello\"}\\n\\n\n\non client disconnect -> cancel upstream model call\non shutdown -> drain active streams"
       }
+    },
+    "反射与注解": {
+      "scenario": "扫描带有业务注解的处理器并建立只读路由表，同时避免运行期任意开放私有成员。",
+      "steps": ["定义运行期注解并限制可标注目标", "扫描受信包并校验方法签名", "缓存元数据并为重复键、非法签名建立启动失败测试"],
+      "expected": "能解释注解只是元数据、反射负责读取；同时说明性能、封装和可维护性边界。",
+      "sourceIds": ["oracle-java-api-21", "oracle-java-spec-21"],
+      "code": {"language":"java","title":"读取受控运行期注解","content":"for (Method method : Handler.class.getDeclaredMethods()) {\n  if (!method.isAnnotationPresent(Route.class)) continue;\n  validateSignature(method);\n  routes.put(method.getAnnotation(Route.class).value(), method);\n}"}
+    },
+    "Java序列化": {
+      "scenario": "读取历史 Java 对象文件时限制允许反序列化的类型，并为协议迁移准备版本字段。",
+      "steps": ["只接收可信来源并先限制类型、深度和数组大小", "固定 serialVersionUID 并写兼容性测试", "跨服务新协议优先使用显式 Schema 的 JSON 或 Protobuf"],
+      "expected": "能说明原生序列化的对象图和版本机制，也能解释不应反序列化不可信输入。",
+      "sourceIds": ["oracle-java-api-21", "oracle-java-spec-21"],
+      "code": {"language":"java","title":"反序列化前设置过滤器","content":"ObjectInputFilter filter = ObjectInputFilter.Config\n    .createFilter(\"com.example.dto.*;java.base/*;!*\");\nin.setObjectInputFilter(filter);\nOrderSnapshot snapshot = (OrderSnapshot) in.readObject();"}
+    },
+    "一致性哈希": {
+      "scenario": "缓存节点扩缩容时只迁移环上相邻区间，并用虚拟节点缓解负载倾斜。",
+      "steps": ["把每个物理节点映射为多个虚拟节点", "对键哈希并顺时针查找第一个节点", "扩缩容前后统计迁移比例、分布方差和热点"],
+      "expected": "能解释一致性哈希减少重映射但不自动解决热点、容量差异和副本容错。",
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"],
+      "code": {"language":"text","title":"环上查找与迁移验证","content":"ring = sorted(virtual_node_hashes)\npos = lower_bound(ring, hash(key))\nnode = ring[pos % ring.length].physical_node\nassert remapped_ratio_after_add << modulo_remapped_ratio"}
+    },
+    "百万数据导入导出": {
+      "scenario": "导出百万级订单时避免一次性加载和深分页，并支持失败后从检查点继续。",
+      "steps": ["按稳定唯一键做游标分页", "分批读取、转换和流式写出并施加背压", "保存最后成功游标，校验总数、重复数、失败数和文件摘要"],
+      "expected": "能给出批大小、内存上限、断点续传和一致性口径，而不是只说开启多线程。",
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"],
+      "code": {"language":"sql","title":"使用唯一键游标分页","content":"SELECT id, status, amount\nFROM orders\nWHERE id > :last_id\nORDER BY id\nLIMIT :batch_size;"}
+    },
+    "高可用与容灾": {
+      "scenario": "为订单服务设计同城故障切换和异地数据恢复演练，明确 RTO、RPO 与降级边界。",
+      "steps": ["先定义允许中断时间和数据丢失量", "消除单点并验证健康检查、流量切换和数据复制", "定期执行故障注入、回切和数据对账"],
+      "expected": "能区分高可用与灾难恢复，并用演练证据证明方案而不是只画多副本架构图。",
+      "sourceIds": ["javaguide-priority-2026", "xiaolin-backend-2026"],
+      "code": {"language":"text","title":"最小容灾验收单","content":"SLO: monthly_availability >= 99.95%\nRTO: <= 15m\nRPO: <= 5m\ndrill: cut traffic -> restore -> reconcile -> controlled failback"}
+    },
+    "记忆写入、检索与遗忘": {
+      "scenario": "Agent 只保存用户明确授权的长期偏好，并支持按租户、有效期和来源删除。",
+      "steps": ["区分任务状态、会话摘要和长期记忆", "写入前做授权、去重、敏感信息过滤和有效期设置", "检索时做租户隔离、相关性排序和来源展示，定期清理"],
+      "expected": "能说明记忆不是无限追加聊天记录，并覆盖写入、召回、冲突、隐私和遗忘策略。",
+      "sourceIds": ["langgraph-official-persistence", "javaguide-ai-2026"],
+      "code": {"language":"json","title":"带作用域和有效期的记忆记录","content":"{\n  \"tenantId\": \"user-42\",\n  \"kind\": \"preference\",\n  \"value\": \"回答先给结论\",\n  \"source\": \"explicit-user-choice\",\n  \"expiresAt\": \"2027-02-28T00:00:00Z\"\n}"}
     }
   }
 }

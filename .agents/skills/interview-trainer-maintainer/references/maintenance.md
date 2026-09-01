@@ -66,6 +66,6 @@ Prioritize by user impact:
 
 1. Updater reliability and auditable content review: cancellation, repeat-run dedup, atomic writes, source-quality flags, labeled grounding evaluation, opt-in aggregate telemetry, and deterministic stub tests.
 2. Beginner content QA: core/high are fully registered and enhanced; spot-check factual deltas when sources or framework versions change, then refine extended questions by measured demand.
-3. Learning effectiveness: v4 bounded recall history, failure-reason diagnosis, and focused weak-topic sessions are implemented; keep fixed intervals until real usage data justifies an FSRS migration.
+3. Learning effectiveness: v5 uses a bounded deterministic adaptive schedule and distinguishes independent, hinted, revealed, and legacy attempts; calibrate its factors only from anonymized retention evidence, and do not call it FSRS.
 4. Search/discovery: aliases, typo tolerance, saved filters, and cross-links from path stages to prerequisites.
 5. Optional deployment hardening: only if remote hosting is introduced, add authentication, CSRF/host checks, encrypted secrets, rate limits, and a real persistence layer.
