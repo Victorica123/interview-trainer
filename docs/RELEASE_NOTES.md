@@ -1,6 +1,11 @@
-# 面试训练场 v0.7.0（待发布）
+# 面试训练场 v0.7.0
 
-正式发布后提供两种下载包：Windows 10/11 x64 便携版与需要 Node.js 20+ 的跨平台轻量版。GitHub 自动生成的 `Source code` 归档不是普通用户的正式使用包；附件 SHA-256 以同期 `SHA256SUMS.txt` 为准。
+本版本提供两种正式下载包：
+
+- Windows 10/11 x64：`interview-trainer-windows-x64-v0.7.0.zip`，内置 Node.js，解压后双击 `start.bat`。
+- macOS、Linux 或已安装 Node.js 20+ 的 Windows：`interview-trainer-v0.7.0.zip`。
+
+GitHub 自动生成的 `Source code` 归档不是普通用户的正式使用包；请使用同期 `SHA256SUMS.txt` 校验附件完整性。
 
 ## 本次更新
 
